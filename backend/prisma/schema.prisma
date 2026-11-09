@@ -1,0 +1,241 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String   @id @default(uuid())
+  name       String
+  email      String   @unique
+  password   String?  // nullable for oauth
+  role       String   // 'TEACHER' or 'STUDENT'
+  avatar_url String?
+  notify_assignments   Boolean @default(true)
+  notify_due_soon      Boolean @default(true)
+  notify_announcements Boolean @default(true)
+  created_at DateTime @default(now())
+
+  // Relations
+  classes_taught Class[]    @relation("TeacherClasses")
+  enrollments    Enrollment[]
+  submissions    Submission[]
+  messages       ChatMessage[]
+  attendance_marked AttendanceRecord[] @relation("AttendanceMarkedBy")
+  attendance_records AttendanceRecord[] @relation("AttendanceStudent")
+  student_notes StudentNote[]
+  personal_blocks StudentPersonalBlock[] @relation("StudentPersonalBlocks")
+  uploaded_materials ClassMaterial[] @relation("UploadedClassMaterials")
+  owned_lessons Lesson[] @relation("StudentOwnedLessons")
+  created_student_records StudentRecord[] @relation("StudentRecordCreatedBy")
+  student_records StudentRecord[] @relation("StudentRecordStudent")
+}
+
+model Class {
+  id          String   @id @default(uuid())
+  name        String
+  section     String?
+  class_code  String   @unique
+  teacher_id  String
+  is_archived Boolean  @default(false)
+  archived_at DateTime?
+  
+  teacher     User     @relation("TeacherClasses", fields: [teacher_id], references: [id])
+  enrollments Enrollment[]
+  assignments Assignment[]
+  announcements Announcement[]
+  lessons     Lesson[]
+  attendance_records AttendanceRecord[]
+  materials   ClassMaterial[]
+  student_records StudentRecord[]
+}
+
+model ClassMaterial {
+  id               String   @id @default(uuid())
+  class_id         String
+  uploader_id      String
+  file_name        String
+  mime_type        String
+  size_bytes       Int
+  file_blob        Bytes
+  created_at       DateTime @default(now())
+
+  class            Class    @relation(fields: [class_id], references: [id], onDelete: Cascade)
+  uploader         User     @relation("UploadedClassMaterials", fields: [uploader_id], references: [id], onDelete: Cascade)
+}
+
+model StudentRecord {
+  id         String   @id @default(uuid())
+  class_id   String
+  student_id String
+  created_by String
+  title      String?
+  remark     String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  class   Class @relation(fields: [class_id], references: [id], onDelete: Cascade)
+  student User  @relation("StudentRecordStudent", fields: [student_id], references: [id], onDelete: Cascade)
+  creator User  @relation("StudentRecordCreatedBy", fields: [created_by], references: [id], onDelete: Cascade)
+}
+
+model Enrollment {
+  id       String @id @default(uuid())
+  user_id  String
+  class_id String
+  
+  user     User   @relation(fields: [user_id], references: [id])
+  class    Class  @relation(fields: [class_id], references: [id])
+}
+
+model Assignment {
+  id             String   @id @default(uuid())
+  class_id       String
+  title          String
+  description    String?
+  due_date       DateTime?
+  attachment_url String?
+
+  class          Class        @relation(fields: [class_id], references: [id])
+  submissions    Submission[]
+}
+
+model Submission {
+  id            String   @id @default(uuid())
+  assignment_id String
+  student_id    String
+  file_url      String
+  grade         Float?
+  feedback      String?
+  submitted_at  DateTime @default(now())
+
+  assignment    Assignment @relation(fields: [assignment_id], references: [id])
+  student       User       @relation(fields: [student_id], references: [id])
+}
+
+model Announcement {
+  id         String   @id @default(uuid())
+  class_id   String
+  message    String
+  created_at DateTime @default(now())
+
+  class      Class    @relation(fields: [class_id], references: [id])
+}
+
+model Lesson {
+  id         String   @id @default(uuid())
+  class_id   String
+  title      String
+  created_by String
+  owner_student_id String?
+  source_lesson_id String?
+  status     String   // 'DRAFT', 'PUBLISHED', 'LIVE'
+  created_at DateTime @default(now())
+
+  class      Class         @relation(fields: [class_id], references: [id])
+  owner_student User?      @relation("StudentOwnedLessons", fields: [owner_student_id], references: [id])
+  source_lesson Lesson?    @relation("LessonForkSource", fields: [source_lesson_id], references: [id])
+  derived_lessons Lesson[] @relation("LessonForkSource")
+  blocks     LessonBlock[]
+  sessions   QuizSession[]
+  messages   ChatMessage[]
+  notes      StudentNote[]
+  personal_blocks StudentPersonalBlock[]
+
+  @@unique([owner_student_id, source_lesson_id])
+}
+
+model LessonBlock {
+  id          String @id @default(uuid())
+  lesson_id   String
+  type        String // 'TEXT', 'CODE', 'EXERCISE', 'QUIZ'
+  content     String // JSON string or text
+  order_index Int
+  is_post_publish_addition Boolean @default(false)
+
+  lesson      Lesson @relation(fields: [lesson_id], references: [id])
+}
+
+model StudentNote {
+  id         String   @id @default(uuid())
+  user_id    String
+  lesson_id  String
+  block_id   String
+  content    String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  user       User     @relation(fields: [user_id], references: [id])
+  lesson     Lesson   @relation(fields: [lesson_id], references: [id])
+}
+
+model StudentPersonalBlock {
+  id            String   @id @default(uuid())
+  lesson_id     String
+  student_id    String
+  after_block_id String?
+  type          String
+  content       String
+  order_index   Int      @default(0)
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  lesson        Lesson   @relation(fields: [lesson_id], references: [id])
+  student       User     @relation("StudentPersonalBlocks", fields: [student_id], references: [id])
+}
+
+model QuizSession {
+  id               String  @id @default(uuid())
+  lesson_id        String
+  active           Boolean @default(false)
+  current_question String? // JSON string or ID
+
+  lesson           Lesson          @relation(fields: [lesson_id], references: [id])
+  responses        QuizResponse[]
+}
+
+model QuizResponse {
+  id         String @id @default(uuid())
+  session_id String
+  student_id String
+  answer     String
+  score      Float?
+
+  session    QuizSession @relation(fields: [session_id], references: [id])
+}
+
+model ChatMessage {
+  id        String   @id @default(uuid())
+  lesson_id String
+  user_id   String
+  message   String
+  role      String   // 'USER', 'SYSTEM', 'ASSISTANT'
+  timestamp DateTime @default(now())
+
+  lesson    Lesson   @relation(fields: [lesson_id], references: [id])
+  user      User     @relation(fields: [user_id], references: [id])
+}
+
+model AttendanceRecord {
+  id              String   @id @default(uuid())
+  class_id        String
+  student_id      String
+  attendance_date DateTime
+  status          String   // 'PRESENT' | 'ABSENT'
+  mode            String   // 'MANUAL' | 'AUTO'
+  marked_by       String
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
+
+  class           Class    @relation(fields: [class_id], references: [id])
+  student         User     @relation("AttendanceStudent", fields: [student_id], references: [id])
+  marker          User     @relation("AttendanceMarkedBy", fields: [marked_by], references: [id])
+
+  @@unique([class_id, student_id, attendance_date])
+}

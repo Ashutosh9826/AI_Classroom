@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary-fixed": "#8ffa9b",
+              "on-secondary-fixed-variant": "#00531e",
+              "background": "#f8f9fa",
+              "surface-container-lowest": "#ffffff",
+              "on-tertiary-fixed": "#410001",
+              "on-surface": "#191c1d",
+              "inverse-primary": "#adc7ff",
+              "primary-fixed": "#d8e2ff",
+              "on-secondary-container": "#00752d",
+              "surface-dim": "#d9dadb",
+              "on-error": "#ffffff",
+              "primary-container": "#1a73e8",
+              "tertiary-container": "#df3429",
+              "surface-tint": "#005bc0",
+              "error-container": "#ffdad6",
+              "surface": "#f8f9fa",
+              "outline-variant": "#c1c6d6",
+              "on-primary-fixed-variant": "#004493",
+              "inverse-surface": "#2e3132",
+              "surface-bright": "#f8f9fa",
+              "on-secondary": "#ffffff",
+              "inverse-on-surface": "#f0f1f2",
+              "surface-container-highest": "#e1e3e4",
+              "secondary": "#006e2a",
+              "tertiary-fixed": "#ffdad5",
+              "surface-container-high": "#e7e8e9",
+              "primary": "#005bbf",
+              "on-surface-variant": "#414754",
+              "on-secondary-fixed": "#002108",
+              "surface-container": "#edeeef",
+              "on-primary": "#ffffff",
+              "on-primary-container": "#ffffff",
+              "surface-variant": "#e1e3e4",
+              "primary-fixed-dim": "#adc7ff",
+              "on-tertiary-container": "#ffffff",
+              "secondary-container": "#8ffa9b",
+              "on-error-container": "#93000a",
+              "on-tertiary": "#ffffff",
+              "outline": "#727785",
+              "on-background": "#191c1d",
+              "error": "#ba1a1a",
+              "tertiary": "#bb1712",
+              "on-primary-fixed": "#001a41",
+              "surface-container-low": "#f3f4f5",
+              "secondary-fixed-dim": "#73dc82",
+              "tertiary-fixed-dim": "#ffb4a9",
+              "on-tertiary-fixed-variant": "#930004"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bg-primary-gradient {
+            background: linear-gradient(135deg, #005bbf 0%, #1a73e8 100%);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface antialiased min-h-screen">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm dark:shadow-none flex justify-between items-center px-8 py-3 w-full">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-50">Academic Atelier</span>
+<nav class="hidden md:flex gap-6 items-center">
+<a class="text-slate-600 dark:text-slate-400 hover:text-slate-900 transition-colors" href="#">Courses</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-slate-900 transition-colors" href="#">Library</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-slate-900 transition-colors" href="#">Reports</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition-colors rounded-full flex items-center">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition-colors rounded-full flex items-center">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+<img alt="User profile" class="w-8 h-8 rounded-full ml-2" data-alt="Portrait of a teacher avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCITP90zdiX2CEVy2cFk4gWRKC_nVwpm1QbfZRDK5UatyzQb4DZHKPhm1t0QE03IT3K9NzxyIbuLNp-iom6pIkZYwryhZ2uQ_z5Xtqvz-NKlZrl6e1wlkSvr2i1zVaeawTRJtiTbKBbSv3JIV015d1dMLUkCkfw_Gu6uXsjth-Hb3RmN5nokFc0CCfBgPXN8KUbXA5fOJwAChhjhDAzr5CDhRmKxHvi10jLfJMhTdzSnU3MhNEjAnjmPNr1QskSd5_18me1z-ixvps"/>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-slate-50 dark:bg-slate-950 flex flex-col p-4 gap-2 pt-20">
+<div class="px-4 py-6 mb-4">
+<h2 class="text-lg font-bold text-slate-900 dark:text-white">CS101</h2>
+<p class="text-xs text-slate-500 uppercase tracking-widest font-semibold mt-1">Intro to Programming</p>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/30 hover:translate-x-1 transition-transform duration-200 text-sm font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 bg-white dark:bg-slate-800 text-blue-700 dark:text-blue-400 shadow-sm rounded-lg hover:translate-x-1 transition-transform duration-200 text-sm font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="live_tv">live_tv</span>
+                Live Session
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/30 hover:translate-x-1 transition-transform duration-200 text-sm font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="book">book</span>
+                Resources
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/30 hover:translate-x-1 transition-transform duration-200 text-sm font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="assessment">assessment</span>
+                Grades
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/30 hover:translate-x-1 transition-transform duration-200 text-sm font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+                Settings
+            </a>
+</nav>
+<div class="mt-auto p-4 bg-primary-container/10 rounded-xl mb-4">
+<button class="w-full bg-primary-gradient text-white font-semibold py-3 px-4 rounded-full text-sm shadow-sm hover:scale-[0.98] active:scale-95 transition-all">
+                Join Live Quiz
+            </button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-20 p-8 min-h-screen flex flex-col gap-12">
+<!-- Header Section -->
+<section class="max-w-6xl w-full mx-auto mt-8">
+<div class="flex flex-col md:flex-row justify-between items-end gap-6">
+<div>
+<span class="text-primary font-bold text-xs uppercase tracking-widest mb-2 block">Active Exercise</span>
+<h1 class="text-5xl font-bold tracking-tight text-on-surface">Live Code Monitor</h1>
+</div>
+<div class="flex items-center gap-4 bg-surface-container-low px-6 py-4 rounded-xl">
+<div class="flex flex-col items-end">
+<span class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Participation</span>
+<span class="text-2xl font-bold text-primary">15/42 <span class="text-on-surface-variant font-medium text-lg">Submitted</span></span>
+</div>
+<div class="w-12 h-12 rounded-full border-4 border-primary/20 flex items-center justify-center relative">
+<svg class="absolute inset-0 w-full h-full -rotate-90">
+<circle class="text-primary" cx="24" cy="24" fill="transparent" r="20" stroke="currentColor" stroke-dasharray="125" stroke-dashoffset="80" stroke-width="4"></circle>
+</svg>
+<span class="text-[10px] font-bold">35%</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Bento Grid Layout -->
+<section class="max-w-6xl w-full mx-auto grid grid-cols-12 gap-6">
+<!-- Prompt & Editor Card -->
+<div class="col-span-12 lg:col-span-8 flex flex-col gap-6">
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-sm border border-outline-variant/15">
+<div class="flex justify-between items-start mb-6">
+<h3 class="text-xl font-semibold text-on-surface">Exercise Prompt</h3>
+<span class="bg-secondary/10 text-secondary text-[10px] font-bold px-3 py-1 rounded-full uppercase">Difficulty: Medium</span>
+</div>
+<div class="prose prose-slate max-w-none">
+<p class="text-on-surface-variant leading-relaxed text-lg">
+                            Write a function <code class="bg-surface-container-high px-1.5 py-0.5 rounded text-primary">reverseString(str)</code> that takes a string as input and returns the string reversed. 
+                            <span class="block mt-4 italic">Example: "hello" -&gt; "olleh"</span>
+</p>
+</div>
+<div class="mt-8 bg-slate-900 rounded-lg p-6 font-mono text-sm text-slate-300 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-white cursor-pointer" data-icon="content_copy">content_copy</span>
+</div>
+<div class="flex gap-4">
+<span class="text-slate-600 select-none">1<br/>2<br/>3<br/>4</span>
+<pre><code>function reverseString(str) {
+  // Your students are coding here...
+  return str.split('').reverse().join('');
+}</code></pre>
+</div>
+</div>
+</div>
+<!-- Live Stream of Feedbacks (Subtle Asymmetry) -->
+<div class="grid grid-cols-2 gap-6">
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/15 flex flex-col gap-4">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-secondary animate-pulse"></div>
+<h4 class="text-sm font-bold uppercase tracking-wider text-on-surface-variant">Real-time Activity</h4>
+</div>
+<div class="flex flex-col gap-3">
+<div class="flex justify-between items-center text-sm py-2 border-b border-outline-variant/10">
+<span class="text-on-surface-variant">Sarah J. just submitted</span>
+<span class="text-xs text-secondary font-semibold">SUCCESS</span>
+</div>
+<div class="flex justify-between items-center text-sm py-2 border-b border-outline-variant/10">
+<span class="text-on-surface-variant">Marcus T. is testing edge cases</span>
+<span class="text-xs text-primary font-semibold">RUNNING</span>
+</div>
+<div class="flex justify-between items-center text-sm py-2">
+<span class="text-on-surface-variant">Elena R. requested a hint</span>
+<span class="text-xs text-tertiary font-semibold">PENDING</span>
+</div>
+</div>
+</div>
+<div class="bg-primary p-6 rounded-xl text-white flex flex-col justify-between relative overflow-hidden">
+<div class="z-10">
+<h4 class="text-sm font-bold uppercase tracking-wider opacity-80">Quick Action</h4>
+<p class="mt-2 text-xl font-medium leading-tight">Identify students struggling with loops.</p>
+</div>
+<button class="z-10 mt-4 bg-white text-primary font-bold text-sm py-2 px-4 rounded-full w-max hover:bg-surface-container-high transition-colors">
+                            View Insights
+                        </button>
+<!-- Decorative background element -->
+<div class="absolute -bottom-4 -right-4 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+</div>
+</div>
+</div>
+<!-- Controls Side Panel -->
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-6">
+<!-- Review Card -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-outline-variant/15">
+<h3 class="text-lg font-bold text-on-surface mb-6">Review Submissions</h3>
+<div class="space-y-4 mb-8">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="groups">groups</span>
+</div>
+<div>
+<p class="text-sm font-bold">42 Students</p>
+<p class="text-xs text-on-surface-variant">Enrolled in CS101-A</p>
+</div>
+</div>
+</div>
+<button class="w-full bg-primary-gradient text-white font-bold py-4 px-6 rounded-full flex items-center justify-center gap-3 shadow-md hover:scale-[0.98] transition-transform">
+                        Review Submissions
+                        <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<!-- AI Assistant Toggle Card -->
+<div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant/15">
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="auto_awesome">auto_awesome</span>
+<h3 class="text-sm font-bold uppercase tracking-widest text-on-surface">AI Assistant</h3>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<p class="text-sm text-on-surface-variant mb-6 leading-relaxed">
+                        Allow students to access the AI Chat Assistant for syntax hints and logical scaffolding after 5 minutes of inactivity.
+                    </p>
+<div class="bg-white/50 rounded-lg p-4 border border-outline-variant/10">
+<div class="flex items-center gap-2 mb-2">
+<span class="text-[10px] font-bold text-primary bg-primary/10 px-2 py-0.5 rounded">AUTO-MODE</span>
+<span class="text-[10px] font-bold text-on-surface-variant">HINTS ENABLED</span>
+</div>
+<p class="text-xs text-on-surface-variant italic">"Hint 1: Have you considered using the split method?"</p>
+</div>
+</div>
+<!-- Class Health Metric -->
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/15 flex flex-col gap-4">
+<h3 class="text-sm font-bold uppercase tracking-widest text-on-surface-variant">Class Understanding</h3>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between text-xs font-bold">
+<span>Logic Flow</span>
+<span>88%</span>
+</div>
+<div class="w-full h-1 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[88%] shadow-[0_0_8px_rgba(0,110,42,0.3)]"></div>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between text-xs font-bold">
+<span>Syntax Accuracy</span>
+<span>62%</span>
+</div>
+<div class="w-full h-1 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-tertiary w-[62%] shadow-[0_0_8px_rgba(187,23,18,0.3)]"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Contextual FAB (Hidden as per suppression rules for focused tasks, but added here if top-level) -->
+<!-- Suppressed: Task-Focused Screen -->
+</body></html>

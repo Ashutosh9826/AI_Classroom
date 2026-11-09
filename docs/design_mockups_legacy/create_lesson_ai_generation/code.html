@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Create Interactive Lesson | Atelier AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-header {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .primary-gradient {
+            background: linear-gradient(135deg, #005bbf 0%, #1a73e8 100%);
+        }
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #e1e3e4; border-radius: 10px; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "inverse-surface": "#2e3132",
+                "secondary": "#006e2a",
+                "error-container": "#ffdad6",
+                "primary": "#005bbf",
+                "on-primary-container": "#ffffff",
+                "surface-tint": "#005bc0",
+                "secondary-fixed-dim": "#73dc82",
+                "tertiary-fixed-dim": "#ffb4a9",
+                "on-secondary-container": "#00752d",
+                "on-primary-fixed": "#001a41",
+                "on-error-container": "#93000a",
+                "on-primary": "#ffffff",
+                "surface-container-highest": "#e1e3e4",
+                "primary-container": "#1a73e8",
+                "inverse-primary": "#adc7ff",
+                "surface-variant": "#e1e3e4",
+                "surface-container-lowest": "#ffffff",
+                "on-tertiary-fixed": "#410001",
+                "tertiary-container": "#df3429",
+                "surface-container": "#edeeef",
+                "on-secondary-fixed": "#002108",
+                "on-tertiary": "#ffffff",
+                "on-surface": "#191c1d",
+                "on-surface-variant": "#414754",
+                "tertiary": "#bb1712",
+                "background": "#f8f9fa",
+                "surface-bright": "#f8f9fa",
+                "surface-container-low": "#f3f4f5",
+                "secondary-fixed": "#8ffa9b",
+                "outline-variant": "#c1c6d6",
+                "outline": "#727785",
+                "tertiary-fixed": "#ffdad5",
+                "surface": "#f8f9fa",
+                "primary-fixed": "#d8e2ff",
+                "on-tertiary-fixed-variant": "#930004",
+                "on-secondary-fixed-variant": "#00531e",
+                "secondary-container": "#8ffa9b",
+                "primary-fixed-dim": "#adc7ff",
+                "on-background": "#191c1d",
+                "inverse-on-surface": "#f0f1f2",
+                "on-tertiary-container": "#ffffff",
+                "error": "#ba1a1a",
+                "on-secondary": "#ffffff",
+                "on-primary-fixed-variant": "#004493",
+                "surface-dim": "#d9dadb",
+                "surface-container-high": "#e7e8e9",
+                "on-error": "#ffffff"
+              },
+              fontFamily: {
+                "headline": ["Inter"],
+                "body": ["Inter"],
+                "label": ["Inter"]
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+            },
+          },
+        }
+      </script>
+</head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#f8f9fa]/80 dark:bg-[#191c1d]/80 backdrop-blur-xl flex justify-between items-center px-8 h-16 w-full shadow-[0px_10px_40px_rgba(25,28,29,0.04)]">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold text-[#191c1d] dark:text-white tracking-tighter">Atelier AI</span>
+<div class="hidden md:flex gap-6">
+<a class="font-['Inter'] font-medium text-sm tracking-tight text-[#005bbf] dark:text-[#8ffa9b] border-b-2 border-[#005bbf] pb-1" href="#">Curriculum</a>
+<a class="font-['Inter'] font-medium text-sm tracking-tight text-[#727785] dark:text-[#c1c6d6] hover:text-[#191c1d] transition-colors duration-200" href="#">Notebooks</a>
+<a class="font-['Inter'] font-medium text-sm tracking-tight text-[#727785] dark:text-[#c1c6d6] hover:text-[#191c1d] transition-colors duration-200" href="#">Insights</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-[#f3f4f5] dark:hover:bg-[#2c2c2c] rounded-full transition-colors duration-200 active:scale-95">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 hover:bg-[#f3f4f5] dark:hover:bg-[#2c2c2c] rounded-full transition-colors duration-200 active:scale-95">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-surface-container-highest overflow-hidden">
+<img alt="User profile" data-alt="Professional male teacher portrait avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuANZrSbWhzYuIg1LXkOSeNJ_hwGcbSg6zf3yQhXSc7W5B4cDg6bllZ6fO2E9NKX3QPpJwx66edRn3GOJTxDMulup2YFPuaEFU2tYBzIGtGCsOcs0hCNOAfYrNdYBwrazWjc_SWKO8_fwqnvyaaxfF3V9kqJyVpW8WebT-IGdP_J9glhiqA7_WF2MW3vjUnOGFGP4InDJ--BDhPE4pSfROR-R6tsjlJ9P0tIyRHZfgtk4st3W7fmO-39cdPJG7MiG78zYt05MUeoFT8"/>
+</div>
+</div>
+<div class="bg-[#f3f4f5] dark:bg-[#2c2c2c] h-[1px] w-full absolute bottom-0 left-0"></div>
+</nav>
+<div class="flex flex-1 pt-16">
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col p-6 gap-y-4 h-screen w-72 bg-[#f3f4f5] dark:bg-[#121415] sticky top-16">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded-xl primary-gradient flex items-center justify-center text-white">
+<span class="material-symbols-outlined">architecture</span>
+</div>
+<div>
+<h2 class="text-lg font-semibold text-[#191c1d] dark:text-white leading-tight">The Atelier</h2>
+<p class="text-[0.75rem] text-outline font-medium">AI-Powered Learning</p>
+</div>
+</div>
+<button class="w-full primary-gradient text-white rounded-full py-3 px-6 font-semibold shadow-lg active:scale-[0.98] transition-all duration-150 flex items-center justify-center gap-2 mb-4">
+<span class="material-symbols-outlined text-[1.25rem]">add</span>
+                New Lesson
+            </button>
+<nav class="flex flex-col gap-1">
+<div class="flex items-center gap-3 px-4 py-3 cursor-pointer text-[#727785] dark:text-[#c1c6d6] hover:bg-[#e7e8e9] dark:hover:bg-[#2c2c2c] transition-all duration-300 hover:translate-x-1 rounded-lg">
+<span class="material-symbols-outlined">edit_note</span>
+<span class="font-['Inter'] text-[0.875rem] font-medium">Drafts</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 cursor-pointer bg-white dark:bg-[#1c1f21] text-[#005bbf] dark:text-[#8ffa9b] rounded-lg shadow-sm font-semibold transition-all duration-300">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-['Inter'] text-[0.875rem]">AI Assistant</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 cursor-pointer text-[#727785] dark:text-[#c1c6d6] hover:bg-[#e7e8e9] dark:hover:bg-[#2c2c2c] transition-all duration-300 hover:translate-x-1 rounded-lg">
+<span class="material-symbols-outlined">library_books</span>
+<span class="font-['Inter'] text-[0.875rem] font-medium">Resources</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 cursor-pointer text-[#727785] dark:text-[#c1c6d6] hover:bg-[#e7e8e9] dark:hover:bg-[#2c2c2c] transition-all duration-300 hover:translate-x-1 rounded-lg">
+<span class="material-symbols-outlined">quiz</span>
+<span class="font-['Inter'] text-[0.875rem] font-medium">Class Quiz</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 cursor-pointer text-[#727785] dark:text-[#c1c6d6] hover:bg-[#e7e8e9] dark:hover:bg-[#2c2c2c] transition-all duration-300 hover:translate-x-1 rounded-lg">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-['Inter'] text-[0.875rem] font-medium">Archive</span>
+</div>
+</nav>
+<div class="mt-auto pt-6 flex flex-col gap-1 border-t border-outline-variant/10">
+<div class="flex items-center gap-3 px-4 py-3 text-[#727785] hover:bg-[#e7e8e9] rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">help_outline</span>
+<span class="font-['Inter'] text-[0.875rem]">Help</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-[#727785] hover:bg-[#e7e8e9] rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">lock</span>
+<span class="font-['Inter'] text-[0.875rem]">Privacy</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 bg-surface-container-low min-h-screen p-8 md:p-12 overflow-y-auto">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-2 mb-12 text-sm font-medium text-on-surface-variant">
+<span class="hover:text-primary cursor-pointer transition-colors">Classroom</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="hover:text-primary cursor-pointer transition-colors">Physics 101</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="text-on-surface">New Lesson</span>
+</nav>
+<!-- Header Section -->
+<header class="max-w-4xl mb-16">
+<h1 class="text-[3.5rem] font-bold text-on-surface tracking-tight leading-tight mb-4">Create Interactive Lesson</h1>
+<p class="text-lg text-on-surface-variant max-w-2xl">Design immersive learning experiences with the help of Atelier AI. Define your parameters and let our engine draft the structure.</p>
+</header>
+<!-- Form Bento Grid -->
+<section class="max-w-5xl grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+<!-- Left: Form Fields -->
+<div class="md:col-span-7 space-y-12">
+<!-- Lesson Identity Card -->
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-[0px_10px_40px_rgba(25,28,29,0.04)] space-y-8">
+<div>
+<label class="block text-[0.75rem] font-bold uppercase tracking-wider text-outline mb-2">Lesson Title</label>
+<input class="w-full bg-surface-container-high border-0 border-b-2 border-outline focus:border-primary focus:ring-0 px-4 py-3 text-lg font-medium transition-all" placeholder="e.g., Quantum Mechanics Fundamentals" type="text"/>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+<div>
+<label class="block text-[0.75rem] font-bold uppercase tracking-wider text-outline mb-2">Topic</label>
+<input class="w-full bg-surface-container-high border-0 border-b-2 border-outline focus:border-primary focus:ring-0 px-4 py-3 text-lg font-medium transition-all" placeholder="Physics" type="text"/>
+</div>
+<div>
+<label class="block text-[0.75rem] font-bold uppercase tracking-wider text-outline mb-2">Difficulty Level</label>
+<select class="w-full bg-surface-container-high border-0 border-b-2 border-outline focus:border-primary focus:ring-0 px-4 py-3 text-lg font-medium transition-all appearance-none cursor-pointer">
+<option>Beginner</option>
+<option selected="">Intermediate</option>
+<option>Advanced</option>
+<option>Scholar</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Objectives Card -->
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-[0px_10px_40px_rgba(25,28,29,0.04)]">
+<label class="block text-[0.75rem] font-bold uppercase tracking-wider text-outline mb-4">Learning Objectives</label>
+<textarea class="w-full bg-surface-container-high border-0 border-b-2 border-outline focus:border-primary focus:ring-0 px-4 py-3 text-lg font-medium transition-all resize-none" placeholder="What should students be able to do after this lesson?" rows="4"></textarea>
+<p class="mt-4 text-xs text-outline italic">Tip: Be specific. Use verbs like 'Identify', 'Apply', or 'Synthesize'.</p>
+</div>
+</div>
+<!-- Right: AI Controls & Preview -->
+<div class="md:col-span-5 space-y-8 sticky top-28">
+<!-- AI Generator Card -->
+<div class="primary-gradient p-8 rounded-2xl text-white shadow-xl relative overflow-hidden group">
+<div class="absolute -right-4 -top-4 opacity-10 group-hover:scale-110 transition-transform duration-700">
+<span class="material-symbols-outlined text-[10rem]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<div class="relative z-10">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-secondary-fixed">bolt</span>
+<span class="text-xs font-bold uppercase tracking-widest text-primary-fixed">Engine Ready</span>
+</div>
+<h3 class="text-2xl font-bold mb-4">Generate with AI</h3>
+<p class="text-primary-fixed/80 text-sm leading-relaxed mb-8">Atelier will draft interactive slides, quiz questions, and a summary based on your inputs. This takes about 30 seconds.</p>
+<button class="w-full bg-white text-primary rounded-full py-4 font-bold flex items-center justify-center gap-3 active:scale-95 transition-all shadow-lg hover:shadow-white/20">
+<span class="material-symbols-outlined animate-spin" style="font-variation-settings: 'wght' 600;">progress_activity</span>
+                                Crafting Lesson...
+                            </button>
+</div>
+</div>
+<!-- Visual Guide / Metadata -->
+<div class="bg-surface-container-highest/50 border border-outline-variant/10 p-6 rounded-xl space-y-4">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<span class="text-sm font-semibold">Interactive Components Included</span>
+</div>
+<ul class="space-y-3 ml-5">
+<li class="flex items-center gap-2 text-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+                                5-Question Adaptive Quiz
+                            </li>
+<li class="flex items-center gap-2 text-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+                                2 Virtual Lab Scenarios
+                            </li>
+<li class="flex items-center gap-2 text-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+                                AI-Generated Video Script
+                            </li>
+</ul>
+</div>
+</div>
+</section>
+</main>
+</div>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-6 py-4 bg-white/90 dark:bg-[#191c1d]/90 backdrop-blur-lg rounded-t-3xl shadow-[0_-10px_40px_rgba(25,28,29,0.06)] border-t border-[#f3f4f5] dark:border-[#2c2c2c]">
+<div class="flex flex-col items-center gap-1 group">
+<span class="material-symbols-outlined text-[#727785] p-3 transition-transform duration-200 group-active:scale-110">auto_stories</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-bold text-[#727785]">Lessons</span>
+</div>
+<div class="flex flex-col items-center gap-1 group">
+<span class="material-symbols-outlined bg-[#1a73e8] text-white rounded-full p-3 transition-transform duration-200 scale-110">chat_bubble</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-bold text-[#1a73e8]">AI Chat</span>
+</div>
+<div class="flex flex-col items-center gap-1 group">
+<span class="material-symbols-outlined text-[#727785] p-3 transition-transform duration-200 group-active:scale-110">timer</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-bold text-[#727785]">Quiz</span>
+</div>
+<div class="flex flex-col items-center gap-1 group">
+<span class="material-symbols-outlined text-[#727785] p-3 transition-transform duration-200 group-active:scale-110">account_circle</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-bold text-[#727785]">Profile</span>
+</div>
+</nav>
+</body></html>

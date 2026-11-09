@@ -1,0 +1,203 @@
+# Academic Atelier: Core Architecture & Backend Foundation
+
+## 1. Folder Structure
+```text
+/academic-atelier
+├── /backend
+│   ├── /config          # Database and Passport config
+│   ├── /controllers     # Logic for Auth, Classes, Lessons, etc.
+│   ├── /middleware      # Auth, Error handling
+│   ├── /models          # Prisma schemas (handled in /prisma)
+│   ├── /routes          # Express route definitions
+│   ├── /utils           # AI helpers, Socket emitters
+│   ├── prisma/          # schema.prisma
+│   ├── .env
+│   ├── server.js
+│   └── package.json
+├── /frontend
+│   ├── /src
+│   │   ├── /components  # Reusable UI (Buttons, Cards, Modals)
+│   │   ├── /context     # AuthContext, LessonContext
+│   │   ├── /hooks       # useSocket, useAI
+│   │   ├── /pages       # Dashboard, LessonView, Editor
+│   │   ├── /services    # API client (Axios)
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   ├── tailwind.config.js
+│   └── package.json
+```
+
+## 2. Database Schema (Prisma)
+`backend/prisma/schema.prisma`
+```prisma
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  STUDENT
+  TEACHER
+}
+
+enum LessonStatus {
+  DRAFT
+  LIVE
+  ARCHIVED
+}
+
+model User {
+  id            String         @id @default(uuid())
+  email         String         @unique
+  password      String?
+  name          String
+  role          Role           @default(STUDENT)
+  avatar        String?
+  classes       Enrollment[]
+  ownedClasses  Class[]        @relation("TeacherClasses")
+  submissions   Submission[]
+  messages      ChatMessage[]
+  createdAt     DateTime       @default(now())
+}
+
+model Class {
+  id          String       @id @default(uuid())
+  name        String
+  section     String?
+  classCode   String       @unique
+  teacher     User         @relation("TeacherClasses", fields: [teacherId], references: [id])
+  teacherId   String
+  students    Enrollment[]
+  assignments Assignment[]
+  lessons     Lesson[]
+  createdAt   DateTime     @default(now())
+}
+
+model Enrollment {
+  id        String   @id @default(uuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  class     Class    @relation(fields: [classId], references: [id])
+  classId   String
+  joinedAt  DateTime @default(now())
+}
+
+model Assignment {
+  id            String       @id @default(uuid())
+  title         String
+  description   String
+  dueDate       DateTime
+  attachments   String[]
+  class         Class        @relation(fields: [classId], references: [id])
+  classId       String
+  submissions   Submission[]
+}
+
+model Submission {
+  id           String     @id @default(uuid())
+  assignment   Assignment @relation(fields: [assignmentId], references: [id])
+  assignmentId String
+  student      User       @relation(fields: [studentId], references: [id])
+  studentId    String
+  fileUrl      String
+  grade        Float?
+  feedback     String?
+  submittedAt  DateTime   @default(now())
+}
+
+model Lesson {
+  id          String        @id @default(uuid())
+  title       String
+  topic       String
+  objectives  String[]
+  status      LessonStatus  @default(DRAFT)
+  class       Class         @relation(fields: [classId], references: [id])
+  classId     String
+  blocks      LessonBlock[]
+  quizSession QuizSession?
+  messages    ChatMessage[]
+  createdAt   DateTime      @default(now())
+}
+
+model LessonBlock {
+  id         String   @id @default(uuid())
+  lesson     Lesson   @relation(fields: [lessonId], references: [id])
+  lessonId   String
+  type       String   // "text", "code", "quiz", "poll"
+  content    Json
+  orderIndex Int
+}
+
+model QuizSession {
+  id              String   @id @default(uuid())
+  lesson          Lesson   @relation(fields: [lessonId], references: [id])
+  lessonId        String   @unique
+  isActive        Boolean  @default(false)
+  currentBlockId  String?
+  responses       QuizResponse[]
+}
+
+model QuizResponse {
+  id        String      @id @default(uuid())
+  session   QuizSession @relation(fields: [sessionId], references: [id])
+  sessionId String
+  studentId String
+  answer    Json
+  score     Float?
+}
+
+model ChatMessage {
+  id       String   @id @default(uuid())
+  lesson   Lesson   @relation(fields: [lessonId], references: [id])
+  lessonId String
+  user     User     @relation(fields: [userId], references: [id])
+  userId   String
+  text     String
+  role     String   // "user", "assistant"
+  createdAt DateTime @default(now())
+}
+```
+
+## 3. Auth Controller (JWT Logic)
+`backend/controllers/authController.js`
+```javascript
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
+
+const generateTokens = (user) => {
+  const accessToken = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '15m' });
+  const refreshToken = jwt.sign({ id: user.id }, process.env.JWT_REFRESH_SECRET, { expiresIn: '7d' });
+  return { accessToken, refreshToken };
+};
+
+exports.register = async (req, res) => {
+  try {
+    const { email, password, name, role } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = await prisma.user.create({
+      data: { email, password: hashedPassword, name, role }
+    });
+    const tokens = generateTokens(user);
+    res.status(201).json({ user, ...tokens });
+  } catch (error) {
+    res.status(400).json({ message: "Registration failed", error });
+  }
+};
+
+exports.login = async (req, res) => {
+  const { email, password } = req.body;
+  const user = await prisma.user.findUnique({ where: { email } });
+  if (user && await bcrypt.compare(password, user.password)) {
+    const tokens = generateTokens(user);
+    res.json({ user, ...tokens });
+  } else {
+    res.status(401).json({ message: "Invalid credentials" });
+  }
+};
+```

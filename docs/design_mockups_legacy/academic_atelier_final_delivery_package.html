@@ -1,0 +1,71 @@
+# Academic Atelier: Complete Project Structure & Ready-to-Deploy Assets
+
+## 1. Final Directory Structure (Root)
+```text
+/academic-atelier
+├── /backend
+│   ├── /config          # DB & Auth (JWT, Passport)
+│   ├── /controllers     # Logic: Auth, Classes, Lessons, Quiz, AI, Grading
+│   ├── /middleware      # Security, RBAC, Validation
+│   ├── /prisma          # schema.prisma, migrations
+│   ├── /routes          # API definition
+│   ├── /utils           # Socket.io, OpenRouter Helper, AWS/Cloudinary
+│   └── server.js        # Entry point with Socket.io integration
+├── /frontend
+│   ├── /public
+│   ├── /src
+│   │   ├── /assets
+│   │   ├── /components  # Sidebar, TopNav, Blocks, Chat, Controls
+│   │   ├── /context     # AuthContext, LessonContext (Live State)
+│   │   ├── /hooks       # useAuth, useSocket, useAI
+│   │   ├── /pages       # Dashboard, ClassStream, LessonEditor, LiveView, Submissions
+│   │   ├── /services    # API Axios instances
+│   │   ├── /styles      # Tailwind & Global CSS
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   ├── tailwind.config.js
+│   └── vite.config.js
+├── .env.example
+├── docker-compose.yml
+└── README.md
+```
+
+## 2. Comprehensive .env Template
+```env
+# SERVER CONFIG
+PORT=5000
+NODE_ENV=production
+CLIENT_URL=http://localhost:5173
+
+# DATABASE
+DATABASE_URL="postgresql://user:password@localhost:5432/academic_atelier?schema=public"
+
+# AUTH
+JWT_SECRET="your_very_long_random_string_here"
+JWT_REFRESH_SECRET="another_very_long_random_string_here"
+GOOGLE_CLIENT_ID="google_oauth_id_here"
+GOOGLE_CLIENT_SECRET="google_oauth_secret_here"
+
+# AI & EXTERNAL APIS
+OPENROUTER_API_KEY="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"
+
+# STORAGE (Cloudinary Example)
+CLOUDINARY_CLOUD_NAME="your_cloud_name"
+CLOUDINARY_API_KEY="your_api_key"
+CLOUDINARY_API_SECRET="your_api_secret"
+```
+
+## 3. Final Frontend Integration: Lesson View (Mobile + Desktop)
+The `LiveLessonView` uses a responsive layout:
+- **Desktop:** Split screen (Main content 70%, Chat 30%).
+- **Mobile:** Single column with a floating bubble for the AI Assistant.
+
+## 4. Deployment Roadmap
+1. **Infrastructure:** Provision a RDS PostgreSQL instance and an EC2/Heroku/Vercel instance.
+2. **Build:** `npm run build` in both directories.
+3. **Database:** `npx prisma migrate deploy` to set up production tables.
+4. **Environment:** Inject the provided `.env` variables.
+5. **Real-time:** Ensure the load balancer supports WebSockets (Sticky sessions).
+
+---
+**Status:** All core systems (Auth, LMS, AI Lessons, Real-time Quizzes) are architected and ready for implementation.

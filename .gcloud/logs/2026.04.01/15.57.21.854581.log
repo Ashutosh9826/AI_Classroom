@@ -1,0 +1,28 @@
+2026-04-01 15:57:21,937 DEBUG    root            Running [gcloud] with arguments: [-v: "None"]
+2026-04-01 15:57:22,062 DEBUG    root            Loaded Command Group: ['gcloud', 'version']
+2026-04-01 15:57:22,063 DEBUG    root            Running [gcloud.version] with arguments: []
+2026-04-01 15:57:22,064 DEBUG    root            Failed to read GCE cache file: [WinError 2] The system cannot find the file specified: 'D:\\AI_TUTOR\\.gcloud\\gce'
+2026-04-01 15:57:22,242 DEBUG    root            Failed to check metadata server: <urlopen error [Errno 11001] getaddrinfo failed>
+2026-04-01 15:57:22,242 DEBUG    root            On GCE from server: False
+2026-04-01 15:57:22,413 DEBUG    root            Chosen display Format:flattened[no-pad,separator=" "]
+2026-04-01 15:57:22,446 INFO     root            Display format: "flattened[no-pad,separator=" "]"
+2026-04-01 15:57:22,511 INFO     ___FILE_ONLY___ Google Cloud SDK
+2026-04-01 15:57:22,511 INFO     ___FILE_ONLY___  
+2026-04-01 15:57:22,511 INFO     ___FILE_ONLY___ 562.0.0
+
+2026-04-01 15:57:22,511 INFO     ___FILE_ONLY___ bq
+2026-04-01 15:57:22,511 INFO     ___FILE_ONLY___  
+2026-04-01 15:57:22,511 INFO     ___FILE_ONLY___ 2.1.30
+
+2026-04-01 15:57:22,511 INFO     ___FILE_ONLY___ core
+2026-04-01 15:57:22,511 INFO     ___FILE_ONLY___  
+2026-04-01 15:57:22,511 INFO     ___FILE_ONLY___ 2026.03.23
+
+2026-04-01 15:57:22,511 INFO     ___FILE_ONLY___ gcloud-crc32c
+2026-04-01 15:57:22,511 INFO     ___FILE_ONLY___  
+2026-04-01 15:57:22,511 INFO     ___FILE_ONLY___ 1.0.0
+
+2026-04-01 15:57:22,511 INFO     ___FILE_ONLY___ gsutil
+2026-04-01 15:57:22,511 INFO     ___FILE_ONLY___  
+2026-04-01 15:57:22,511 INFO     ___FILE_ONLY___ 5.36
+

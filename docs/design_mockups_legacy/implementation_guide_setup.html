@@ -1,0 +1,38 @@
+# Academic Atelier: Implementation Instructions
+
+## 1. Prerequisites
+- Node.js (v18+)
+- PostgreSQL
+- OpenRouter API Key: `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`
+
+## 2. Environment Variables (.env)
+```env
+# Backend
+PORT=5000
+DATABASE_URL="postgresql://user:password@localhost:5432/academic_atelier"
+JWT_SECRET="your_jwt_secret"
+JWT_REFRESH_SECRET="your_refresh_secret"
+GOOGLE_CLIENT_ID="your_google_id"
+OPENROUTER_API_KEY="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"
+
+# AWS/Cloudinary
+CLOUDINARY_URL="your_cloudinary_url"
+```
+
+## 3. Setup Instructions
+
+### Backend
+1. `cd backend`
+2. `npm install`
+3. `npx prisma migrate dev --name init`
+4. `npm run dev`
+
+### Frontend
+1. `cd frontend`
+2. `npm install`
+3. `npm run dev`
+
+## 4. Key Implementation Details
+- **AI Lessons:** Uses `nvidia/nemotron-3-super-120b-a12b:free` via OpenRouter.
+- **Real-time:** Socket.io handles quiz synchronization and live chat.
+- **Architecture:** MVC pattern with specialized controllers for AI generation and real-time quiz logic.

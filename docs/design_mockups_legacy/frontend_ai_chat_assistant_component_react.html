@@ -1,0 +1,102 @@
+import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
+import { PaperAirplaneIcon, LockClosedIcon, LockOpenIcon } from '@heroicons/react/24/outline';
+
+const AssistantChat = ({ lessonId, lessonContext, isLocked }) => {
+  const [messages, setMessages] = useState([
+    { role: 'assistant', content: "Hi! I'm your Academic Assistant. I can help you understand the concepts in this lesson. I won't give you direct answers, but I'll provide hints and explanations to guide you!" }
+  ]);
+  const [input, setInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [messages]);
+
+  const sendMessage = async (e) => {
+    e.preventDefault();
+    if (!input.trim() || isLocked || isLoading) return;
+
+    const userMessage = { role: 'user', content: input };
+    setMessages(prev => [...prev, userMessage]);
+    setInput('');
+    setIsLoading(true);
+
+    try {
+      const res = await axios.post('/api/lesson-chat/message', {
+        lessonId,
+        message: input,
+        lessonContext
+      });
+
+      setMessages(prev => [...prev, { role: 'assistant', content: res.data.reply }]);
+    } catch (err) {
+      console.error('Chat error:', err);
+      setMessages(prev => [...prev, { role: 'assistant', content: "Sorry, I'm having trouble connecting. Please try again later." }]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className="flex flex-col h-full bg-slate-50 border-l border-slate-200">
+      <div className="p-4 bg-white border-b border-slate-200 flex items-center justify-between">
+        <h2 className="font-bold text-slate-800 flex items-center gap-2">
+          <span className="material-icons text-blue-600">smart_toy</span>
+          AI Assistant
+        </h2>
+        {isLocked && <LockClosedIcon className="w-4 h-4 text-slate-400" />}
+      </div>
+
+      <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-4">
+        {messages.map((msg, i) => (
+          <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+            <div className={`max-w-[85%] p-3 rounded-2xl text-sm ${
+              msg.role === 'user' 
+                ? 'bg-blue-600 text-white rounded-tr-none' 
+                : 'bg-white text-slate-700 shadow-sm border border-slate-100 rounded-tl-none'
+            }`}>
+              {msg.content}
+            </div>
+          </div>
+        ))}
+        {isLoading && (
+          <div className="flex justify-start">
+            <div className="bg-white p-3 rounded-2xl rounded-tl-none shadow-sm border border-slate-100">
+              <div className="flex gap-1">
+                <div className="w-1.5 h-1.5 bg-slate-300 rounded-full animate-bounce" />
+                <div className="w-1.5 h-1.5 bg-slate-300 rounded-full animate-bounce delay-100" />
+                <div className="w-1.5 h-1.5 bg-slate-300 rounded-full animate-bounce delay-200" />
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <form onSubmit={sendMessage} className="p-4 bg-white border-t border-slate-200">
+        <div className="relative">
+          <input
+            type="text"
+            disabled={isLocked}
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder={isLocked ? "Chat is locked by teacher" : "Ask a question..."}
+            className="w-full pl-4 pr-12 py-3 bg-slate-100 border-none rounded-xl text-sm focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+          />
+          <button
+            type="submit"
+            disabled={isLocked || !input.trim() || isLoading}
+            className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-blue-600 hover:text-blue-700 disabled:text-slate-400"
+          >
+            <PaperAirplaneIcon className="w-5 h-5" />
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default AssistantChat;

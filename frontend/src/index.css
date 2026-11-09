@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+@theme {
+  --color-surface-tint: #005bc0;
+  --color-on-surface-variant: #414754;
+  --color-background: #f8f9fa;
+  --color-inverse-on-surface: #f0f1f2;
+  --color-primary: #005bbf;
+  --color-secondary-fixed-dim: #73dc82;
+  --color-surface-bright: #f8f9fa;
+  --color-error: #ba1a1a;
+  --color-secondary: #006e2a;
+  --color-surface-container: #edeeef;
+  --color-secondary-fixed: #8ffa9b;
+  --color-on-error-container: #93000a;
+  --color-on-primary: #ffffff;
+  --color-on-secondary-container: #00752d;
+  --color-tertiary-fixed: #ffdad5;
+  --color-on-secondary-fixed-variant: #00531e;
+  --color-on-error: #ffffff;
+  --color-surface-variant: #e1e3e4;
+  --color-on-primary-fixed: #001a41;
+  --color-on-primary-container: #ffffff;
+  --color-on-tertiary-container: #ffffff;
+  --color-primary-container: #1a73e8;
+  --color-inverse-primary: #adc7ff;
+  --color-primary-fixed: #d8e2ff;
+  --color-on-primary-fixed-variant: #004493;
+  --color-secondary-container: #8ffa9b;
+  --color-tertiary-container: #df3429;
+  --color-error-container: #ffdad6;
+  --color-on-tertiary-fixed: #410001;
+  --color-surface-container-lowest: #ffffff;
+  --color-tertiary: #bb1712;
+  --color-primary-fixed-dim: #adc7ff;
+  --color-on-tertiary-fixed-variant: #930004;
+  --color-outline: #727785;
+  --color-surface-container-high: #e7e8e9;
+  --color-surface: #f8f9fa;
+  --color-surface-dim: #d9dadb;
+  --color-on-secondary-fixed: #002108;
+  --color-on-secondary: #ffffff;
+  --color-on-background: #191c1d;
+  --color-surface-container-highest: #e1e3e4;
+  --color-surface-container-low: #f3f4f5;
+  --color-on-surface: #191c1d;
+  --color-tertiary-fixed-dim: #ffb4a9;
+  --color-outline-variant: #c1c6d6;
+  --color-inverse-surface: #2e3132;
+  --color-on-tertiary: #ffffff;
+  
+  --font-headline: "Inter", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-label: "Inter", sans-serif;
+}
+
+@layer utilities {
+  .signature-gradient {
+    background: linear-gradient(135deg, #005bbf 0%, #1a73e8 100%);
+  }
+  .atelier-card-gradient {
+    background: linear-gradient(135deg, #005bbf 0%, #1a73e8 100%);
+  }
+  .ambient-shadow {
+    box-shadow: 0px 10px 40px rgba(25, 28, 29, 0.06);
+  }
+}
+
+@media (min-width: 1024px) {
+  .sidebar-collapsed .lg\:pl-64 {
+    padding-left: 0 !important;
+  }
+
+  .sidebar-collapsed .lg\:ml-64 {
+    margin-left: 0 !important;
+  }
+}

@@ -1,0 +1,141 @@
+2026-04-01 15:57:38,212 DEBUG    root            Loaded Command Group: ['gcloud', 'config']
+2026-04-01 15:57:38,228 DEBUG    root            Loaded Command Group: ['gcloud', 'config', 'get_value']
+2026-04-01 15:57:38,230 DEBUG    root            Running [gcloud.config.get-value] with arguments: [SECTION/PROPERTY: "project"]
+2026-04-01 15:57:38,231 DEBUG    root            On GCE from disk cache: False
+2026-04-01 15:57:38,231 INFO     ___FILE_ONLY___ (unset)
+
+2026-04-01 15:57:38,232 DEBUG    root            Chosen display Format:value(.)
+2026-04-01 15:57:38,232 INFO     root            Display format: "value(.)"
+2026-04-01 15:57:38,377 DEBUG    root            Checking for updates...
+2026-04-01 15:57:38,379 DEBUG    root            On GCE from memory cache: False
+2026-04-01 15:57:38,382 DEBUG    root            On GCE from memory cache: False
+2026-04-01 15:57:38,392 DEBUG    urllib3.connectionpool Starting new HTTPS connection (1): dl.google.com:443
+2026-04-01 15:57:38,400 DEBUG    root            Failed to perform update check.
+Traceback (most recent call last):
+  File "C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\..\lib\third_party\urllib3\connection.py", line 206, in _new_conn
+    sock = connection.create_connection(
+        (self._dns_host, self.port),
+    ...<3 lines>...
+        google_protocol_id=self.google_protocol_id,
+    )
+  File "C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\..\lib\third_party\urllib3\util\connection.py", line 101, in create_connection
+    raise err
+  File "C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\..\lib\third_party\urllib3\util\connection.py", line 89, in create_connection
+    sock.connect(sa)
+    ~~~~~~~~~~~~^^^^
+PermissionError: [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\..\lib\third_party\urllib3\connectionpool.py", line 787, in urlopen
+    response = self._make_request(
+        conn,
+    ...<10 lines>...
+        **response_kw,
+    )
+  File "C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\..\lib\third_party\urllib3\connectionpool.py", line 488, in _make_request
+    raise new_e
+  File "C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\..\lib\third_party\urllib3\connectionpool.py", line 464, in _make_request
+    self._validate_conn(conn)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\..\lib\third_party\urllib3\connectionpool.py", line 1096, in _validate_conn
+    conn.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\..\lib\third_party\urllib3\connection.py", line 764, in connect
+    self.sock = sock = self._new_conn()
+                       ~~~~~~~~~~~~~~^^
+  File "C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\..\lib\third_party\urllib3\connection.py", line 222, in _new_conn
+    raise NewConnectionError(
+        self, f"Failed to establish a new connection: {e}"
+    ) from e
+urllib3.exceptions.NewConnectionError: HTTPSConnection(host='dl.google.com', port=443): Failed to establish a new connection: [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\..\lib\third_party\requests\adapters.py", line 667, in send
+    resp = conn.urlopen(
+        method=request.method,
+    ...<9 lines>...
+        chunked=chunked,
+    )
+  File "C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\..\lib\third_party\urllib3\connectionpool.py", line 841, in urlopen
+    retries = retries.increment(
+        method, url, error=new_e, _pool=self, _stacktrace=sys.exc_info()[2]
+    )
+  File "C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\..\lib\third_party\urllib3\util\retry.py", line 536, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='dl.google.com', port=443): Max retries exceeded with url: /dl/cloudsdk/channels/rapid/components-2.json (Caused by NewConnectionError("HTTPSConnection(host='dl.google.com', port=443): Failed to establish a new connection: [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions"))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\..\lib\googlecloudsdk\gcloud_main.py", line 59, in UpdateCheck
+    update_manager.UpdateManager.PerformUpdateCheck(command_path=command_path)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\..\lib\googlecloudsdk\core\updater\update_manager.py", line 315, in PerformUpdateCheck
+    manager._PerformUpdateCheck(command_path, force=force)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\..\lib\googlecloudsdk\core\updater\update_manager.py", line 732, in _PerformUpdateCheck
+    (_, diff) = self._GetStateAndDiff(
+                ~~~~~~~~~~~~~~~~~~~~~^
+        command_path=installers.UPDATE_MANAGER_COMMAND_PATH)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\..\lib\googlecloudsdk\core\updater\update_manager.py", line 686, in _GetStateAndDiff
+    latest_snapshot = self._GetLatestSnapshot(version=version,
+                                              command_path=command_path)
+  File "C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\..\lib\googlecloudsdk\core\updater\update_manager.py", line 669, in _GetLatestSnapshot
+    return snapshots.ComponentSnapshot.FromURLs(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        *effective_url.split(','), command_path=command_path)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\..\lib\googlecloudsdk\core\updater\snapshots.py", line 173, in FromURLs
+    (ComponentSnapshot._DictFromURL(
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        url, command_path, is_extra_repo=(url != first)),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\..\lib\googlecloudsdk\core\updater\snapshots.py", line 197, in _DictFromURL
+    response = installers.MakeRequest(url, command_path)
+  File "C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\..\lib\googlecloudsdk\core\updater\installers.py", line 121, in MakeRequest
+    return _RawRequest(url, headers=headers, timeout=timeout)
+  File "C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\..\lib\googlecloudsdk\core\updater\installers.py", line 177, in _RawRequest
+    return retryer.RetryOnException(
+           ~~~~~~~~~~~~~~~~~~~~~~~~^
+        _ExecuteRequestAndRaiseExceptions,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        sleep_ms=500,
+        ^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\..\lib\googlecloudsdk\core\util\retry.py", line 198, in RetryOnException
+    exceptions.reraise(exc_info[1], tb=exc_info[2])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\..\lib\googlecloudsdk\core\exceptions.py", line 146, in reraise
+    six.reraise(type(exc_value), exc_value, tb)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\..\lib\third_party\six\__init__.py", line 719, in reraise
+    raise value
+  File "C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\..\lib\googlecloudsdk\core\util\retry.py", line 179, in TryFunc
+    return func(*args, **kwargs), None
+           ~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\..\lib\googlecloudsdk\core\updater\installers.py", line 211, in _ExecuteRequestAndRaiseExceptions
+    response = requests_session.get(
+        url, headers=headers, timeout=timeout, stream=True
+    )
+  File "C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\..\lib\third_party\requests\sessions.py", line 602, in get
+    return self.request("GET", url, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\..\lib\googlecloudsdk\core\transport.py", line 278, in WrappedRequest
+    response = orig_request(*modified_args, **modified_kwargs)
+  File "C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\..\lib\googlecloudsdk\core\requests.py", line 655, in WrappedRequest
+    return orig_request_method(*args, **kwargs)
+  File "C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\..\lib\third_party\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+  File "C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\..\lib\third_party\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+  File "C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\..\lib\third_party\requests\adapters.py", line 700, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='dl.google.com', port=443): Max retries exceeded with url: /dl/cloudsdk/channels/rapid/components-2.json (Caused by NewConnectionError("HTTPSConnection(host='dl.google.com', port=443): Failed to establish a new connection: [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions"))

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Academic Atelier - Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "surface-tint": "#005bc0",
+                "on-surface-variant": "#414754",
+                "background": "#f8f9fa",
+                "inverse-on-surface": "#f0f1f2",
+                "primary": "#005bbf",
+                "secondary-fixed-dim": "#73dc82",
+                "surface-bright": "#f8f9fa",
+                "error": "#ba1a1a",
+                "secondary": "#006e2a",
+                "surface-container": "#edeeef",
+                "secondary-fixed": "#8ffa9b",
+                "on-error-container": "#93000a",
+                "on-primary": "#ffffff",
+                "on-secondary-container": "#00752d",
+                "tertiary-fixed": "#ffdad5",
+                "on-secondary-fixed-variant": "#00531e",
+                "on-error": "#ffffff",
+                "surface-variant": "#e1e3e4",
+                "on-primary-fixed": "#001a41",
+                "on-primary-container": "#ffffff",
+                "on-tertiary-container": "#ffffff",
+                "primary-container": "#1a73e8",
+                "inverse-primary": "#adc7ff",
+                "primary-fixed": "#d8e2ff",
+                "on-primary-fixed-variant": "#004493",
+                "secondary-container": "#8ffa9b",
+                "tertiary-container": "#df3429",
+                "error-container": "#ffdad6",
+                "on-tertiary-fixed": "#410001",
+                "surface-container-lowest": "#ffffff",
+                "tertiary": "#bb1712",
+                "primary-fixed-dim": "#adc7ff",
+                "on-tertiary-fixed-variant": "#930004",
+                "outline": "#727785",
+                "surface-container-high": "#e7e8e9",
+                "surface": "#f8f9fa",
+                "surface-dim": "#d9dadb",
+                "on-secondary-fixed": "#002108",
+                "on-secondary": "#ffffff",
+                "on-background": "#191c1d",
+                "surface-container-highest": "#e1e3e4",
+                "surface-container-low": "#f3f4f5",
+                "on-surface": "#191c1d",
+                "tertiary-fixed-dim": "#ffb4a9",
+                "outline-variant": "#c1c6d6",
+                "inverse-surface": "#2e3132",
+                "on-tertiary": "#ffffff"
+              },
+              fontFamily: {
+                "headline": ["Inter"],
+                "body": ["Inter"],
+                "label": ["Inter"]
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+            },
+          },
+        }
+      </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        .atelier-card-gradient {
+            background: linear-gradient(135deg, #005bbf 0%, #1a73e8 100%);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 shadow-sm">
+<div class="flex justify-between items-center px-6 h-16 w-full max-w-screen-2xl mx-auto">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer p-2 hover:bg-slate-50 rounded-full transition-colors">menu</span>
+<span class="text-xl font-semibold text-slate-900">Academic Atelier</span>
+</div>
+<nav class="hidden md:flex items-center gap-8 font-['Inter'] antialiased">
+<a class="text-blue-600 border-b-2 border-blue-600 pb-2" href="#">Stream</a>
+<a class="text-slate-500 hover:text-slate-900 transition-colors" href="#">Classwork</a>
+<a class="text-slate-500 hover:text-slate-900 transition-colors" href="#">People</a>
+<a class="text-slate-500 hover:text-slate-900 transition-colors" href="#">Grades</a>
+</nav>
+<div class="flex items-center gap-2">
+<button class="p-2 text-on-surface-variant hover:bg-slate-50 rounded-full transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined">apps</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-slate-50 rounded-full transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="ml-2 w-8 h-8 rounded-full overflow-hidden border border-outline-variant/30">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="User profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuChQ_0-0GBIaajC04IZXWYbxzpln6EwdP8oo5xVUlGAD84X0n3jhAoMjqKyafdQkJGNLPjRpSFLOYraxm5A-w13I1FRh005ethd-2Umruyj7X-OwOagVpeR6tPQlmg1-VADttGdvgcjukoSJABtZhSrIPeldXg-O_R0CMOiUqe_HgIsodtNJCnOgGhjqKnyEQgD9akpHbaShV7b7QVKwmEX5Zs1hGIZ5fdBAJOZayUjHt5A7nw6ykRUCNRCpi17iKltHtxvMdgs7yU"/>
+</div>
+</div>
+</div>
+</header>
+<div class="flex min-h-screen pt-16">
+<!-- SideNavBar -->
+<aside class="hidden lg:flex flex-col pt-4 pb-4 h-[calc(100vh-64px)] w-64 fixed left-0 bg-surface-container-low font-['Inter'] text-sm font-medium z-40">
+<div class="px-4 mb-6">
+<div class="flex items-center gap-3 px-2 py-4">
+<div class="w-10 h-10 atelier-card-gradient rounded-xl flex items-center justify-center text-white">
+<span class="material-symbols-outlined">school</span>
+</div>
+<div>
+<div class="text-lg font-bold text-blue-600 leading-tight">Classroom</div>
+<div class="text-xs text-on-surface-variant">Academic Atelier</div>
+</div>
+</div>
+</div>
+<nav class="flex-grow space-y-1 pr-4">
+<a class="flex items-center gap-4 bg-blue-50 text-blue-700 rounded-r-full px-4 py-3 ml-0 transition-all" href="#">
+<span class="material-symbols-outlined">home</span>
+<span>Home</span>
+</a>
+<a class="flex items-center gap-4 text-slate-600 px-4 py-3 hover:bg-slate-100 rounded-r-full transition-all" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span>Calendar</span>
+</a>
+<a class="flex items-center gap-4 text-slate-600 px-4 py-3 hover:bg-slate-100 rounded-r-full transition-all" href="#">
+<span class="material-symbols-outlined">school</span>
+<span>Enrolled</span>
+</a>
+<a class="flex items-center gap-4 text-slate-600 px-4 py-3 hover:bg-slate-100 rounded-r-full transition-all" href="#">
+<span class="material-symbols-outlined">archive</span>
+<span>Archived</span>
+</a>
+<a class="flex items-center gap-4 text-slate-600 px-4 py-3 hover:bg-slate-100 rounded-r-full transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-4 space-y-4">
+<button class="w-full atelier-card-gradient text-white rounded-full py-3 px-6 font-semibold flex items-center justify-center gap-2 shadow-lg shadow-blue-500/20 active:scale-95 transition-transform">
+<span class="material-symbols-outlined">add</span>
+                    Join Class
+                </button>
+<div class="pt-4 border-t border-slate-200">
+<a class="flex items-center gap-4 text-slate-500 px-4 py-2 hover:text-slate-900 text-xs" href="#">
+<span class="material-symbols-outlined text-sm">help</span>
+<span>Help</span>
+</a>
+<a class="flex items-center gap-4 text-slate-500 px-4 py-2 hover:text-slate-900 text-xs" href="#">
+<span class="material-symbols-outlined text-sm">security</span>
+<span>Privacy</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-grow lg:ml-64 p-6 md:p-12 max-w-screen-2xl mx-auto">
+<header class="mb-12 flex justify-between items-end">
+<div>
+<span class="text-blue-600 font-semibold uppercase tracking-widest text-xs mb-2 block">Student Workspace</span>
+<h1 class="text-5xl font-bold tracking-tight text-on-surface">Your Classes</h1>
+</div>
+<div class="hidden sm:block">
+<button class="group flex items-center gap-2 text-primary font-medium hover:underline decoration-2 underline-offset-4 transition-all">
+                        View All Tasks
+                        <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</header>
+<!-- Bento-style Grid of Classes -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+<!-- Card 1 -->
+<article class="bg-surface-container-lowest rounded-xl overflow-hidden group hover:shadow-xl transition-all duration-300">
+<div class="h-32 bg-slate-800 relative p-6 flex flex-col justify-between">
+<div class="absolute inset-0 opacity-40">
+<img alt="Advanced Calculus header" class="w-full h-full object-cover" data-alt="Abstract mathematical geometric patterns" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnZS7AKdtUOvj8_zwB4yiR1JEOA6BG8fgmolXIdyK2Qugb1P-99ewOJjGKQKHtZgPQ9d32wvEujL5f8jEARWGJIVO4lI0PjeDA2PKfRO4mfuE45P7MfHiKQ6ZunZelCv-OJFcHhnerPXqrC0EH0K7cOHl1tzA8sWOQ_ZpH-wHYq6BR_in0DK_qaAqNLgpvARR51jq_Lu_SINfcpyXJCLfuUAa1dlufu_WL8EgfF4XJn--5vpEb4DH_ZXu4u0Jv2ObLtgB2-cYAriA"/>
+</div>
+<div class="relative z-10 flex justify-between items-start">
+<div>
+<h3 class="text-xl font-bold text-white hover:underline cursor-pointer">Advanced Calculus</h3>
+<p class="text-white/80 text-sm">Fall Semester 2024</p>
+</div>
+<button class="text-white hover:bg-white/20 p-1 rounded-full transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="relative z-10">
+<p class="text-white font-medium text-sm">Dr. Eleanor Vance</p>
+</div>
+<div class="absolute -bottom-6 right-6 w-12 h-12 rounded-full border-4 border-white overflow-hidden shadow-md">
+<img alt="Dr. Vance" class="w-full h-full object-cover" data-alt="Professor portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIdjEan4WI1I4W4UrkWnnMxTadDdbo_vPuZaBT3QiITaRrg3WgrN3vR87CXo5G424BVd-NIsqYZVYJtr9gdBGMcZnE5GwEuvLWjX3CtVlJ3n9Zsd5Hg2bhXZIh4oYvChCxgjgHVHCiQ0Fiy3WK3JOAXltItWPox0SqmQw0DUAmepqNdVV-L44Q9MT6UrhAbIE3UHHv79X8ovoL0sSugH04ith8_bBXg8rUAPcIwuTcLdstjOhAqj5wJMzn0rYxgFAPX__WLRP1vLQ"/>
+</div>
+</div>
+<div class="p-6 pt-10 flex flex-col gap-6">
+<div class="space-y-4">
+<div class="flex items-center gap-3 text-on-surface-variant hover:text-primary cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-xl">assignment</span>
+<span class="text-sm">Assignment 4: Taylor Series Expansion</span>
+</div>
+<div class="flex items-center gap-3 text-on-surface-variant hover:text-primary cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-xl">announcement</span>
+<span class="text-sm">Midterm dates announced</span>
+</div>
+</div>
+<div class="flex justify-end border-t border-slate-100 pt-4">
+<div class="flex gap-2">
+<button class="p-2 text-slate-400 hover:text-primary transition-colors"><span class="material-symbols-outlined">account_circle</span></button>
+<button class="p-2 text-slate-400 hover:text-primary transition-colors"><span class="material-symbols-outlined">folder_open</span></button>
+</div>
+</div>
+</div>
+</article>
+<!-- Card 2 -->
+<article class="bg-surface-container-lowest rounded-xl overflow-hidden group hover:shadow-xl transition-all duration-300">
+<div class="h-32 bg-emerald-800 relative p-6 flex flex-col justify-between">
+<div class="absolute inset-0 opacity-40">
+<img alt="Astrophysics header" class="w-full h-full object-cover" data-alt="Starry nebula space background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDs7DL_PmVKccEzWcj4Nqo88dgCeZCO31MlEZ7anfvbHhY_n7fw0M1Ktk94kH88XjOoO3b6_uHaXG87faoZh7Ycf1YEcDu6gUSWJxbvSBiganxkV-M61F1nvLIuQNAru4jQqMU2QbA6cbiBYY60TK4HlgYbQJzCkbNaWnlEbdUQ_cJHfOEpsZt6MYFTCMF_FZy0YIzUqNPJP06PM0FjXY3WdRKwQ3TmNfz5zM34wCqmat9bsc_oOqVzNql7uKyVj1OARasMWAy4oqQ"/>
+</div>
+<div class="relative z-10 flex justify-between items-start">
+<div>
+<h3 class="text-xl font-bold text-white hover:underline cursor-pointer">Astrophysics 101</h3>
+<p class="text-white/80 text-sm">Science Department</p>
+</div>
+<button class="text-white hover:bg-white/20 p-1 rounded-full transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="relative z-10">
+<p class="text-white font-medium text-sm">Prof. Marcus Thorne</p>
+</div>
+<div class="absolute -bottom-6 right-6 w-12 h-12 rounded-full border-4 border-white overflow-hidden shadow-md">
+<img alt="Prof. Thorne" class="w-full h-full object-cover" data-alt="Male teacher portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0ciXmWiq_PmTTAeqAMH8aq3USr39Y52pfZGJ3E5OWWetX_zumQ3T81cf-vZwXTEo7TR7AB439WnlxzocXNuIg96V23Z-f6-uaOUkB7pBysnd883SvD4cov1Iyrcki2iEJuEVuebsi6IB_4r66cQDhfy6J6M9RgiKmC3678hH7uU_vCv0spd9LNEK1ebWl604iQHgZnkqv1boieDq4vLBhs9Av7y4zR6npMA4b0hIK1dL2E0fT9bhh1WlBlMaoTYf8qjCDUTrfYKQ"/>
+</div>
+</div>
+<div class="p-6 pt-10 flex flex-col gap-6">
+<div class="space-y-4">
+<div class="flex items-center gap-3 text-on-surface-variant hover:text-primary cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-xl">assignment</span>
+<span class="text-sm">Lab Report: Stellar Parallax</span>
+</div>
+</div>
+<div class="flex justify-end border-t border-slate-100 pt-4">
+<div class="flex gap-2">
+<button class="p-2 text-slate-400 hover:text-primary transition-colors"><span class="material-symbols-outlined">account_circle</span></button>
+<button class="p-2 text-slate-400 hover:text-primary transition-colors"><span class="material-symbols-outlined">folder_open</span></button>
+</div>
+</div>
+</div>
+</article>
+<!-- Card 3 -->
+<article class="bg-surface-container-lowest rounded-xl overflow-hidden group hover:shadow-xl transition-all duration-300">
+<div class="h-32 bg-orange-800 relative p-6 flex flex-col justify-between">
+<div class="absolute inset-0 opacity-40">
+<img alt="Literature header" class="w-full h-full object-cover" data-alt="Open classic books stacked" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBspMpZb5Sjpfm4qBhQHuR52rlscl01vaP-p9tgZs7OuPytCGWeezk2gp4DnF8lK-h5zvLP_yJUoYLtu4VyCPun-SYro9Ec5WadS2Y3cFEKUqYxPOyGhVSpKFjXTO0FfjSD-idGzyiEBNylgVgIxSi2l0QeVKOH2FIH0zOmO7frNnV_C4FxfD4ed4yKvcXMlTwfxnGivyf7tBZd-I1K4KN2Twlww3p4YztkGTl5u2q4FJuKuJlVHG2w4AYat74UFWnNBGprmkvjdM"/>
+</div>
+<div class="relative z-10 flex justify-between items-start">
+<div>
+<h3 class="text-xl font-bold text-white hover:underline cursor-pointer">Modern Literature</h3>
+<p class="text-white/80 text-sm">Humanities Hub</p>
+</div>
+<button class="text-white hover:bg-white/20 p-1 rounded-full transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="relative z-10">
+<p class="text-white font-medium text-sm">Sarah Jenkins, PhD</p>
+</div>
+<div class="absolute -bottom-6 right-6 w-12 h-12 rounded-full border-4 border-white overflow-hidden shadow-md">
+<img alt="Dr. Jenkins" class="w-full h-full object-cover" data-alt="Female teacher portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOZvrIS2aOSYWVoh1Is4KM9E32i_k6v7Lqo9TzzIiA2rsayZd_ah56G5VGSWWFa2S0dRN8OX2WZs5_i0youJ6JKEJHnD31EuD_FZr-oKkpXezWpGm9wFbk_8fnuvOtDt6wBQ0eA6r84jhil1RGm2Spr0mea54XTjj8qCgh4iIB53yROE7omg11ZUCUDOlBylEBM7EP6XDZ4Vntbt8VvCIWMeQ3j95CHodAb1HqH_c8PgbuugTtbkSP4KSnkiaDG7a-uZY28DYmKHA"/>
+</div>
+</div>
+<div class="p-6 pt-10 flex flex-col gap-6">
+<p class="text-slate-400 text-sm italic">No upcoming assignments</p>
+<div class="flex justify-end border-t border-slate-100 pt-4">
+<div class="flex gap-2">
+<button class="p-2 text-slate-400 hover:text-primary transition-colors"><span class="material-symbols-outlined">account_circle</span></button>
+<button class="p-2 text-slate-400 hover:text-primary transition-colors"><span class="material-symbols-outlined">folder_open</span></button>
+</div>
+</div>
+</div>
+</article>
+<!-- Add New Class Card - Special Action UI -->
+<article class="border-2 border-dashed border-slate-200 rounded-xl flex flex-col items-center justify-center p-12 group hover:border-primary hover:bg-blue-50/30 transition-all cursor-pointer">
+<div class="w-16 h-16 rounded-full bg-slate-100 text-slate-400 group-hover:bg-primary group-hover:text-white flex items-center justify-center mb-4 transition-all">
+<span class="material-symbols-outlined text-3xl">add</span>
+</div>
+<p class="font-bold text-slate-500 group-hover:text-primary">Create or Join Class</p>
+</article>
+</div>
+</main>
+</div>
+<!-- Floating Action Button (FAB) - Visible on Mobile -->
+<button class="lg:hidden fixed bottom-6 right-6 w-14 h-14 atelier-card-gradient text-white rounded-full shadow-2xl flex items-center justify-center active:scale-90 transition-transform z-50">
+<span class="material-symbols-outlined text-2xl">add</span>
+</button>
+</body></html>

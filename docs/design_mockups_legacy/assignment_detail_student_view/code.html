@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Assignment Detail - Academic Atelier</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+        }
+        .atelier-card {
+            background-color: #ffffff;
+            transition: all 0.2s ease-in-out;
+        }
+        .primary-gradient {
+            background: linear-gradient(135deg, #005bbf 0%, #1a73e8 100%);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "surface-tint": "#005bc0",
+                "on-surface-variant": "#414754",
+                "background": "#f8f9fa",
+                "inverse-on-surface": "#f0f1f2",
+                "primary": "#005bbf",
+                "secondary-fixed-dim": "#73dc82",
+                "surface-bright": "#f8f9fa",
+                "error": "#ba1a1a",
+                "secondary": "#006e2a",
+                "surface-container": "#edeeef",
+                "secondary-fixed": "#8ffa9b",
+                "on-error-container": "#93000a",
+                "on-primary": "#ffffff",
+                "on-secondary-container": "#00752d",
+                "tertiary-fixed": "#ffdad5",
+                "on-secondary-fixed-variant": "#00531e",
+                "on-error": "#ffffff",
+                "surface-variant": "#e1e3e4",
+                "on-primary-fixed": "#001a41",
+                "on-primary-container": "#ffffff",
+                "on-tertiary-container": "#ffffff",
+                "primary-container": "#1a73e8",
+                "inverse-primary": "#adc7ff",
+                "primary-fixed": "#d8e2ff",
+                "on-primary-fixed-variant": "#004493",
+                "secondary-container": "#8ffa9b",
+                "tertiary-container": "#df3429",
+                "error-container": "#ffdad6",
+                "on-tertiary-fixed": "#410001",
+                "surface-container-lowest": "#ffffff",
+                "tertiary": "#bb1712",
+                "primary-fixed-dim": "#adc7ff",
+                "on-tertiary-fixed-variant": "#930004",
+                "outline": "#727785",
+                "surface-container-high": "#e7e8e9",
+                "surface": "#f8f9fa",
+                "surface-dim": "#d9dadb",
+                "on-secondary-fixed": "#002108",
+                "on-secondary": "#ffffff",
+                "on-background": "#191c1d",
+                "surface-container-highest": "#e1e3e4",
+                "surface-container-low": "#f3f4f5",
+                "on-surface": "#191c1d",
+                "tertiary-fixed-dim": "#ffb4a9",
+                "outline-variant": "#c1c6d6",
+                "inverse-surface": "#2e3132",
+                "on-tertiary": "#ffffff"
+              },
+              fontFamily: {
+                "headline": ["Inter"],
+                "body": ["Inter"],
+                "label": ["Inter"]
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface antialiased">
+<!-- TopAppBar from Shared Components -->
+<header class="fixed top-0 w-full z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-none font-['Inter'] antialiased">
+<div class="flex justify-between items-center px-6 h-16 w-full max-w-screen-2xl mx-auto">
+<div class="flex items-center gap-8">
+<div class="text-xl font-semibold text-slate-900 dark:text-slate-100">Academic Atelier</div>
+<nav class="hidden md:flex items-center space-x-6">
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors" href="#">Stream</a>
+<a class="text-blue-600 dark:text-blue-400 border-b-2 border-blue-600 dark:border-blue-400 pb-2" href="#">Classwork</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors" href="#">People</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors" href="#">Grades</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-full transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined">apps</span>
+</button>
+<button class="p-2 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-full transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-primary-fixed flex items-center justify-center overflow-hidden">
+<img alt="User profile" class="h-full w-full object-cover" data-alt="User profile circular headshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfliTjWox4DJ0_XLIna-StPUpCKMO-La9AZfgG0HINGNMKSxMkMruQWCXD8KGb8C3WVEgePkTW2XYpeKyrJg_Wv2RIGNmfmGdBmNVDXzjduVy8YIWTZaQpggp9A-EqTKLNPze48k8PRXRBitAMksfGJo-vGeCNcmI65S41ehIZS6OZeP1xOlRmU0HcUpWRXRRz7JpA2ymtAXoeBAEqEGrEJCeRRzG-WLNSju4ODlt2kTE3D-Nm0GOT_w9bfNXjuocRcZJhUmdBpnA"/>
+</div>
+</div>
+</div>
+</header>
+<main class="pt-24 pb-12 px-6 max-w-screen-xl mx-auto">
+<!-- Back Navigation -->
+<div class="mb-8">
+<button class="flex items-center gap-2 text-primary font-medium hover:underline group">
+<span class="material-symbols-outlined text-sm transition-transform group-hover:-translate-x-1">arrow_back</span>
+                Back to Classwork
+            </button>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+<!-- Main Content Area -->
+<div class="lg:col-span-8">
+<!-- Assignment Header -->
+<div class="flex items-start gap-5 mb-10">
+<div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">assignment</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<h1 class="text-[2.5rem] font-bold tracking-tight text-on-surface leading-tight mb-2">Architectural History: The Renaissance Revival</h1>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="flex flex-wrap items-center gap-x-6 gap-y-2 mt-2">
+<div class="flex items-center gap-1.5 text-on-surface-variant">
+<span class="text-sm font-semibold tracking-wider text-primary">DR. ELARA VANCE</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="text-sm">Posted Oct 12</span>
+</div>
+<div class="text-sm font-semibold text-on-surface">100 points</div>
+<div class="text-sm font-bold text-tertiary">Due Oct 24, 11:59 PM</div>
+</div>
+</div>
+</div>
+<!-- Assignment Body -->
+<div class="space-y-12">
+<section>
+<div class="prose prose-slate max-w-none text-on-surface leading-relaxed text-lg">
+<p class="mb-4">For this week's Atelier assignment, you are tasked with analyzing the stylistic resurgence of Italian Renaissance principles in 19th-century public architecture. Focus your research on the balance between symmetry, proportion, and the decorative use of classical orders.</p>
+<p class="mb-4">Please prepare a visual essay (approx. 1,500 words) that identifies at least three specific landmarks within the city that exhibit these characteristics. Your analysis should not only identify the elements but also explain the socio-political motivations behind choosing a Renaissance aesthetic for these structures.</p>
+</div>
+</section>
+<!-- Attachments -->
+<section>
+<h3 class="text-sm font-bold uppercase tracking-widest text-on-surface-variant mb-6">Reference Materials</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<!-- Attachment Card -->
+<a class="atelier-card group flex items-center gap-4 p-4 rounded-xl border border-transparent hover:bg-surface-container-low transition-all" href="#">
+<div class="w-12 h-12 bg-red-50 dark:bg-red-900/20 rounded-lg flex items-center justify-center text-red-600">
+<span class="material-symbols-outlined text-3xl">picture_as_pdf</span>
+</div>
+<div class="flex-grow overflow-hidden">
+<p class="text-sm font-bold text-on-surface truncate">Reading_List_v4.pdf</p>
+<p class="text-xs text-on-surface-variant">PDF Document</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors">open_in_new</span>
+</a>
+<a class="atelier-card group flex items-center gap-4 p-4 rounded-xl border border-transparent hover:bg-surface-container-low transition-all" href="#">
+<div class="w-12 h-12 bg-blue-50 dark:bg-blue-900/20 rounded-lg flex items-center justify-center text-blue-600">
+<span class="material-symbols-outlined text-3xl">description</span>
+</div>
+<div class="flex-grow overflow-hidden">
+<p class="text-sm font-bold text-on-surface truncate">Architecture_Rubric_2023</p>
+<p class="text-xs text-on-surface-variant">Google Doc</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors">open_in_new</span>
+</a>
+</div>
+</section>
+<!-- Class Comments -->
+<section class="border-t border-surface-container pt-8">
+<div class="flex items-center gap-3 text-on-surface-variant mb-6 group cursor-pointer">
+<span class="material-symbols-outlined">group</span>
+<span class="text-sm font-bold">Class comments</span>
+<span class="text-xs font-normal px-2 py-0.5 bg-surface-container-high rounded-full">2</span>
+</div>
+<div class="flex gap-4">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest overflow-hidden flex-shrink-0">
+<img alt="User avatar" class="w-full h-full object-cover" data-alt="Student user avatar placeholder" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1m_2P_zhbuI5gy0d-5WfXrWBZpVFAaVybTR35UrRqeFZl-N3WP5dZqsZe1tVA9fAVbtKR7PLmBDRMGfBXCDpS7eFzARfcs-Oz0US2SuQCPyoFT4q8h2deINLpMTlUXbDYwY8PxM6TBbUF_NVwu73eCG3td_YBSa4j4iOEFI7p9vzb5yGetTede1-vQH3cy2ZSaEgHmpKvvSzTjFJUwpYtPXEDqklOjdbd53qv9wvTYswBX3juLEzPg1qkaXCdWhwZVi6zT3Y0a0w"/>
+</div>
+<div class="flex-grow relative">
+<input class="w-full bg-surface-container-low border-b-2 border-outline-variant focus:border-primary focus:ring-0 transition-all px-4 py-2 text-sm rounded-t-lg" placeholder="Add class comment..." type="text"/>
+<button class="absolute right-2 top-1.5 p-1 text-primary hover:bg-primary-fixed/20 rounded-full">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</div>
+</section>
+</div>
+</div>
+<!-- Sidebar -->
+<div class="lg:col-span-4 space-y-6">
+<!-- Your Work Card -->
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-[0px_10px_40px_rgba(25,28,29,0.06)] sticky top-24">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-xl font-bold text-on-surface">Your work</h2>
+<span class="text-xs font-bold uppercase tracking-widest text-secondary">Assigned</span>
+</div>
+<!-- Work Placeholder/List -->
+<div class="space-y-3 mb-6">
+<div class="flex items-center gap-3 p-3 rounded-lg border border-outline-variant bg-surface-container-low">
+<span class="material-symbols-outlined text-primary">description</span>
+<span class="text-sm font-medium flex-grow truncate">My_Essay_Draft.gdoc</span>
+<button class="text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined text-lg">close</span>
+</button>
+</div>
+</div>
+<!-- Actions -->
+<div class="space-y-3">
+<button class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-full border-2 border-primary text-primary font-bold hover:bg-primary-fixed/10 transition-all active:scale-95">
+<span class="material-symbols-outlined">add</span>
+                            Add or create
+                        </button>
+<button class="w-full py-3 px-4 rounded-full primary-gradient text-white font-bold shadow-md hover:shadow-lg transition-all active:scale-95">
+                            Turn in
+                        </button>
+</div>
+<!-- Private Comments -->
+<div class="mt-8 pt-6 border-t border-surface-container">
+<div class="flex items-center gap-3 text-on-surface-variant mb-4 group cursor-pointer">
+<span class="material-symbols-outlined text-xl">person</span>
+<span class="text-sm font-bold">Private comments</span>
+</div>
+<button class="text-primary text-sm font-bold hover:underline">Add private comment...</button>
+</div>
+</div>
+<!-- Assistance Card -->
+<div class="bg-surface-container-low rounded-xl p-6 space-y-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">help_center</span>
+<h3 class="text-sm font-bold text-on-surface">Need help?</h3>
+</div>
+<p class="text-xs text-on-surface-variant leading-relaxed">If you have questions about the rubric or the submission format, please contact Dr. Vance during atelier hours.</p>
+<button class="text-primary text-xs font-bold uppercase tracking-widest hover:underline">View Office Hours</button>
+</div>
+</div>
+</div>
+</main>
+<!-- SideNavBar Logic Filtered: Hidden on Desktop, Bottom on Mobile if needed -->
+<div class="md:hidden fixed bottom-0 left-0 w-full bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 px-6 py-3 z-50 flex justify-around items-center">
+<button class="flex flex-col items-center gap-1 text-blue-700">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">school</span>
+<span class="text-[10px] font-bold">Classwork</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-500">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-bold">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-500">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="text-[10px] font-bold">Calendar</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-500">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-bold">Settings</span>
+</button>
+</div>
+</body></html>

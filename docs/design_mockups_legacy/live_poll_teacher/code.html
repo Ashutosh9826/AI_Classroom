@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Live Poll - Academic Atelier</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary-fixed": "#8ffa9b",
+              "on-secondary-fixed-variant": "#00531e",
+              "background": "#f8f9fa",
+              "surface-container-lowest": "#ffffff",
+              "on-tertiary-fixed": "#410001",
+              "on-surface": "#191c1d",
+              "inverse-primary": "#adc7ff",
+              "primary-fixed": "#d8e2ff",
+              "on-secondary-container": "#00752d",
+              "surface-dim": "#d9dadb",
+              "on-error": "#ffffff",
+              "primary-container": "#1a73e8",
+              "tertiary-container": "#df3429",
+              "surface-tint": "#005bc0",
+              "error-container": "#ffdad6",
+              "surface": "#f8f9fa",
+              "outline-variant": "#c1c6d6",
+              "on-primary-fixed-variant": "#004493",
+              "inverse-surface": "#2e3132",
+              "surface-bright": "#f8f9fa",
+              "on-secondary": "#ffffff",
+              "inverse-on-surface": "#f0f1f2",
+              "surface-container-highest": "#e1e3e4",
+              "secondary": "#006e2a",
+              "tertiary-fixed": "#ffdad5",
+              "surface-container-high": "#e7e8e9",
+              "primary": "#005bbf",
+              "on-surface-variant": "#414754",
+              "on-secondary-fixed": "#002108",
+              "surface-container": "#edeeef",
+              "on-primary": "#ffffff",
+              "on-primary-container": "#ffffff",
+              "surface-variant": "#e1e3e4",
+              "primary-fixed-dim": "#adc7ff",
+              "on-tertiary-container": "#ffffff",
+              "secondary-container": "#8ffa9b",
+              "on-error-container": "#93000a",
+              "on-tertiary": "#ffffff",
+              "outline": "#727785",
+              "on-background": "#191c1d",
+              "error": "#ba1a1a",
+              "tertiary": "#bb1712",
+              "on-primary-fixed": "#001a41",
+              "surface-container-low": "#f3f4f5",
+              "secondary-fixed-dim": "#73dc82",
+              "tertiary-fixed-dim": "#ffb4a9",
+              "on-tertiary-fixed-variant": "#930004"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm dark:shadow-none font-inter antialiased">
+<div class="flex justify-between items-center px-8 py-3 w-full">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-50">Academic Atelier</span>
+<nav class="hidden md:flex gap-6">
+<a class="text-slate-600 dark:text-slate-400 hover:text-slate-900 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition-colors px-2 py-1" href="#">Courses</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-slate-900 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition-colors px-2 py-1" href="#">Library</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-slate-900 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition-colors px-2 py-1" href="#">Reports</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-600 hover:bg-slate-100/50 rounded-full transition-colors"><span class="material-symbols-outlined">notifications</span></button>
+<button class="p-2 text-slate-600 hover:bg-slate-100/50 rounded-full transition-colors"><span class="material-symbols-outlined">help_outline</span></button>
+<div class="w-8 h-8 rounded-full bg-primary-fixed overflow-hidden">
+<img alt="User profile" data-alt="Professional avatar of a female instructor" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClhASvy-EpvJDrmOhNIuUW5nbl1tQnjjnB5XMVD1QPjBfK8QtpMXupI5sYdpXsA9wpzj0YYLqG-1XmZx0Fde3YhQPmwyvEa7-LvLJVVkCCoSthptOaR50fnh3k2AlIBWll50jujOCR8aMKKD5JSPwLtFMPbUSsD_kA0u23Iayb8bZxfPOz383d9NwO5PbpeRA9c0B5NRLR_qO6gntHCel7X1-1X98vb5ANhl0C8dsLJ0iMaY_4FtwWWwleeTrhMv3PW6u5RNXTlsE"/>
+</div>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-slate-50 dark:bg-slate-950 flex flex-col p-4 gap-2 border-r border-transparent bg-slate-100 dark:bg-slate-900 pt-20">
+<div class="mb-6 px-2">
+<h2 class="text-lg font-bold text-slate-900 dark:text-white">CS101</h2>
+<p class="text-xs text-slate-500">Intro to Programming</p>
+</div>
+<nav class="flex-grow flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/30 hover:translate-x-1 transition-transform rounded-lg text-sm font-medium" href="#">
+<span class="material-symbols-outlined">dashboard</span> Dashboard
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 bg-white dark:bg-slate-800 text-blue-700 dark:text-blue-400 shadow-sm rounded-lg text-sm font-medium" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">live_tv</span> Live Session
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/30 hover:translate-x-1 transition-transform rounded-lg text-sm font-medium" href="#">
+<span class="material-symbols-outlined">book</span> Resources
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/30 hover:translate-x-1 transition-transform rounded-lg text-sm font-medium" href="#">
+<span class="material-symbols-outlined">assessment</span> Grades
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/30 hover:translate-x-1 transition-transform rounded-lg text-sm font-medium" href="#">
+<span class="material-symbols-outlined">settings</span> Settings
+            </a>
+</nav>
+<div class="mt-auto">
+<button class="w-full py-3 bg-gradient-to-br from-primary to-primary-container text-white rounded-full font-semibold shadow-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+                Join Live Quiz
+            </button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-24 px-12 pb-12 min-h-screen bg-surface">
+<!-- Header Section -->
+<div class="flex justify-between items-end mb-12">
+<div>
+<span class="text-xs font-bold text-primary tracking-widest uppercase mb-2 block">Live Interaction</span>
+<h1 class="text-5xl font-bold text-on-surface tracking-tight leading-tight">Session Pulse</h1>
+</div>
+<div class="flex gap-4">
+<button class="flex items-center gap-2 px-6 py-3 bg-surface-container-high rounded-full font-semibold text-on-surface-variant hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined">visibility_off</span> Hide Results
+                </button>
+<button class="flex items-center gap-2 px-6 py-3 bg-error text-white rounded-full font-semibold shadow-md hover:bg-tertiary transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">lock</span> Lock Poll
+                </button>
+</div>
+</div>
+<!-- Asymmetric Grid Layout -->
+<div class="grid grid-cols-12 gap-8">
+<!-- Main Results Display -->
+<div class="col-span-12 lg:col-span-8">
+<div class="bg-surface-container-lowest rounded-xl p-10 shadow-sm border border-transparent">
+<div class="mb-10">
+<h2 class="text-2xl font-semibold text-on-surface mb-2">How are you finding the pace?</h2>
+<div class="flex items-center gap-4 text-sm text-on-surface-variant">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">groups</span> 142 Responses</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-secondary">radio_button_checked</span> Live</span>
+</div>
+</div>
+<!-- Modern Bar Chart Pattern -->
+<div class="space-y-8">
+<!-- Option: Too Fast -->
+<div class="group">
+<div class="flex justify-between items-end mb-3">
+<span class="text-lg font-medium text-on-surface">Too Fast</span>
+<span class="text-xl font-bold text-primary">18%</span>
+</div>
+<div class="h-4 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 18%"></div>
+</div>
+<p class="mt-2 text-xs text-on-surface-variant">26 students</p>
+</div>
+<!-- Option: Just Right -->
+<div class="group">
+<div class="flex justify-between items-end mb-3">
+<span class="text-lg font-medium text-on-surface">Just Right</span>
+<span class="text-xl font-bold text-secondary">74%</span>
+</div>
+<div class="h-6 w-full bg-surface-container rounded-full overflow-hidden relative">
+<div class="h-full bg-gradient-to-r from-secondary to-secondary-fixed rounded-full shadow-[0_0_12px_rgba(143,250,155,0.4)]" style="width: 74%"></div>
+</div>
+<p class="mt-2 text-xs text-on-surface-variant">105 students • Leading response</p>
+</div>
+<!-- Option: Too Slow -->
+<div class="group">
+<div class="flex justify-between items-end mb-3">
+<span class="text-lg font-medium text-on-surface">Too Slow</span>
+<span class="text-xl font-bold text-primary">8%</span>
+</div>
+<div class="h-4 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full opacity-60" style="width: 8%"></div>
+</div>
+<p class="mt-2 text-xs text-on-surface-variant">11 students</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Sidebar Stats / Controls -->
+<div class="col-span-12 lg:col-span-4 space-y-8">
+<!-- Attendance Card -->
+<div class="bg-surface-container-low rounded-xl p-8">
+<h3 class="text-xs font-bold text-on-surface-variant tracking-widest uppercase mb-6">Participation</h3>
+<div class="flex items-center justify-center mb-6">
+<div class="relative w-40 h-40 flex items-center justify-center">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-surface-container-highest" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-primary" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-dasharray="440" stroke-dashoffset="44" stroke-width="12"></circle>
+</svg>
+<div class="absolute text-center">
+<span class="block text-3xl font-bold text-on-surface">90%</span>
+<span class="text-[10px] uppercase tracking-tighter text-on-surface-variant">Active</span>
+</div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-sm">
+<span class="text-on-surface-variant">Joined Session</span>
+<span class="font-semibold text-on-surface">158</span>
+</div>
+<div class="flex justify-between text-sm">
+<span class="text-on-surface-variant">Responded</span>
+<span class="font-semibold text-on-surface">142</span>
+</div>
+</div>
+</div>
+<!-- Recent Activity / History -->
+<div class="bg-surface-container-lowest rounded-xl p-8 shadow-sm">
+<h3 class="text-xs font-bold text-on-surface-variant tracking-widest uppercase mb-6">Poll History</h3>
+<div class="space-y-6">
+<div class="flex gap-4 items-start opacity-50">
+<div class="mt-1 w-2 h-2 rounded-full bg-outline-variant"></div>
+<div>
+<p class="text-sm font-medium text-on-surface">Python Basics Quiz</p>
+<p class="text-xs text-on-surface-variant">15 mins ago • 92% completion</p>
+</div>
+</div>
+<div class="flex gap-4 items-start opacity-50">
+<div class="mt-1 w-2 h-2 rounded-full bg-outline-variant"></div>
+<div>
+<p class="text-sm font-medium text-on-surface">Lecture Feedback</p>
+<p class="text-xs text-on-surface-variant">45 mins ago • 88% completion</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Shortcut -->
+<button class="w-full group bg-surface-container-high hover:bg-primary hover:text-white transition-all duration-300 rounded-xl p-6 flex items-center justify-between">
+<div class="text-left">
+<span class="block text-sm font-bold">New Poll</span>
+<span class="text-xs opacity-70">Queue your next question</span>
+</div>
+<span class="material-symbols-outlined text-3xl group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Footer / Global Context -->
+<footer class="mt-20 flex justify-center">
+<div class="bg-surface-container-high/50 px-6 py-2 rounded-full flex gap-8 items-center border border-outline-variant/10">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span class="text-xs font-medium text-on-surface-variant">Live streaming to Classroom B</span>
+</div>
+<div class="h-4 w-[1px] bg-outline-variant"></div>
+<div class="text-xs font-medium text-on-surface-variant">Sync: 0.2ms latency</div>
+</div>
+</footer>
+</main>
+</body></html>

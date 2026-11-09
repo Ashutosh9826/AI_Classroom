@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-tint": "#005bc0",
+            "on-surface-variant": "#414754",
+            "background": "#f8f9fa",
+            "inverse-on-surface": "#f0f1f2",
+            "primary": "#005bbf",
+            "secondary-fixed-dim": "#73dc82",
+            "surface-bright": "#f8f9fa",
+            "error": "#ba1a1a",
+            "secondary": "#006e2a",
+            "surface-container": "#edeeef",
+            "secondary-fixed": "#8ffa9b",
+            "on-error-container": "#93000a",
+            "on-primary": "#ffffff",
+            "on-secondary-container": "#00752d",
+            "tertiary-fixed": "#ffdad5",
+            "on-secondary-fixed-variant": "#00531e",
+            "on-error": "#ffffff",
+            "surface-variant": "#e1e3e4",
+            "on-primary-fixed": "#001a41",
+            "on-primary-container": "#ffffff",
+            "on-tertiary-container": "#ffffff",
+            "primary-container": "#1a73e8",
+            "inverse-primary": "#adc7ff",
+            "primary-fixed": "#d8e2ff",
+            "on-primary-fixed-variant": "#004493",
+            "secondary-container": "#8ffa9b",
+            "tertiary-container": "#df3429",
+            "error-container": "#ffdad6",
+            "on-tertiary-fixed": "#410001",
+            "surface-container-lowest": "#ffffff",
+            "tertiary": "#bb1712",
+            "primary-fixed-dim": "#adc7ff",
+            "on-tertiary-fixed-variant": "#930004",
+            "outline": "#727785",
+            "surface-container-high": "#e7e8e9",
+            "surface": "#f8f9fa",
+            "surface-dim": "#d9dadb",
+            "on-secondary-fixed": "#002108",
+            "on-secondary": "#ffffff",
+            "on-background": "#191c1d",
+            "surface-container-highest": "#e1e3e4",
+            "surface-container-low": "#f3f4f5",
+            "on-surface": "#191c1d",
+            "tertiary-fixed-dim": "#ffb4a9",
+            "outline-variant": "#c1c6d6",
+            "inverse-surface": "#2e3132",
+            "on-tertiary": "#ffffff"
+          },
+          fontFamily: {
+            "headline": ["Inter"],
+            "body": ["Inter"],
+            "label": ["Inter"]
+          },
+          borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle;
+    }
+    body { font-family: 'Inter', sans-serif; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- TopAppBar Navigation Shell -->
+<header class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md fixed top-0 w-full z-50 border-b border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-none">
+<div class="flex justify-between items-center px-6 h-16 w-full max-w-screen-2xl mx-auto font-['Inter'] antialiased">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors">arrow_back</button>
+<div class="flex flex-col">
+<h1 class="text-xl font-semibold text-slate-900 dark:text-slate-100">Assignment 4: Renaissance Art Critique</h1>
+<span class="text-xs font-medium text-on-surface-variant uppercase tracking-wider">Academic Atelier • History 101</span>
+</div>
+</div>
+<nav class="hidden md:flex items-center gap-8 h-full">
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors" href="#">Stream</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors" href="#">Classwork</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors" href="#">People</a>
+<a class="text-blue-600 dark:text-blue-400 border-b-2 border-blue-600 dark:border-blue-400 pb-2 translate-y-[9px]" href="#">Grades</a>
+</nav>
+<div class="flex items-center gap-2">
+<button class="material-symbols-outlined text-on-surface-variant p-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-full transition-colors">apps</button>
+<button class="material-symbols-outlined text-on-surface-variant p-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-full transition-colors">notifications</button>
+<div class="h-8 w-8 rounded-full bg-primary-container flex items-center justify-center ml-2">
+<img alt="User profile" class="h-full w-full object-cover rounded-full" data-alt="Teacher profile picture avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDw9f7MPGA4VwzjfgfzkwKn3TdLRTTbG6b8Ynj3Yacqm0mUuzKyMTQOp9OCIs4EE2m3TGFknrxdVMycN9OpGflZto9iOK2YoUkakvw92mUpfsYEAvnTYgGhnaz3NQEd_t6Idtx7FcGx28b4NJ9xlu-z0TxRE1WzeAhr2vRF8TJhgmZ2CdFuVqEBr-YmfclIqnJdlXnCv0zatgJapHAxS-0M8OeV2B4qAVExnmGcvzTJFJl-hm779edm0SVUr09zUBcmMFmdYHxu2jI"/>
+</div>
+</div>
+</div>
+</header>
+<main class="pt-16 h-screen flex overflow-hidden">
+<!-- Left Pane: Student Roster (Surface-Container-Low) -->
+<aside class="w-80 flex-shrink-0 bg-surface-container-low border-r border-outline-variant/15 flex flex-col">
+<div class="p-4 border-b border-outline-variant/15">
+<div class="flex items-center justify-between mb-4">
+<span class="text-sm font-semibold text-on-surface-variant">24 Students</span>
+<button class="material-symbols-outlined text-on-surface-variant">sort</button>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="w-full bg-surface-container-high border-none rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary transition-all" placeholder="Search students" type="text"/>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto no-scrollbar">
+<!-- Active Student -->
+<div class="flex items-center gap-3 p-4 bg-surface-container-lowest shadow-sm mx-2 my-1 rounded-xl cursor-pointer">
+<div class="h-10 w-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-semibold">JS</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-semibold truncate">Julianne Smith</p>
+<p class="text-xs text-secondary font-medium">Turned In</p>
+</div>
+<span class="material-symbols-outlined text-secondary text-sm" data-weight="fill">check_circle</span>
+</div>
+<!-- Student List Items -->
+<div class="flex items-center gap-3 p-4 hover:bg-surface-container-high transition-colors mx-2 my-1 rounded-xl cursor-pointer">
+<div class="h-10 w-10 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed font-semibold">AM</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-medium truncate">Arthur Morgan</p>
+<p class="text-xs text-secondary font-medium">Turned In</p>
+</div>
+</div>
+<div class="flex items-center gap-3 p-4 hover:bg-surface-container-high transition-colors mx-2 my-1 rounded-xl cursor-pointer">
+<div class="h-10 w-10 rounded-full bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed font-semibold">BC</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-medium truncate">Ben Cooper</p>
+<p class="text-xs text-tertiary font-medium">Missing</p>
+</div>
+</div>
+<div class="flex items-center gap-3 p-4 hover:bg-surface-container-high transition-colors mx-2 my-1 rounded-xl cursor-pointer opacity-80">
+<div class="h-10 w-10 rounded-full bg-surface-dim flex items-center justify-center text-on-surface-variant font-semibold">DE</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-medium truncate">Diana Evans</p>
+<p class="text-xs text-on-surface-variant">Draft</p>
+</div>
+</div>
+<!-- Repeated for list length -->
+<div class="flex items-center gap-3 p-4 hover:bg-surface-container-high transition-colors mx-2 my-1 rounded-xl cursor-pointer">
+<div class="h-10 w-10 rounded-full bg-primary-fixed-dim flex items-center justify-center text-on-primary-fixed font-semibold">EG</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-medium truncate">Ethan Grant</p>
+<p class="text-xs text-secondary font-medium">Turned In</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Center Pane: Document Viewer (Surface) -->
+<section class="flex-1 bg-surface-dim/30 overflow-y-auto p-8 flex flex-col items-center">
+<div class="max-w-4xl w-full bg-surface-container-lowest shadow-lg rounded-lg min-h-[1100px] p-16 relative overflow-hidden">
+<!-- Document Content -->
+<div class="absolute top-0 left-0 w-full h-1 bg-primary"></div>
+<div class="mb-12 flex justify-between items-start">
+<div class="space-y-2">
+<h2 class="text-3xl font-bold tracking-tight text-on-surface">The Renaissance: A Rebirth</h2>
+<p class="text-on-surface-variant font-medium">Julianne Smith • Oct 14, 2023</p>
+</div>
+<div class="flex gap-2">
+<button class="material-symbols-outlined p-2 hover:bg-surface-container-low rounded-full">zoom_in</button>
+<button class="material-symbols-outlined p-2 hover:bg-surface-container-low rounded-full">print</button>
+</div>
+</div>
+<div class="space-y-6 text-lg leading-relaxed text-on-surface/90">
+<p>The Renaissance was a fervent period of European cultural, artistic, political and economic “rebirth” following the Middle Ages. Generally described as taking place from the 14th century to the 17th century, the Renaissance promoted the rediscovery of classical philosophy, literature and art.</p>
+<p>During this era, many of the greatest thinkers, authors, statesmen, scientists and artists in human history thrived, while global exploration opened up new lands and cultures to European commerce. The Renaissance is credited with bridging the gap between the Middle Ages and modern-day civilization.</p>
+<div class="my-10 aspect-video rounded-xl bg-surface-container-high overflow-hidden">
+<img alt="Renaissance Artwork" class="w-full h-full object-cover" data-alt="High resolution classical Renaissance oil painting on canvas" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYkHuNfBLnqt8Vjy15dJ0AsRQENnrIMuXk0u44qzGFEXqZ3B4L8zBo4UCrGV0WrDre-nHmAoMhpSskOTDEfUMMcTNoPcng45tV5BoOCG899yL3CwdffKgdULerJhQk8RmwibEnXtNOvuLuU2bD9hZBItSRIbGTk8Y7oGl5abLxR6J7lxbkYDjX6E7lXGVX85X4ckmO2bOOnNVC9Eyh9dS4d_iszTfZVWsKWq81EL428ps0pLk1gpKkTOEGKjvYfpbC6RZ0ISUCKvo"/>
+</div>
+<p>Humanism, a philosophy that emphasized the value and agency of human beings, individually and collectively, played a significant role in the intellectual life of the Renaissance. This shift from divine focus to human perspective revolutionized the way art was created, moving towards linear perspective and anatomical realism.</p>
+</div>
+<!-- Annotation Markers (Simulated) -->
+<div class="absolute right-4 top-1/3 group cursor-pointer">
+<div class="h-6 w-6 bg-primary rounded-full flex items-center justify-center text-white text-[10px] shadow-md border-2 border-white">1</div>
+</div>
+</div>
+</section>
+<!-- Right Sidebar: Grading & Feedback (Surface-Container-Lowest) -->
+<aside class="w-80 flex-shrink-0 bg-surface-container-lowest border-l border-outline-variant/15 flex flex-col p-6 gap-8">
+<!-- Grading Section -->
+<div class="space-y-4">
+<h3 class="text-sm font-semibold text-on-surface-variant uppercase tracking-widest">Grading</h3>
+<div class="flex items-end gap-3">
+<div class="relative flex-1">
+<label class="text-[10px] font-bold text-primary uppercase absolute -top-2.5 left-2 bg-surface-container-lowest px-1">Score</label>
+<input class="w-full text-2xl font-bold border-b-2 border-primary focus:border-primary focus:ring-0 p-2 bg-transparent" type="number" value="95"/>
+</div>
+<span class="text-2xl font-medium text-on-surface-variant pb-2">/ 100</span>
+</div>
+</div>
+<!-- Rubric / Status -->
+<div class="space-y-3">
+<div class="flex items-center justify-between p-3 rounded-lg bg-surface-container-low">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">checklist</span>
+<span class="text-xs font-semibold">Rubric Applied</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">chevron_right</span>
+</div>
+</div>
+<!-- Feedback Section -->
+<div class="space-y-4 flex-1 flex flex-col">
+<h3 class="text-sm font-semibold text-on-surface-variant uppercase tracking-widest">Private Comments</h3>
+<div class="flex-1 flex flex-col gap-4">
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-center">
+<span class="text-xs font-bold">You</span>
+<span class="text-[10px] text-on-surface-variant">Just now</span>
+</div>
+<p class="text-sm p-3 bg-surface-container-low rounded-lg rounded-tr-none">Excellent analysis of the transition from divine to human focus. The section on linear perspective is particularly well-researched.</p>
+</div>
+<div class="mt-auto relative">
+<textarea class="w-full bg-surface-container-high border-none rounded-xl p-3 text-sm focus:ring-2 focus:ring-primary min-h-[100px] resize-none" placeholder="Add private comment..."></textarea>
+<button class="absolute bottom-3 right-3 material-symbols-outlined text-primary hover:scale-110 transition-transform" data-weight="fill">send</button>
+</div>
+</div>
+</div>
+<!-- Action Footer -->
+<div class="pt-6 border-t border-outline-variant/15 flex gap-3">
+<button class="flex-1 py-3 px-4 rounded-full font-semibold text-primary hover:bg-primary/5 border border-primary transition-all active:scale-95">
+          Save Draft
+        </button>
+<button class="flex-1 py-3 px-4 rounded-full font-semibold text-on-primary bg-gradient-to-br from-primary to-primary-container shadow-md hover:shadow-lg transition-all active:scale-95">
+          Return
+        </button>
+</div>
+</aside>
+</main>
+<!-- Contextual FAB (Hidden as per suppression rule for details view) -->
+</body></html>

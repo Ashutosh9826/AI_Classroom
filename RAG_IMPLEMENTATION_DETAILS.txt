@@ -1,0 +1,870 @@
+================================================================================
+   HOW ACADEMIC ATELIER USES RAG (RETRIEVAL-AUGMENTED GENERATION)
+   TO GET INFORMATION FROM THE INTERNET
+================================================================================
+
+This document explains, in detail, every mechanism the project uses to retrieve
+real-time information from the internet and inject it into AI model prompts.
+The project implements RAG in TWO distinct systems:
+
+  1. CHAT AI TUTOR  — Google Search Grounding via Vertex AI (real-time)
+  2. LESSON GENERATION — Agentic Web Research Pipeline (DuckDuckGo + Vertex AI fallback)
+
+Each is explained below with the exact code from the project.
+
+
+================================================================================
+SYSTEM 1: CHAT AI TUTOR — GOOGLE SEARCH GROUNDING
+================================================================================
+
+Location: backend/routes/chat.js
+Purpose:  When a student asks a question in the live lesson chat, the AI tutor
+          can autonomously search the web via Google Search to augment its answer.
+
+----- HOW IT WORKS (HIGH-LEVEL FLOW) -----
+
+  1. Student sends a message from the frontend.
+  2. Backend compiles the lesson context (all lesson blocks summarized).
+  3. Backend creates a Gemini chat session with `googleSearch` enabled as a tool.
+  4. The model decides autonomously whether it needs web search.
+  5. If the model uses Google Search, it returns `groundingMetadata` in the
+     response stream, which contains the web sources it used.
+  6. Backend extracts citations from the grounding metadata and appends them
+     to the AI response.
+  7. Frontend displays a "Web Researched" badge on messages that used web search.
+
+
+----- STEP 1: ENABLING GOOGLE SEARCH AS A TOOL -----
+
+File: backend/routes/chat.js (lines 357-364)
+
+The Google Search tool is attached when creating the chat session:
+
+    const chat = ai.chats.create({
+      model: VERTEX_AI_CHAT_MODEL,
+      config: {
+        tools: [{ googleSearch: {} }],                    // <-- ENABLES RAG
+        systemInstruction: buildSystemPrompt({ lessonContext })
+      },
+      history
+    });
+
+The `{ googleSearch: {} }` tool tells Vertex AI / Gemini that the model is
+allowed to perform Google Search queries during its response generation. The
+model decides autonomously when to use it based on the user's question and the
+system prompt instructions.
+
+
+----- STEP 2: SYSTEM PROMPT INSTRUCTS THE MODEL TO USE SEARCH -----
+
+File: backend/routes/chat.js (lines 265-280)
+
+The system prompt explicitly tells the model it has web search access:
+
+    const buildSystemPrompt = ({ lessonContext }) => {
+      return `You are the Academic Atelier AI tutor for university-level students.
+
+    Use the provided lesson context as your primary source. 
+
+    Rules:
+    1. Keep explanations rigorous, concise, and conceptually precise.
+    2. Prefer guided reasoning over directly giving away graded answers.
+    3. Answer primarily from the lesson context and general academic knowledge.
+    4. You have access to Google Search retrieval. Use it seamlessly when you
+       need real-time information, news, or context outside of the provided lesson.
+    5. If you use web search, cite your sources.
+    6. If the web search returns no results, or if you simply do not know the
+       answer based on the available context, explicitly state that you do not
+       have enough information to answer. Never output an empty string.
+
+    Lesson Context:
+    ${lessonContext}`;
+    };
+
+Rule 4 is critical — it tells the model to use Google Search when the lesson
+context isn't sufficient.
+
+
+----- STEP 3: COMPILING LESSON CONTEXT (THE "RETRIEVAL" PART FROM DB) -----
+
+File: backend/routes/chat.js (lines 204-240)
+
+Before sending to the model, the backend summarizes all lesson blocks into a
+compact text context. This is the internal knowledge base:
+
+    const compileLessonContext = (lesson) => {
+      if (!lesson) {
+        return 'No lesson context available.';
+      }
+
+      const titlePrefix = `Lesson title: ${lesson.title}\n\n`;
+      const blockSummaries = [];
+      let contextLength = titlePrefix.length;
+      let truncated = false;
+      const sourceBlocks = Array.isArray(lesson.blocks) ? lesson.blocks : [];
+      const blocks = sourceBlocks.slice(0, CHAT_MAX_BLOCKS_IN_CONTEXT);    // max 24
+
+      blocks.forEach((block, index) => {
+        const summary = truncateText(
+          summarizeBlockContent(block),
+          CHAT_MAX_BLOCK_SUMMARY_CHARS     // max 900 chars per block
+        );
+        const chunk = `[Block ${index + 1} - ${block.type}]\n${summary}`;
+        const projectedLength = contextLength + chunk.length;
+
+        if (projectedLength > CHAT_MAX_CONTEXT_CHARS) {   // max 12000 total
+          truncated = true;
+          return;
+        }
+
+        blockSummaries.push(chunk);
+        contextLength = projectedLength;
+      });
+
+      let context = `${titlePrefix}${blockSummaries.join('\n\n')}`;
+      if (truncated) {
+        context += '\n\n[Context truncated for latency.]';
+      }
+      return context;
+    };
+
+
+----- STEP 4: STREAMING THE RESPONSE AND EXTRACTING GROUNDING METADATA -----
+
+File: backend/routes/chat.js (lines 366-429)
+
+The response is streamed. During streaming, the backend checks each chunk for
+`groundingMetadata` — this is what Vertex AI returns when it used Google Search:
+
+    await runWithTimeout(async (signal) => {
+      const resultStream = await awaitStreamWithAbort({
+        chat,
+        message: latestQuestionText,
+        signal,
+        isClientDisconnected: () => clientDisconnected,
+      });
+
+      let fullText = '';
+      let metadata = null;
+      for await (const chunk of resultStream) {
+          if (chunk.text) {
+             fullText += chunk.text;
+          }
+          // EXTRACTING GROUNDING METADATA (web search results)
+          if (chunk.candidates?.[0]?.groundingMetadata) {
+             metadata = chunk.candidates[0].groundingMetadata;
+          }
+      }
+      
+      // PROCESSING THE WEB SEARCH RESULTS
+      let citations = '';
+      let usedWebContext = false;
+      let webSearchResults = [];
+
+      if (metadata && metadata.groundingChunks) {
+          usedWebContext = true;
+          citations = metadata.groundingChunks.map(chunk => 
+            chunk.web?.title
+              ? `- [${chunk.web.title}](${chunk.web.uri})`
+              : ''
+          ).filter(Boolean).join('\n');
+          
+          webSearchResults = metadata.groundingChunks.map(chunk => ({
+             title: chunk.web?.title || 'Google Search',
+             url: chunk.web?.uri || ''
+          }));
+      }
+
+      // APPENDING CITATIONS TO THE RESPONSE
+      let finalResponseText = fullText;
+      if (citations) {
+          finalResponseText += `\n\nSources:\n${citations}`;
+      }
+
+      // SENDING TO FRONTEND (includes web context flag)
+      res.write(JSON.stringify({
+        type: 'result',
+        text: finalResponseText,
+        usedWebContext,                    // boolean: did it use web search?
+        webContext: webSearchResults,      // array of {title, url}
+      }) + '\n');
+    }, 45000);
+
+
+----- STEP 5: FRONTEND DISPLAY OF WEB-RESEARCHED RESPONSES -----
+
+File: frontend/src/components/ChatAssistant.jsx (lines 54-59)
+
+When the AI response has `usedWebContext: true`, the frontend shows a badge:
+
+    {msg.usedWebContext && (
+      <div className="flex items-center gap-1.5 mb-3 px-2 py-1
+                       bg-surface-container border border-outline-variant/20
+                       rounded max-w-fit">
+        <span className="material-symbols-outlined text-[12px] text-secondary">
+          travel_explore
+        </span>
+        <span className="text-[10px] uppercase tracking-widest font-bold
+                         text-secondary">
+          Web Researched
+        </span>
+      </div>
+    )}
+
+
+----- STEP 6: FRONTEND STREAMING CLIENT -----
+
+File: frontend/src/services/api.js (lines 260-325)
+
+The frontend uses an NDJSON streaming generator to read the chat response:
+
+    export const chatService = {
+      sendMessageStream: async function* (lessonId, messages, options = {}) {
+        const token = localStorage.getItem('token');
+        const response = await window.fetch(
+          `${API_BASE_URL}/lesson-chat/message`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+            },
+            body: JSON.stringify({ lessonId, messages }),
+            signal: options.signal
+          }
+        );
+
+        // Read NDJSON stream line by line
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder('utf-8');
+        let buffer = '';
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n');
+          buffer = lines.pop(); 
+          for (const line of lines) {
+            if (line.trim()) {
+              yield JSON.parse(line);   // yields {type, text, usedWebContext, ...}
+            }
+          }
+        }
+      },
+    };
+
+
+File: frontend/src/pages/LiveLessonView.jsx (lines 658-674)
+
+The LiveLessonView consumes the stream and sets the web context on messages:
+
+    const stream = chatService.sendMessageStream(lessonId, updatedMessages, {
+      signal: chatAbortControllerRef.current.signal
+    });
+    
+    for await (const chunk of stream) {
+      if (chunk.type === 'status') {
+        setMessages(prev => prev.map(m =>
+          m.id === assistantMsgId ? { ...m, status: chunk.message } : m
+        ));
+      } else if (chunk.type === 'result') {
+        setMessages(prev => prev.map(m =>
+          m.id === assistantMsgId ? { 
+            ...m, 
+            isGenerating: false, 
+            text: chunk.text,
+            usedWebContext: chunk.usedWebContext,     // <-- RAG flag
+            webContext: chunk.webContext               // <-- RAG sources
+          } : m
+        ));
+      }
+    }
+
+
+================================================================================
+SYSTEM 2: LESSON GENERATION — AGENTIC WEB RESEARCH PIPELINE
+================================================================================
+
+Location: backend/routes/lessons.js (lines 1744-2596 and 3351-3882)
+Purpose:  When a teacher generates a new AI lesson, the system performs
+          structured internet research to ground the generated content in
+          real, verifiable web sources.
+
+This is a much more sophisticated RAG system with:
+  - Multiple search queries generated from the topic
+  - DuckDuckGo Instant Answer API as primary retrieval
+  - Vertex AI Grounded Search as fallback
+  - Evidence scoring, ranking, and deduplication
+  - Section-level evidence mapping
+  - Post-generation verification against evidence
+  - Redis/Memory caching of research bundles
+
+
+----- HIGH-LEVEL PIPELINE -----
+
+  Phase 0:   Build initial research bundle (topic-level web search)
+  Step 1:    Generate lesson structure (outline) using research summary
+  Phase 0b:  Rebuild research bundle with section-awareness
+  Step 2:    Generate block strategy using research tags
+  Step 3:    Generate section content with section-specific evidence
+  Step 4:    Generate simulation code
+  Verify:    Cross-check generated content against evidence pool
+
+
+----- CONFIGURATION CONSTANTS -----
+
+File: backend/routes/lessons.js (lines 1744-1768)
+
+    const RESEARCH_CACHE_TTL_SECONDS = 1800;       // 30 min cache
+    const RESEARCH_MAX_QUERIES = 5;                  // max 5 search queries
+    const RESEARCH_MAX_GLOBAL_EVIDENCE = 12;         // max 12 evidence items
+    const RESEARCH_MAX_SECTION_EVIDENCE = 4;         // max 4 per section
+    const RESEARCH_MIN_CONFIDENCE = 0.42;            // minimum quality threshold
+    const RESEARCH_SNIPPET_MAX_CHARS = 420;
+    const RESEARCH_GLOBAL_PROMPT_MAX_CHARS = 3000;
+    const RESEARCH_SECTION_PROMPT_MAX_CHARS = 1600;
+
+
+----- RETRIEVAL SOURCE 1: DUCKDUCKGO INSTANT ANSWER API -----
+
+File: backend/routes/lessons.js (lines 1985-2018)
+
+The primary retrieval source. It calls the DuckDuckGo API for each query:
+
+    const fetchDuckDuckGoCandidates = async (query) => {
+      const safeQuery = String(query || '').trim();
+      if (!safeQuery) return [];
+
+      const response = await runWithTimeout(
+        (signal) =>
+          fetch(
+            `https://api.duckduckgo.com/?q=${encodeURIComponent(safeQuery)}` +
+            `&format=json&no_html=1&skip_disambig=1`,
+            { signal }
+          ),
+        12000
+      );
+
+      if (!response.ok) {
+        throw new Error(`Web search failed with status ${response.status}`);
+      }
+
+      const data = await response.json();
+      const candidates = [];
+
+      // Extract the abstract (main summary)
+      if (data.AbstractText) {
+        candidates.push({
+          title: data.Heading || 'DuckDuckGo Summary',
+          snippet: data.AbstractText,
+          url: data.AbstractURL || '',
+          query: safeQuery,
+          source: 'duckduckgo_abstract',
+        });
+      }
+
+      // Extract related topics
+      const related = flattenRelatedTopics(data.RelatedTopics || [], safeQuery);
+      candidates.push(...related.slice(0, 8));
+      return candidates;
+    };
+
+
+----- RETRIEVAL SOURCE 2: VERTEX AI GROUNDED SEARCH (FALLBACK) -----
+
+File: backend/routes/lessons.js (lines 2020-2076)
+
+If DuckDuckGo results are low quality, Vertex AI's Google Search grounding
+is used as a fallback:
+
+    const fetchVertexGroundedCandidates = async ({ query, topic }) => {
+      const safeQuery = String(query || '').trim();
+      if (!safeQuery) return [];
+
+      const ai = getGenAI();
+      if (!ai) return [];
+
+      try {
+        const chat = ai.chats.create({
+          model: VERTEX_AI_GENERATION_MODEL,
+          config: {
+            tools: [{ googleSearch: {} }],     // <-- Google Search grounding
+            systemInstruction:
+              'You are a curriculum research assistant. Retrieve concise, ' +
+              'high-quality factual web evidence for university-level teaching.',
+          },
+        });
+
+        const stream = await chat.sendMessageStream({
+          message: `Topic: ${topic}\nSearch query: ${safeQuery}\n` +
+                   `Focus on reliable sources and concise evidence.`,
+        });
+
+        let fullText = '';
+        let metadata = null;
+        for await (const chunk of stream) {
+          if (chunk.text) {
+            fullText += chunk.text;
+          }
+          if (chunk.candidates?.[0]?.groundingMetadata) {
+            metadata = chunk.candidates[0].groundingMetadata;
+          }
+        }
+
+        // Extract grounding chunks (web sources)
+        const chunks = Array.isArray(metadata?.groundingChunks)
+          ? metadata.groundingChunks
+          : [];
+
+        return chunks.map((chunk, index) => ({
+          title: chunk?.web?.title || `Grounded source ${index + 1}`,
+          snippet: chunk?.web?.snippet || fullText.trim().slice(0, 420),
+          url: chunk?.web?.uri || '',
+          query: safeQuery,
+          source: 'vertex_grounded',
+        }));
+      } catch (err) {
+        console.warn('Grounded web fallback failed', err?.message);
+        return [];
+      }
+    };
+
+
+----- QUERY GENERATION -----
+
+File: backend/routes/lessons.js (lines 2310-2345)
+
+Multiple search queries are generated from the topic and teacher reference:
+
+    const buildResearchQueries = ({
+      topic, teacherReference, structurePlan, recencySensitive,
+    }) => {
+      const safeTopic = String(topic || '').trim();
+      const keywords = extractReferenceKeywords(teacherReference, 6);
+      const querySet = new Set();
+
+      // Core queries
+      querySet.add(`${safeTopic} core concepts explanation university level`);
+      querySet.add(`${safeTopic} official documentation standard reference`);
+
+      // Keyword-enriched query
+      if (keywords.length > 0) {
+        querySet.add(
+          `${safeTopic} ${keywords.slice(0, 4).join(' ')} worked example`
+        );
+      }
+
+      // Recency-aware query
+      if (recencySensitive) {
+        querySet.add(
+          `${safeTopic} latest developments current best practices`
+        );
+      } else {
+        querySet.add(`${safeTopic} benchmark complexity case study`);
+      }
+
+      // Section-specific queries
+      if (Array.isArray(structurePlan?.sections)) {
+        structurePlan.sections.slice(0, 2).forEach((section) => {
+          const sectionLabel = [section.title, section.goal]
+            .filter(Boolean).join(' ');
+          if (sectionLabel.trim()) {
+            querySet.add(
+              `${safeTopic} ${sectionLabel} reference material`
+            );
+          }
+        });
+      }
+
+      return [...querySet].slice(0, RESEARCH_MAX_QUERIES);   // max 5
+    };
+
+
+----- EVIDENCE SCORING AND RANKING -----
+
+File: backend/routes/lessons.js (lines 2078-2167)
+
+Each retrieved evidence item is scored on multiple dimensions:
+
+    const normalizeResearchEvidence = (candidate, context) => {
+      // ... sanitization and extraction ...
+
+      const topicMatch = computeTokenOverlapScore(
+        evidenceTokens, [...topicTokens, ...referenceTokens]
+      );
+      const queryMatch = computeTokenOverlapScore(
+        evidenceTokens, queryTokens
+      );
+      const trustScore = getDomainTrustScore(safeDomain);
+      const recencyScore = getRecencyScore(publishedAt, context.recencySensitive);
+      const snippetQuality = getSnippetQualityScore(sanitizedSnippet);
+
+      // WEIGHTED COMPOSITE SCORE
+      const score = clampNumber(
+        (0.34 * trustScore) +        // Domain trust (e.g. .edu = 0.95)
+        (0.26 * topicMatch) +        // Token overlap with topic
+        (0.20 * queryMatch) +        // Token overlap with search query
+        (0.12 * recencyScore) +      // How recent the content is
+        (0.08 * snippetQuality),     // Quality of the snippet text
+        0, 1
+      );
+
+      return {
+        id, title, url, snippet, publishedAt,
+        confidence: score,
+        score,
+        domain, query, source,
+        retrievedAt: new Date().toISOString(),
+      };
+    };
+
+
+----- DOMAIN TRUST SCORING -----
+
+File: backend/routes/lessons.js (lines 1804-1929)
+
+Domains are scored for trustworthiness:
+
+    TRUSTED DOMAINS (high scores):
+      .edu           → 0.95
+      .gov           → 0.94
+      .ac.uk         → 0.93
+      arxiv.org      → 0.92
+      ieee.org       → 0.92
+      acm.org        → 0.92
+      w3.org         → 0.90
+      python.org     → 0.90
+      developer.mozilla.org → 0.90
+      docs.*         → 0.86
+
+    LOW-TRUST DOMAINS (low scores):
+      pinterest      → 0.25
+      quora          → 0.30
+      facebook       → 0.20
+      instagram      → 0.20
+      tiktok         → 0.20
+
+    DEFAULT:
+      .org           → 0.78
+      .com           → 0.62
+      other          → 0.55
+
+
+----- SNIPPET SANITIZATION (SECURITY) -----
+
+File: backend/routes/lessons.js (lines 1774-1853)
+
+Snippets are sanitized to remove prompt injection and low-signal content:
+
+    LOW_SIGNAL_SNIPPET_PATTERNS (filtered out):
+      /click here/i, /subscribe/i, /sign up/i, /buy now/i,
+      /read more/i, /cookie/i, /accept all/i,
+      /privacy policy/i, /terms of service/i
+
+    INJECTION_LINE_PATTERNS (filtered out):
+      /ignore\s+(all\s+)?previous/i,
+      /\bsystem prompt\b/i,
+      /\bact as\b/i,
+      /\byou are chatgpt\b/i,
+      /\bfollow these instructions\b/i,
+      /\boverride\b/i,
+      /\bdeveloper message\b/i
+
+
+----- BUILDING THE RESEARCH BUNDLE (MAIN ORCHESTRATOR) -----
+
+File: backend/routes/lessons.js (lines 2502-2596)
+
+This function orchestrates the entire retrieval pipeline:
+
+    const buildResearchBundle = async ({
+      topic, teacherReference, durationMinutes,
+      interactivityLevel, structurePlan, seedBundle,
+    }) => {
+      const recencySensitive = isRecencySensitiveTopic(topic, teacherReference);
+
+      // CHECK CACHE FIRST
+      const cacheKey = buildResearchCacheKey({ ... });
+      const cachedBundle = await getCachedResearchBundle(cacheKey);
+      if (cachedBundle) return cachedBundle;
+
+      // GENERATE SEARCH QUERIES
+      const queries = buildResearchQueries({
+        topic, teacherReference, structurePlan, recencySensitive,
+      });
+
+      // PRIMARY RETRIEVAL: DuckDuckGo
+      const ddgCandidatesNested = await Promise.all(
+        queries.map(async (query) => {
+          try {
+            return await fetchDuckDuckGoCandidates(query);
+          } catch (err) {
+            warnings.push(`DuckDuckGo search failed for: "${query}"`);
+            return [];
+          }
+        })
+      );
+
+      const ddgCandidates = ddgCandidatesNested.flat();
+
+      // NORMALIZE & SCORE all candidates
+      let normalized = ddgCandidates
+        .map((candidate) => normalizeResearchEvidence(candidate, context))
+        .filter(Boolean);
+
+      // Merge with seed bundle from Phase 0
+      if (Array.isArray(seedBundle?.evidence)) {
+        normalized.push(...seedBundle.evidence);
+      }
+
+      // DEDUPLICATE & RANK
+      normalized = dedupeEvidenceByIdentity(normalized);
+      let ranked = rankResearchEvidence(normalized);
+
+      // FALLBACK: If DDG quality is low, use Vertex AI grounded search
+      if (isEvidencePoolLowQuality(ranked)) {
+        const fallbackQueries = queries.slice(0, 2);
+        const vertexFallbackNested = await Promise.all(
+          fallbackQueries.map((query) =>
+            fetchVertexGroundedCandidates({ query, topic })
+          )
+        );
+
+        const vertexCandidates = vertexFallbackNested.flat();
+        if (vertexCandidates.length > 0) {
+          const merged = dedupeEvidenceByIdentity([
+            ...ranked,
+            ...vertexCandidates
+              .map((c) => normalizeResearchEvidence(c, context))
+              .filter(Boolean),
+          ]);
+          ranked = rankResearchEvidence(merged);
+        }
+      }
+
+      // TAKE TOP 12 EVIDENCE ITEMS
+      const evidence = ranked.slice(0, RESEARCH_MAX_GLOBAL_EVIDENCE);
+
+      // MAP EVIDENCE TO SECTIONS (max 4 per section)
+      const sectionEvidence = mapEvidenceToSections(evidence, structurePlan);
+
+      // BUILD FINAL BUNDLE
+      const bundle = {
+        topic, queries, evidence, sectionEvidence, warnings,
+        cache: { cacheHit: false, generatedAt: new Date().toISOString() },
+      };
+
+      // CACHE IT (Redis + Memory)
+      await setCachedResearchBundle(cacheKey, bundle);
+      return bundle;
+    };
+
+
+----- CACHING LAYER (REDIS + IN-MEMORY) -----
+
+File: backend/routes/lessons.js (lines 2168-2293)
+
+Research bundles are cached in two layers to avoid redundant searches:
+
+    Layer 1: In-memory Map with TTL
+      const memoryResearchCache = new Map();
+
+    Layer 2: Redis with EX (expiry)
+      await client.set(
+        `${RESEARCH_CACHE_KEY_PREFIX}${cacheKey}`,
+        JSON.stringify(bundle),
+        { EX: RESEARCH_CACHE_TTL_SECONDS }    // 30 min TTL
+      );
+
+Cache keys are SHA-256 hashes of: topic + reference + duration +
+interactivity + section signatures.
+
+
+----- HOW RESEARCH IS INJECTED INTO GENERATION PROMPTS -----
+
+File: backend/routes/lessons.js (lines 3392-3464 and 3554-3668)
+
+The research bundle is used at multiple stages of lesson generation:
+
+  PHASE 0 (Initial Topic Research):
+    const initialResearchBundle = await buildResearchBundle({
+      topic: safeTopic,
+      teacherReference: effectiveReference,
+      durationMinutes,
+      interactivityLevel: safeInteractivityLevel,
+      structurePlan: null,              // no sections yet
+    });
+    const initialResearchSummary = formatResearchSummaryForPrompt({
+      evidence: initialResearchBundle?.evidence || [],
+    });
+
+  STEP 1 (Structure Generation) — includes research summary:
+    const structureUserPrompt = `Topic: ${safeTopic}
+    ...
+    Internet research digest (compact, sanitized):
+    ${initialResearchSummary}`;
+
+  PHASE 0b (Section-Aware Re-Research):
+    const researchBundle = await buildResearchBundle({
+      topic: safeTopic,
+      teacherReference: effectiveReference,
+      durationMinutes,
+      interactivityLevel: safeInteractivityLevel,
+      structurePlan,                    // now section-aware
+      seedBundle: initialResearchBundle,
+    });
+    const sectionResearchPromptMap = buildSectionResearchPromptMap(
+      researchBundle, structurePlan
+    );
+
+  STEP 2 (Block Strategy) — includes evidence tags:
+    const blockStrategyUserPrompt = `...
+    Internet evidence tags (for block-type decisions):
+    ${researchTagsForStrategy}
+    Internet research digest:
+    ${globalResearchSummary}`;
+
+  STEP 3 (Section Content) — section-specific evidence:
+    const sectionUserPrompt = `...
+    Section-Specific Internet Evidence (sanitized):
+    ${sectionEvidencePrompt}
+    Citation IDs mapped to this section:
+    ${sectionCitationIds}`;
+
+Each section receives its own curated subset of evidence, matched by
+token overlap with the section's title, goal, and key points.
+
+
+----- POST-GENERATION VERIFICATION -----
+
+File: backend/routes/lessons.js (lines 3284-3349)
+
+After generation, the system verifies content against the evidence pool:
+
+    const verifyAndRepairGeneratedLesson = ({
+      lessonData, researchBundle, topic
+    }) => {
+      const evidencePool = researchBundle?.evidence || [];
+
+      lessonData.blocks = lessonData.blocks.map((block) => {
+        // TEXT BLOCKS: Check evidence alignment
+        if (block.type === 'TEXT') {
+          const matchScore = getEvidenceMatchScoreForText(
+            block.content, evidencePool
+          );
+          if (matchScore < 0.06) {
+            // SOFTEN unsupported claims
+            block.content = softenUnsupportedClaims(block.content);
+            // e.g. "always" → "often", "never" → "rarely",
+            //      "guaranteed" → "typically expected"
+          }
+        }
+
+        // STATIC CHART: Verify data claims
+        if (block.type === 'STATIC_CHART' && hasNumericChartClaims(block.content)) {
+          const matchScore = getEvidenceMatchScoreForText(
+            chartSignal, evidencePool
+          );
+          if (matchScore < 0.04) {
+            // REPLACE with safe fallback chart
+            block.content = buildTopicStaticChartFallback(topic);
+          }
+        }
+
+        // MERMAID DIAGRAM: Verify year-specific claims
+        if (block.type === 'MERMAID_DIAGRAM') {
+          const yearMatches = code.match(/\b20\d{2}\b/g) || [];
+          if (yearMatches.length > 0) {
+            const hasYearSupport = yearMatches.every((year) =>
+              evidenceText.includes(year)
+            );
+            if (!hasYearSupport) {
+              // REPLACE with safe fallback diagram
+              block.content = { code: buildTopicMermaidFallbackCode(topic) };
+            }
+          }
+        }
+      });
+    };
+
+
+----- RESEARCH METADATA IN RESPONSE -----
+
+File: backend/routes/lessons.js (lines 3811-3833)
+
+The final response includes research metadata so the frontend can display it:
+
+    const generationMeta = {
+      researchSources: compactResearchSources(researchBundle),
+      researchUsage: sectionResearchUsage,
+      researchWarnings,
+      referenceFilesUsed: extractedReferenceFilesContext.filesUsed || [],
+      researchCache: researchBundle?.cache || {
+        cacheHit: false,
+        cacheSource: 'none',
+        generatedAt: new Date().toISOString(),
+      },
+    };
+    lessonData._generationMeta = generationMeta;
+
+
+================================================================================
+SUMMARY: RAG ARCHITECTURE COMPARISON
+================================================================================
+
+┌─────────────────────┬─────────────────────────┬──────────────────────────────┐
+│                     │ CHAT AI TUTOR           │ LESSON GENERATION            │
+├─────────────────────┼─────────────────────────┼──────────────────────────────┤
+│ File                │ chat.js                 │ lessons.js                   │
+│ Trigger             │ Student asks question   │ Teacher generates lesson     │
+│ Search Engine       │ Google Search (via      │ DuckDuckGo API + Google      │
+│                     │ Vertex AI grounding)    │ Search (Vertex fallback)     │
+│ Who decides to      │ The model (autonomous)  │ The system (always)          │
+│ search?             │                         │                              │
+│ # of queries        │ Model decides           │ Up to 5 structured queries   │
+│ Evidence scoring    │ N/A (model handles)     │ Weighted composite score     │
+│                     │                         │ (trust + topic + recency)    │
+│ Caching             │ None                    │ Redis + In-Memory (30 min)   │
+│ Injection into      │ Tool config only;       │ Formatted text injected      │
+│ prompt              │ model searches itself    │ into system/user prompts     │
+│ Post-generation     │ N/A                     │ Evidence-based verification  │
+│ verification        │                         │ + claim softening            │
+│ Security            │ N/A (model handles)     │ Snippet sanitization +       │
+│                     │                         │ injection pattern filtering  │
+│ Frontend indicator  │ "Web Researched" badge  │ Research sources in          │
+│                     │                         │ generation metadata          │
+└─────────────────────┴─────────────────────────┴──────────────────────────────┘
+
+
+================================================================================
+KEY TECHNOLOGIES USED
+================================================================================
+
+  1. @google/genai (GoogleGenAI SDK)
+     - Used to create chat sessions with Google Search grounding
+     - Model: gemini-3-flash-preview (configurable via env var)
+     - Config: tools: [{ googleSearch: {} }]
+
+  2. DuckDuckGo Instant Answer API
+     - Endpoint: https://api.duckduckgo.com/?q=...&format=json&no_html=1
+     - Used for primary web retrieval in lesson generation
+     - Returns: AbstractText, RelatedTopics
+
+  3. Vertex AI Grounded Search
+     - Same GoogleGenAI SDK with googleSearch tool
+     - Used as fallback when DuckDuckGo quality is low
+     - Returns: groundingMetadata.groundingChunks
+
+  4. Redis (optional)
+     - Used to cache research bundles across server restarts
+     - Fallback: in-memory Map cache
+
+  5. NDJSON Streaming
+     - Chat responses streamed as newline-delimited JSON
+     - Each line contains: { type, text, usedWebContext, webContext }
+
+
+================================================================================
+END OF DOCUMENT
+================================================================================

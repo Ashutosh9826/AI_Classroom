@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Interactive Lesson Editor | Atelier AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "inverse-surface": "#2e3132",
+              "secondary": "#006e2a",
+              "error-container": "#ffdad6",
+              "primary": "#005bbf",
+              "on-primary-container": "#ffffff",
+              "surface-tint": "#005bc0",
+              "secondary-fixed-dim": "#73dc82",
+              "tertiary-fixed-dim": "#ffb4a9",
+              "on-secondary-container": "#00752d",
+              "on-primary-fixed": "#001a41",
+              "on-error-container": "#93000a",
+              "on-primary": "#ffffff",
+              "surface-container-highest": "#e1e3e4",
+              "primary-container": "#1a73e8",
+              "inverse-primary": "#adc7ff",
+              "surface-variant": "#e1e3e4",
+              "surface-container-lowest": "#ffffff",
+              "on-tertiary-fixed": "#410001",
+              "tertiary-container": "#df3429",
+              "surface-container": "#edeeef",
+              "on-secondary-fixed": "#002108",
+              "on-tertiary": "#ffffff",
+              "on-surface": "#191c1d",
+              "on-surface-variant": "#414754",
+              "tertiary": "#bb1712",
+              "background": "#f8f9fa",
+              "surface-bright": "#f8f9fa",
+              "surface-container-low": "#f3f4f5",
+              "secondary-fixed": "#8ffa9b",
+              "outline-variant": "#c1c6d6",
+              "outline": "#727785",
+              "tertiary-fixed": "#ffdad5",
+              "surface": "#f8f9fa",
+              "primary-fixed": "#d8e2ff",
+              "on-tertiary-fixed-variant": "#930004",
+              "on-secondary-fixed-variant": "#00531e",
+              "secondary-container": "#8ffa9b",
+              "primary-fixed-dim": "#adc7ff",
+              "on-background": "#191c1d",
+              "inverse-on-surface": "#f0f1f2",
+              "on-tertiary-container": "#ffffff",
+              "error": "#ba1a1a",
+              "on-secondary": "#ffffff",
+              "on-primary-fixed-variant": "#004493",
+              "surface-dim": "#d9dadb",
+              "surface-container-high": "#e7e8e9",
+              "on-error": "#ffffff"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        .notebook-line { border-left: 2px solid transparent; transition: border-color 0.2s; }
+        .notebook-line:hover { border-left-color: #005bbf; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface overflow-hidden">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#f8f9fa]/80 dark:bg-[#191c1d]/80 backdrop-blur-xl shadow-[0px_10px_40px_rgba(25,28,29,0.04)] flex justify-between items-center px-8 h-16 w-full">
+<div class="flex items-center gap-6">
+<span class="text-xl font-bold text-[#191c1d] dark:text-white tracking-tighter">Atelier AI</span>
+<div class="hidden md:flex gap-6">
+<a class="font-['Inter'] font-medium text-sm tracking-tight text-[#727785] dark:text-[#c1c6d6] hover:text-[#191c1d] transition-colors duration-200" href="#">Curriculum</a>
+<a class="font-['Inter'] font-medium text-sm tracking-tight text-[#005bbf] dark:text-[#8ffa9b] border-b-2 border-[#005bbf] pb-1" href="#">Notebooks</a>
+<a class="font-['Inter'] font-medium text-sm tracking-tight text-[#727785] dark:text-[#c1c6d6] hover:text-[#191c1d] transition-colors duration-200" href="#">Insights</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-[#f3f4f5] dark:hover:bg-[#2c2c2c] transition-colors duration-200 rounded-full active:scale-95 duration-150">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+<button class="p-2 hover:bg-[#f3f4f5] dark:hover:bg-[#2c2c2c] transition-colors duration-200 rounded-full active:scale-95 duration-150">
+<span class="material-symbols-outlined text-on-surface-variant">settings</span>
+</button>
+<img alt="User profile" class="w-8 h-8 rounded-full border border-outline-variant/30" data-alt="Small circular user profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbbIY6-T2y1SyF0gnixDFwvYhhzdEGnkG_64RATwUBl5UlLYjo31MGC_dkgwoVYTWnHVQ8KC31Gd1PudGN-MGAtcvNnyOQw_Ifq-u8Ue4exp7SerGkbUSKbsbcm032RdfYMy7lvdkXUM5TlYjHmPCf3SlkRV1yV6IWu8CBen7NaNcUyR31ujUljSxU5XjMn5Qoij5HgmRjOL1cppU_GSLAI5k8ptx9A2gioNZS-_g_ACfhLUgjPeDGNVC49cBuJLVCm_AWMVfdW4U"/>
+</div>
+<div class="bg-[#f3f4f5] dark:bg-[#2c2c2c] h-[1px] w-full absolute bottom-0 left-0"></div>
+</nav>
+<div class="flex h-screen pt-16">
+<!-- SideNavBar -->
+<aside class="hidden lg:flex flex-col p-6 gap-y-4 bg-[#f3f4f5] dark:bg-[#121415] h-screen w-72 border-r-0">
+<div class="mb-6">
+<h2 class="text-lg font-semibold text-[#191c1d] dark:text-white">The Atelier</h2>
+<p class="text-xs text-outline font-medium">AI-Powered Learning</p>
+</div>
+<button class="bg-primary text-white py-3 px-4 rounded-full flex items-center justify-center gap-2 mb-4 font-semibold active:opacity-80 transition-all hover:shadow-lg">
+<span class="material-symbols-outlined">add</span>
+                New Lesson
+            </button>
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-3 p-3 text-[#727785] dark:text-[#c1c6d6] hover:bg-[#e7e8e9] dark:hover:bg-[#2c2c2c] hover:translate-x-1 transition-all duration-300 cursor-pointer rounded-lg">
+<span class="material-symbols-outlined">edit_note</span>
+<span class="font-['Inter'] text-[0.875rem] font-medium">Drafts</span>
+</div>
+<div class="flex items-center gap-3 p-3 bg-white dark:bg-[#1c1f21] text-[#005bbf] dark:text-[#8ffa9b] rounded-lg shadow-sm font-semibold cursor-pointer">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-['Inter'] text-[0.875rem] font-medium">AI Assistant</span>
+</div>
+<div class="flex items-center gap-3 p-3 text-[#727785] dark:text-[#c1c6d6] hover:bg-[#e7e8e9] dark:hover:bg-[#2c2c2c] hover:translate-x-1 transition-all duration-300 cursor-pointer rounded-lg">
+<span class="material-symbols-outlined">library_books</span>
+<span class="font-['Inter'] text-[0.875rem] font-medium">Resources</span>
+</div>
+<div class="flex items-center gap-3 p-3 text-[#727785] dark:text-[#c1c6d6] hover:bg-[#e7e8e9] dark:hover:bg-[#2c2c2c] hover:translate-x-1 transition-all duration-300 cursor-pointer rounded-lg">
+<span class="material-symbols-outlined">quiz</span>
+<span class="font-['Inter'] text-[0.875rem] font-medium">Class Quiz</span>
+</div>
+<div class="flex items-center gap-3 p-3 text-[#727785] dark:text-[#c1c6d6] hover:bg-[#e7e8e9] dark:hover:bg-[#2c2c2c] hover:translate-x-1 transition-all duration-300 cursor-pointer rounded-lg">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-['Inter'] text-[0.875rem] font-medium">Archive</span>
+</div>
+</div>
+<div class="mt-auto pt-6 border-t border-outline-variant/20">
+<div class="flex items-center gap-3 p-3 text-[#727785] cursor-pointer hover:translate-x-1 transition-all">
+<span class="material-symbols-outlined">help_outline</span>
+<span class="text-sm">Help</span>
+</div>
+<div class="flex items-center gap-3 p-3 text-[#727785] cursor-pointer hover:translate-x-1 transition-all">
+<span class="material-symbols-outlined">lock</span>
+<span class="text-sm">Privacy</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Area (Editor Canvas) -->
+<main class="flex-1 overflow-y-auto bg-surface-container-low px-4 md:px-12 py-12 scroll-smooth">
+<div class="max-w-3xl mx-auto">
+<!-- Lesson Header -->
+<div class="mb-12">
+<span class="text-label-md uppercase tracking-[0.2em] text-primary font-bold mb-4 block">Interactive Notebook</span>
+<h1 class="text-[3.5rem] font-bold text-on-surface leading-tight tracking-tight mb-4" contenteditable="true">Neural Networks: An Intuitive Approach</h1>
+<p class="text-body-lg text-on-surface-variant max-w-2xl" contenteditable="true">In this lesson, we will explore the fundamental layers of a neural network using conceptual visual metaphors before diving into the mathematical framework.</p>
+</div>
+<!-- Interactive Blocks Container -->
+<div class="space-y-8 pb-32">
+<!-- Text Block -->
+<section class="group relative bg-surface-container-lowest rounded-xl p-8 transition-all hover:shadow-lg notebook-line">
+<div class="absolute -left-12 top-1/2 -translate-y-1/2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1 hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg">drag_indicator</span></button>
+<button class="p-1 hover:text-error transition-colors"><span class="material-symbols-outlined text-lg">delete</span></button>
+</div>
+<div class="flex items-center gap-2 mb-4 text-xs font-bold text-outline tracking-widest uppercase">
+<span class="material-symbols-outlined text-sm">subject</span> Explanation
+                        </div>
+<p class="text-lg leading-relaxed text-on-surface" contenteditable="true">
+                            Imagine a neural network as a series of <strong>filters</strong>. Each layer extracts more complex features. The first layer might see simple lines, while the last layer sees entire faces.
+                        </p>
+</section>
+<!-- Code Block -->
+<section class="group relative bg-[#1c1f21] text-secondary-fixed rounded-xl p-8 font-mono text-sm transition-all hover:shadow-xl notebook-line overflow-hidden">
+<div class="absolute -left-12 top-1/2 -translate-y-1/2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity text-on-surface">
+<button class="p-1 hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg">drag_indicator</span></button>
+<button class="p-1 hover:text-error transition-colors"><span class="material-symbols-outlined text-lg">delete</span></button>
+</div>
+<div class="flex justify-between items-center mb-4">
+<div class="flex items-center gap-2 text-outline-variant text-xs font-bold tracking-widest uppercase">
+<span class="material-symbols-outlined text-sm">code</span> Python Script
+                            </div>
+<button class="text-primary-fixed-dim hover:text-white transition-colors"><span class="material-symbols-outlined">play_arrow</span></button>
+</div>
+<div class="outline-none" contenteditable="true">
+<span class="text-primary-fixed">import</span> torch<br/>
+<span class="text-primary-fixed">import</span> torch.nn <span class="text-primary-fixed">as</span> nn<br/><br/>
+<span class="text-outline"># Define a simple linear layer</span><br/>
+                            layer = nn.Linear(<span class="text-secondary-fixed">10</span>, <span class="text-secondary-fixed">2</span>)<br/>
+                            input_data = torch.randn(<span class="text-secondary-fixed">1</span>, <span class="text-secondary-fixed">10</span>)<br/>
+                            output = layer(input_data)
+                        </div>
+</section>
+<!-- Quiz Block -->
+<section class="group relative bg-surface-container-lowest rounded-xl p-8 transition-all hover:shadow-lg notebook-line">
+<div class="absolute -left-12 top-1/2 -translate-y-1/2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1 hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg">drag_indicator</span></button>
+<button class="p-1 hover:text-error transition-colors"><span class="material-symbols-outlined text-lg">delete</span></button>
+</div>
+<div class="flex items-center gap-2 mb-6 text-xs font-bold text-secondary tracking-widest uppercase">
+<span class="material-symbols-outlined text-sm">quiz</span> Quick Quiz
+                        </div>
+<h3 class="text-xl font-semibold mb-6">Which component defines the 'strength' of a connection in a neural network?</h3>
+<div class="space-y-3">
+<div class="flex items-center p-4 rounded-lg bg-surface-container-low border border-transparent hover:border-primary transition-all cursor-pointer">
+<div class="w-5 h-5 rounded-full border-2 border-outline mr-4 flex items-center justify-center"></div>
+<span class="font-medium text-on-surface">Activation Function</span>
+</div>
+<div class="flex items-center p-4 rounded-lg bg-primary/5 border border-primary transition-all cursor-pointer">
+<div class="w-5 h-5 rounded-full border-2 border-primary mr-4 flex items-center justify-center">
+<div class="w-2.5 h-2.5 bg-primary rounded-full"></div>
+</div>
+<span class="font-medium text-primary">Weights &amp; Biases</span>
+</div>
+<div class="flex items-center p-4 rounded-lg bg-surface-container-low border border-transparent hover:border-primary transition-all cursor-pointer">
+<div class="w-5 h-5 rounded-full border-2 border-outline mr-4 flex items-center justify-center"></div>
+<span class="font-medium text-on-surface">Backpropagation</span>
+</div>
+</div>
+</section>
+<!-- Discussion Prompt -->
+<section class="group relative bg-primary-fixed rounded-xl p-8 transition-all hover:shadow-lg notebook-line">
+<div class="absolute -left-12 top-1/2 -translate-y-1/2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity text-on-surface">
+<button class="p-1 hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg">drag_indicator</span></button>
+<button class="p-1 hover:text-error transition-colors"><span class="material-symbols-outlined text-lg">delete</span></button>
+</div>
+<div class="flex items-center gap-2 mb-4 text-xs font-bold text-on-primary-fixed-variant tracking-widest uppercase">
+<span class="material-symbols-outlined text-sm">forum</span> Discussion Prompt
+                        </div>
+<p class="text-xl font-medium text-on-primary-fixed" contenteditable="true">
+                            "If artificial intelligence can learn to perceive like a human, can it also learn to dream like one?"
+                        </p>
+</section>
+</div>
+</div>
+</main>
+<!-- Right Sidebar (Lesson Settings) -->
+<aside class="w-80 bg-surface border-l border-outline-variant/10 p-8 hidden xl:block overflow-y-auto">
+<h3 class="text-sm font-bold uppercase tracking-widest text-outline mb-8">Lesson Settings</h3>
+<div class="space-y-10">
+<section>
+<label class="text-xs font-semibold text-on-surface-variant block mb-2">Visibility</label>
+<div class="bg-surface-container-high p-3 rounded-lg flex justify-between items-center cursor-pointer">
+<span class="text-sm font-medium">Public to Institution</span>
+<span class="material-symbols-outlined text-primary">expand_more</span>
+</div>
+</section>
+<section>
+<label class="text-xs font-semibold text-on-surface-variant block mb-2">Metadata</label>
+<div class="space-y-3">
+<div class="flex items-center gap-2 text-sm text-outline">
+<span class="material-symbols-outlined text-sm">schedule</span> 45 mins
+                        </div>
+<div class="flex items-center gap-2 text-sm text-outline">
+<span class="material-symbols-outlined text-sm">local_offer</span> Computer Science, AI
+                        </div>
+<div class="flex items-center gap-2 text-sm text-outline">
+<span class="material-symbols-outlined text-sm">group</span> Grade 12+
+                        </div>
+</div>
+</section>
+<section class="pt-6">
+<div class="bg-secondary-container rounded-xl p-6 text-on-secondary-container">
+<h4 class="font-bold mb-2">Ready to publish?</h4>
+<p class="text-sm opacity-80 mb-6">Review accessibility and SEO metadata before going live.</p>
+<button class="w-full bg-secondary text-white py-3 rounded-full font-bold shadow-lg active:scale-95 transition-all">
+                            Go Live
+                        </button>
+</div>
+</section>
+<section>
+<label class="text-xs font-semibold text-on-surface-variant block mb-4">Collaborators</label>
+<div class="flex -space-x-2">
+<img alt="Collab 1" class="w-10 h-10 rounded-full border-2 border-surface" data-alt="Avatar of collaborator 1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeuNUIDO3wNTIv4YY5jf31Wm7nMi-Avs3CG74yYiLuLDf1t2hJgQ1OE3-w9FjapfuJyis6u9wKDj5a4pTlChy4vzIkNYKV4oP6_9wKmJGr8j5ht4pMzGJDDlqbTAP7Zg8pTvqpNitIHybn6I9UvVS1_Tc6uLlkap9VtvjhhnsCVwd9LbGJWlRvmkQYR7BW7HEoVwjB_O0WKzkAbGcpOw5kMo9Ugu51InxEvkE2gbZ_kHDd8G8-_Sq13Tur8GIoics7wZZ1zIkzY3M"/>
+<img alt="Collab 2" class="w-10 h-10 rounded-full border-2 border-surface" data-alt="Avatar of collaborator 2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2iFTwAGHD3Dk64j41X0rW1KzeAsWYJaEu8TLe23sVexoFjLEMxOxv8T2jdZebePFvzcLhubnfpbeI0CgV5uV8cZrJc14vmirXntWb0J6WYdojbv14L-FVfc4NVnK4sqZk6nBtMGxKCcISw9jDyUtH0ilD6OVCHQ7vhtYd_ux0EqMwneGb4Vsk7RSCBxlbUmmiP0PTWK3Rs1LuMPp3o1rgOdNc0l006FATPS01rlByGXFrF6uPYhw5piFCXJyRGQr2vXRsW-5KvRM"/>
+<div class="w-10 h-10 rounded-full bg-surface-container-highest border-2 border-surface flex items-center justify-center text-xs font-bold text-outline">+3</div>
+</div>
+</section>
+</div>
+</aside>
+</div>
+<!-- AI Assistant Floating Action Button Cluster -->
+<div class="fixed bottom-8 right-8 flex flex-col items-end gap-4 z-[60]">
+<div class="flex flex-col gap-3 items-end opacity-0 group-hover:opacity-100 transition-opacity duration-300 mb-2 pointer-events-none">
+<!-- Hidden by default, shown on hover of FAB logic if JS existed, simulating here as static or via hover class -->
+<button class="bg-surface-container-lowest text-on-surface-variant px-5 py-2.5 rounded-full shadow-lg border border-outline-variant/10 text-sm font-semibold hover:bg-primary hover:text-white transition-all pointer-events-auto">
+                Modify Section
+            </button>
+<button class="bg-surface-container-lowest text-on-surface-variant px-5 py-2.5 rounded-full shadow-lg border border-outline-variant/10 text-sm font-semibold hover:bg-primary hover:text-white transition-all pointer-events-auto">
+                Add Block
+            </button>
+</div>
+<button class="group bg-gradient-to-br from-primary to-primary-container text-white w-16 h-16 rounded-full shadow-2xl flex items-center justify-center transition-transform hover:scale-110 active:scale-95">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+<!-- Tooltip/Menu (Simulated) -->
+<div class="absolute bottom-full right-0 mb-4 flex flex-col gap-2 items-end opacity-0 group-hover:opacity-100 transition-all pointer-events-none translate-y-2 group-hover:translate-y-0">
+<div class="bg-surface shadow-2xl rounded-2xl p-4 w-64 border border-outline-variant/20 pointer-events-auto text-on-surface">
+<p class="text-xs font-bold text-primary mb-2">AI ASSISTANT</p>
+<p class="text-sm mb-4 leading-snug">"I can help you expand this section with a coding example or a quiz question. What would you like to do?"</p>
+<div class="grid grid-cols-1 gap-2">
+</div></div></div></button><button class="text-xs text-left p-2 rounded-lg bg-surface-container-low hover:bg-primary/10 transition-colors font-medium">✨ Generate Quiz Question</button>
+<button class="text-xs text-left p-2 rounded-lg bg-surface-container-low hover:bg-primary/10 transition-colors font-medium">📝 Summarize Section</button>
+</div>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-6 py-4 bg-white/90 dark:bg-[#191c1d]/90 backdrop-blur-lg rounded-t-3xl shadow-[0_-10px_40px_rgba(25,28,29,0.06)] border-t border-[#f3f4f5] dark:border-[#2c2c2c] md:hidden">
+<button class="text-[#727785] p-3 hover:bg-[#f3f4f5] dark:hover:bg-[#2c2c2c] transition-transform duration-200">
+<span class="material-symbols-outlined">auto_stories</span>
+</button>
+<button class="bg-[#1a73e8] text-white rounded-full p-3 scale-110 transition-transform duration-200">
+<span class="material-symbols-outlined">chat_bubble</span>
+</button>
+<button class="text-[#727785] p-3 hover:bg-[#f3f4f5] dark:hover:bg-[#2c2c2c] transition-transform duration-200">
+<span class="material-symbols-outlined">timer</span>
+</button>
+<button class="text-[#727785] p-3 hover:bg-[#f3f4f5] dark:hover:bg-[#2c2c2c] transition-transform duration-200">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</nav>
+</body></html>

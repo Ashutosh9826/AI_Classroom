@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Live Lesson Control Panel | Atelier AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "inverse-surface": "#2e3132",
+                "secondary": "#006e2a",
+                "error-container": "#ffdad6",
+                "primary": "#005bbf",
+                "on-primary-container": "#ffffff",
+                "surface-tint": "#005bc0",
+                "secondary-fixed-dim": "#73dc82",
+                "tertiary-fixed-dim": "#ffb4a9",
+                "on-secondary-container": "#00752d",
+                "on-primary-fixed": "#001a41",
+                "on-error-container": "#93000a",
+                "on-primary": "#ffffff",
+                "surface-container-highest": "#e1e3e4",
+                "primary-container": "#1a73e8",
+                "inverse-primary": "#adc7ff",
+                "surface-variant": "#e1e3e4",
+                "surface-container-lowest": "#ffffff",
+                "on-tertiary-fixed": "#410001",
+                "tertiary-container": "#df3429",
+                "surface-container": "#edeeef",
+                "on-secondary-fixed": "#002108",
+                "on-tertiary": "#ffffff",
+                "on-surface": "#191c1d",
+                "on-surface-variant": "#414754",
+                "tertiary": "#bb1712",
+                "background": "#f8f9fa",
+                "surface-bright": "#f8f9fa",
+                "surface-container-low": "#f3f4f5",
+                "secondary-fixed": "#8ffa9b",
+                "outline-variant": "#c1c6d6",
+                "outline": "#727785",
+                "tertiary-fixed": "#ffdad5",
+                "surface": "#f8f9fa",
+                "primary-fixed": "#d8e2ff",
+                "on-tertiary-fixed-variant": "#930004",
+                "on-secondary-fixed-variant": "#00531e",
+                "secondary-container": "#8ffa9b",
+                "primary-fixed-dim": "#adc7ff",
+                "on-background": "#191c1d",
+                "inverse-on-surface": "#f0f1f2",
+                "on-tertiary-container": "#ffffff",
+                "error": "#ba1a1a",
+                "on-secondary": "#ffffff",
+                "on-primary-fixed-variant": "#004493",
+                "surface-dim": "#d9dadb",
+                "surface-container-high": "#e7e8e9",
+                "on-error": "#ffffff"
+              },
+              fontFamily: {
+                "headline": ["Inter"],
+                "body": ["Inter"],
+                "label": ["Inter"]
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-header {
+            background: rgba(248, 249, 250, 0.8);
+            backdrop-filter: blur(20px);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e1e3e4;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body overflow-hidden">
+<!-- TopNavBar (Shared Component) -->
+<header class="fixed top-0 w-full z-50 bg-[#f8f9fa]/80 dark:bg-[#191c1d]/80 backdrop-blur-xl shadow-[0px_10px_40px_rgba(25,28,29,0.04)]">
+<div class="flex justify-between items-center px-8 h-16 w-full">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold text-[#191c1d] dark:text-white tracking-tighter">Atelier AI</span>
+<nav class="hidden md:flex gap-6">
+<a class="font-['Inter'] font-medium text-sm tracking-tight text-[#727785] dark:text-[#c1c6d6] hover:text-[#191c1d] hover:bg-[#f3f4f5] transition-colors duration-200 px-2 py-1 rounded" href="#">Curriculum</a>
+<a class="font-['Inter'] font-medium text-sm tracking-tight text-[#727785] dark:text-[#c1c6d6] hover:text-[#191c1d] hover:bg-[#f3f4f5] transition-colors duration-200 px-2 py-1 rounded" href="#">Notebooks</a>
+<a class="font-['Inter'] font-medium text-sm tracking-tight text-[#727785] dark:text-[#c1c6d6] hover:text-[#191c1d] hover:bg-[#f3f4f5] transition-colors duration-200 px-2 py-1 rounded" href="#">Insights</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-[#727785] hover:bg-[#f3f4f5] rounded-full transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-[#727785] hover:bg-[#f3f4f5] rounded-full transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest overflow-hidden">
+<img alt="User profile" data-alt="Close up portrait of a professional male instructor" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZw6GATmxnzaU9IW-M1T2k9K90ZSiQJphjqPvf-9gcWDNxfqaZN9kgWbDnT0stuGVm3v_hNfhsHjilOR9cfu7xXT78IT8_GxTEv8yPMagHFD7t7Rkyf_IALpmWgvt6p28uW03za1cnoKMvs1HmvIvT7NIzjJOgp6D7iAWyJJlvy87YUDPMuqRXKhxbMfB39mm-DMQX_oC1N1mCY25HJMe9LiJEeJPEEa55yeZG9758o6pvczMn-Samcuw-zZ8TVOgvFlweQ4Nyc90"/>
+</div>
+</div>
+</div>
+<div class="bg-[#f3f4f5] dark:bg-[#2c2c2c] h-[1px] w-full absolute bottom-0"></div>
+</header>
+<div class="flex h-screen pt-16">
+<!-- SideNavBar (Shared Component) -->
+<aside class="hidden lg:flex flex-col p-6 gap-y-4 h-screen w-72 bg-[#f3f4f5] dark:bg-[#121415] border-r-0">
+<div class="mb-6">
+<div class="flex items-center gap-3 mb-1">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">architecture</span>
+</div>
+<span class="text-lg font-semibold text-[#191c1d] dark:text-white">The Atelier</span>
+</div>
+<p class="text-[0.75rem] text-outline font-medium px-1">AI-Powered Learning</p>
+</div>
+<button class="bg-primary text-white font-semibold py-3 px-4 rounded-xl flex items-center justify-center gap-2 mb-4 hover:translate-x-1 transition-all duration-300 active:opacity-80">
+<span class="material-symbols-outlined">add</span>
+                New Lesson
+            </button>
+<nav class="flex flex-col gap-1">
+<div class="flex items-center gap-3 p-3 text-[#727785] dark:text-[#c1c6d6] hover:bg-[#e7e8e9] dark:hover:bg-[#2c2c2c] rounded-lg transition-all duration-300 cursor-pointer">
+<span class="material-symbols-outlined">edit_note</span>
+<span class="font-['Inter'] text-[0.875rem] font-medium">Drafts</span>
+</div>
+<div class="flex items-center gap-3 p-3 bg-white dark:bg-[#1c1f21] text-[#005bbf] dark:text-[#8ffa9b] rounded-lg shadow-sm font-semibold transition-all duration-300 cursor-pointer">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+<span class="font-['Inter'] text-[0.875rem]">AI Assistant</span>
+</div>
+<div class="flex items-center gap-3 p-3 text-[#727785] dark:text-[#c1c6d6] hover:bg-[#e7e8e9] dark:hover:bg-[#2c2c2c] rounded-lg transition-all duration-300 cursor-pointer">
+<span class="material-symbols-outlined">library_books</span>
+<span class="font-['Inter'] text-[0.875rem] font-medium">Resources</span>
+</div>
+<div class="flex items-center gap-3 p-3 text-[#727785] dark:text-[#c1c6d6] hover:bg-[#e7e8e9] dark:hover:bg-[#2c2c2c] rounded-lg transition-all duration-300 cursor-pointer">
+<span class="material-symbols-outlined">quiz</span>
+<span class="font-['Inter'] text-[0.875rem] font-medium">Class Quiz</span>
+</div>
+<div class="flex items-center gap-3 p-3 text-[#727785] dark:text-[#c1c6d6] hover:bg-[#e7e8e9] dark:hover:bg-[#2c2c2c] rounded-lg transition-all duration-300 cursor-pointer">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-['Inter'] text-[0.875rem] font-medium">Archive</span>
+</div>
+</nav>
+<div class="mt-auto flex flex-col gap-1 border-t border-outline-variant/20 pt-4">
+<div class="flex items-center gap-3 p-3 text-[#727785] dark:text-[#c1c6d6] hover:bg-[#e7e8e9] dark:hover:bg-[#2c2c2c] rounded-lg transition-all duration-300 cursor-pointer">
+<span class="material-symbols-outlined">help_outline</span>
+<span class="font-['Inter'] text-[0.875rem] font-medium">Help</span>
+</div>
+<div class="flex items-center gap-3 p-3 text-[#727785] dark:text-[#c1c6d6] hover:bg-[#e7e8e9] dark:hover:bg-[#2c2c2c] rounded-lg transition-all duration-300 cursor-pointer">
+<span class="material-symbols-outlined">lock</span>
+<span class="font-['Inter'] text-[0.875rem] font-medium">Privacy</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex overflow-hidden bg-surface">
+<!-- Left: Current Lesson View -->
+<section class="flex-1 flex flex-col p-8 border-r-0 bg-surface">
+<div class="flex justify-between items-end mb-12">
+<div>
+<span class="label-md text-primary tracking-[0.2em] mb-2 block">LIVE SESSION • MODULE 04</span>
+<h1 class="text-[2.5rem] font-bold text-on-surface leading-tight tracking-tighter">The Silk Road Dynamics</h1>
+<p class="text-body-lg text-outline mt-2">Trade routes that shaped the modern world.</p>
+</div>
+<div class="flex gap-2">
+<div class="flex items-center gap-2 bg-secondary-container px-4 py-2 rounded-full">
+<span class="w-2 h-2 bg-secondary rounded-full animate-pulse"></span>
+<span class="text-on-secondary-container font-semibold text-xs tracking-wider uppercase">Live</span>
+</div>
+</div>
+</div>
+<!-- Lesson Content Card -->
+<div class="flex-1 bg-surface-container-lowest rounded-xl p-0 overflow-hidden shadow-[0px_10px_40px_rgba(25,28,29,0.02)] flex flex-col border border-outline-variant/10">
+<div class="relative h-64 w-full">
+<img class="w-full h-full object-cover" data-alt="Old world map showing ancient trade routes across Asia and Europe" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtB3TI9LoHISocsaGCWpX9cNChVpivwAndEjvz7YuPxZXgzSDQC_DkaE6vv_z784Oo7-TMQUfnI5J8aBeatQvV40uHwsMLB6LTj-h83rVTPKCqs4lxCTUwfSKyeUI-ur0e14EjckWUEifMh-MtKDrUvLHtsg4i8NDzKeeT6yGA-BJUgsCd4jVjk173k2lzdHWzCyTpZz6lry6IM9Ncy0KRi5s9FewmPivd-oB3wf1w7vCnKUp76Y0sJbaeoLFThZwXsEYiae3yI5U"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent"></div>
+</div>
+<div class="p-8 flex-1">
+<h2 class="headline-md mb-6">Section 03: Economic Exchange</h2>
+<div class="space-y-6 text-on-surface-variant leading-relaxed">
+<p class="text-lg">The Silk Road was not a single thoroughfare but a sprawling network of routes. Beyond silk, merchants traded spices, precious stones, and even technologies like paper-making and gunpowder.</p>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container-low p-6 rounded-lg border-l-4 border-primary">
+<span class="material-symbols-outlined text-primary mb-2">trending_up</span>
+<h4 class="font-bold text-on-surface mb-1">Impact on GDP</h4>
+<p class="text-sm">Estimated trade value accounted for 25% of regional wealth.</p>
+</div>
+<div class="bg-surface-container-low p-6 rounded-lg border-l-4 border-secondary">
+<span class="material-symbols-outlined text-secondary mb-2">hub</span>
+<h4 class="font-bold text-on-surface mb-1">Cultural Diffusion</h4>
+<p class="text-sm">Shared languages and religions emerged across borders.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="p-6 bg-surface-container-high/50 flex justify-between items-center">
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<span class="text-sm font-semibold">Step 12 of 24</span>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+<button class="bg-primary text-white px-6 py-2 rounded-full font-bold text-sm tracking-wide shadow-lg shadow-primary/20 hover:scale-105 transition-transform active:scale-95">
+                            PRESENT NEXT BLOCK
+                        </button>
+</div>
+</div>
+</section>
+<!-- Right: Class Controls -->
+<section class="w-[480px] bg-surface-container-low flex flex-col p-6 gap-6">
+<!-- Quick Actions Bento -->
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container-lowest p-5 rounded-xl flex flex-col gap-3 shadow-sm border border-outline-variant/10 group hover:border-primary/30 transition-colors">
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
+<span class="material-symbols-outlined">quiz</span>
+</div>
+<div>
+<h3 class="font-bold text-sm">Flash Quiz</h3>
+<p class="text-[0.7rem] text-outline uppercase tracking-wider font-bold mt-1">Ready to Deploy</p>
+</div>
+<button class="mt-2 text-primary font-bold text-xs flex items-center gap-1 hover:gap-2 transition-all">
+                            START NOW <span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+<div class="bg-surface-container-lowest p-5 rounded-xl flex flex-col gap-3 shadow-sm border border-outline-variant/10">
+<div class="flex justify-between items-start">
+<div class="w-10 h-10 rounded-lg bg-error/10 flex items-center justify-center text-error">
+<span class="material-symbols-outlined">chat_bubble_outline</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"></div>
+</label>
+</div>
+<div>
+<h3 class="font-bold text-sm">Class Chat</h3>
+<p class="text-[0.7rem] text-secondary uppercase tracking-wider font-bold mt-1">Unlocked</p>
+</div>
+</div>
+</div>
+<!-- Participation List -->
+<div class="bg-surface-container-lowest rounded-xl flex-1 flex flex-col overflow-hidden border border-outline-variant/10 shadow-sm">
+<div class="px-5 py-4 flex justify-between items-center border-b border-surface-container-low">
+<h3 class="font-bold text-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-secondary" style="font-variation-settings: 'FILL' 1;">groups</span>
+                            Active Students (42)
+                        </h3>
+<button class="text-primary text-[0.7rem] font-bold uppercase tracking-widest hover:underline">View All</button>
+</div>
+<div class="flex-1 overflow-y-auto custom-scrollbar px-5 py-3 space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="relative">
+<div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-xs font-bold text-blue-600">SM</div>
+<div class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-secondary border-2 border-white rounded-full"></div>
+</div>
+<div>
+<p class="text-xs font-bold">Sarah Miller</p>
+<p class="text-[0.65rem] text-outline">Typing notebook...</p>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-xs text-secondary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-[0.65rem] font-bold text-secondary">92%</span>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="relative">
+<div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-xs font-bold text-purple-600">JD</div>
+<div class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-secondary border-2 border-white rounded-full"></div>
+</div>
+<div>
+<p class="text-xs font-bold">Jason Duong</p>
+<p class="text-[0.65rem] text-outline">Viewing diagram 3</p>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-xs text-secondary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-[0.65rem] font-bold text-secondary">88%</span>
+</div>
+</div>
+<div class="flex items-center justify-between opacity-60">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-600">AL</div>
+<div>
+<p class="text-xs font-bold">Avery Long</p>
+<p class="text-[0.65rem] text-outline italic">Away for 2m</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Chat Logs -->
+<div class="bg-surface-container-lowest h-64 rounded-xl flex flex-col border border-outline-variant/10 shadow-sm overflow-hidden">
+<div class="px-5 py-3 border-b border-surface-container-low flex items-center justify-between">
+<span class="text-[0.7rem] font-bold uppercase tracking-widest text-outline">Live Chat Stream</span>
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+</div>
+<div class="flex-1 overflow-y-auto custom-scrollbar p-5 space-y-4">
+<div class="flex gap-3">
+<div class="text-[0.7rem] font-bold text-primary mt-1">10:42</div>
+<div class="text-xs">
+<span class="font-bold">Sarah Miller:</span>
+<span class="text-on-surface-variant"> Why was silk the main commodity? Why not spices earlier?</span>
+</div>
+</div>
+<div class="flex gap-3">
+<div class="text-[0.7rem] font-bold text-primary mt-1">10:44</div>
+<div class="text-xs">
+<span class="font-bold">Marcus Chen:</span>
+<span class="text-on-surface-variant"> I think it was because of the weight/value ratio. Spices were heavier for the desert crossings.</span>
+</div>
+</div>
+<div class="flex gap-3 bg-secondary/5 -mx-5 px-5 py-2">
+<div class="text-[0.7rem] font-bold text-secondary mt-1">10:45</div>
+<div class="text-xs">
+<span class="font-bold text-secondary">Instructor AI:</span>
+<span class="text-on-surface-variant"> Spot on, Marcus. Silk is incredibly lightweight and durable for thousands of miles.</span>
+</div>
+</div>
+</div>
+<div class="p-3 bg-surface-container-low">
+<div class="flex items-center bg-white rounded-lg px-3 py-2 border border-outline-variant/30">
+<input class="flex-1 border-none focus:ring-0 text-xs text-on-surface placeholder:text-outline bg-transparent" placeholder="Announce to class..." type="text"/>
+<button class="text-primary hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-lg">send</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+<!-- BottomNavBar (Shared Component - Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-6 py-4 bg-white/90 dark:bg-[#191c1d]/90 backdrop-blur-lg rounded-t-3xl md:hidden shadow-[0_-10px_40px_rgba(25,28,29,0.06)] border-t border-[#f3f4f5] dark:border-[#2c2c2c]">
+<div class="flex flex-col items-center gap-1 group">
+<div class="bg-[#1a73e8] text-white rounded-full p-3 transition-transform duration-200 scale-110">
+<span class="material-symbols-outlined">auto_stories</span>
+</div>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-bold text-[#1a73e8]">Lessons</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-[#727785] p-3 group">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-bold">AI Chat</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-[#727785] p-3 group">
+<span class="material-symbols-outlined">timer</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-bold">Quiz</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-[#727785] p-3 group">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-bold">Profile</span>
+</div>
+</nav>
+</body></html>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-tint": "#005bc0",
+              "on-surface-variant": "#414754",
+              "background": "#f8f9fa",
+              "inverse-on-surface": "#f0f1f2",
+              "primary": "#005bbf",
+              "secondary-fixed-dim": "#73dc82",
+              "surface-bright": "#f8f9fa",
+              "error": "#ba1a1a",
+              "secondary": "#006e2a",
+              "surface-container": "#edeeef",
+              "secondary-fixed": "#8ffa9b",
+              "on-error-container": "#93000a",
+              "on-primary": "#ffffff",
+              "on-secondary-container": "#00752d",
+              "tertiary-fixed": "#ffdad5",
+              "on-secondary-fixed-variant": "#00531e",
+              "on-error": "#ffffff",
+              "surface-variant": "#e1e3e4",
+              "on-primary-fixed": "#001a41",
+              "on-primary-container": "#ffffff",
+              "on-tertiary-container": "#ffffff",
+              "primary-container": "#1a73e8",
+              "inverse-primary": "#adc7ff",
+              "primary-fixed": "#d8e2ff",
+              "on-primary-fixed-variant": "#004493",
+              "secondary-container": "#8ffa9b",
+              "tertiary-container": "#df3429",
+              "error-container": "#ffdad6",
+              "on-tertiary-fixed": "#410001",
+              "surface-container-lowest": "#ffffff",
+              "tertiary": "#bb1712",
+              "primary-fixed-dim": "#adc7ff",
+              "on-tertiary-fixed-variant": "#930004",
+              "outline": "#727785",
+              "surface-container-high": "#e7e8e9",
+              "surface": "#f8f9fa",
+              "surface-dim": "#d9dadb",
+              "on-secondary-fixed": "#002108",
+              "on-secondary": "#ffffff",
+              "on-background": "#191c1d",
+              "surface-container-highest": "#e1e3e4",
+              "surface-container-low": "#f3f4f5",
+              "on-surface": "#191c1d",
+              "tertiary-fixed-dim": "#ffb4a9",
+              "outline-variant": "#c1c6d6",
+              "inverse-surface": "#2e3132",
+              "on-tertiary": "#ffffff"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; }
+    </style>
+</head>
+<body class="bg-background text-on-background">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-100 shadow-sm">
+<div class="flex justify-between items-center px-6 h-16 w-full max-w-screen-2xl mx-auto">
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-slate-50 rounded-full transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-slate-600">menu</span>
+</button>
+<h1 class="text-xl font-semibold text-slate-900">Academic Atelier</h1>
+</div>
+<nav class="hidden md:flex items-center gap-8 h-full">
+<a class="text-blue-600 border-b-2 border-blue-600 pb-2 h-full flex items-center mt-2 font-medium" href="#">Stream</a>
+<a class="text-slate-500 hover:text-slate-900 transition-colors h-full flex items-center mt-2 font-medium" href="#">Classwork</a>
+<a class="text-slate-500 hover:text-slate-900 transition-colors h-full flex items-center mt-2 font-medium" href="#">People</a>
+<a class="text-slate-500 hover:text-slate-900 transition-colors h-full flex items-center mt-2 font-medium" href="#">Grades</a>
+</nav>
+<div class="flex items-center gap-2">
+<button class="p-2 hover:bg-slate-50 rounded-full transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-slate-600">apps</span>
+</button>
+<button class="p-2 hover:bg-slate-50 rounded-full transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-slate-600">notifications</span>
+</button>
+<div class="ml-2 w-8 h-8 rounded-full overflow-hidden border border-slate-200">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="Portrait of a female user" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCco_TNHTUvi8LQ72Qgjr85nml1wQYSmL0rquQAStkS57R6ZlftAqNiHneC6IBJy3hqZOumplp1lwlnanA9juM9rcXCCMYc6UUL0Dt9jXKCaykDfxyuyK6hc5aaHlIEom5KF198TEuJxjlbF4kU7xJxW2APjZOiMcC2d10yhrAOEgrHvhBGT9d8y073g3Nia3wrKZZ9CWYdvHPi4ZwD8xX5GJYgySf9qbF5S8eeSqaTkLSk1ZJYjQKlt-UkQ4zA2AGGgeN5bdkhX_s"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Sidebar (Hidden on mobile as per design system pivot) -->
+<aside class="hidden lg:flex flex-col pt-24 pb-4 h-screen w-64 fixed left-0 top-0 z-40 bg-slate-50">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center text-white">
+<span class="material-symbols-outlined">school</span>
+</div>
+<div>
+<p class="text-sm font-bold text-secondary">Classroom</p>
+<p class="text-xs text-slate-500">Academic Atelier</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-4 bg-blue-50 text-blue-700 rounded-r-full px-6 py-3 mr-4 font-medium" href="#">
+<span class="material-symbols-outlined">home</span>
+<span>Home</span>
+</a>
+<a class="flex items-center gap-4 text-slate-600 hover:bg-slate-100 rounded-r-full px-6 py-3 mr-4 font-medium transition-all" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span>Calendar</span>
+</a>
+<a class="flex items-center gap-4 text-slate-600 hover:bg-slate-100 rounded-r-full px-6 py-3 mr-4 font-medium transition-all" href="#">
+<span class="material-symbols-outlined">school</span>
+<span>Enrolled</span>
+</a>
+<a class="flex items-center gap-4 text-slate-600 hover:bg-slate-100 rounded-r-full px-6 py-3 mr-4 font-medium transition-all" href="#">
+<span class="material-symbols-outlined">archive</span>
+<span>Archived</span>
+</a>
+<a class="flex items-center gap-4 text-slate-600 hover:bg-slate-100 rounded-r-full px-6 py-3 mr-4 font-medium transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-6 py-4 border-t border-slate-100">
+<button class="w-full py-2 px-4 rounded-full bg-primary text-white font-medium shadow-sm hover:shadow-md transition-all active:scale-95">
+                Join Class
+            </button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="pt-16 lg:pl-64 min-h-screen">
+<div class="max-w-5xl mx-auto px-6 py-8">
+<!-- Hero Banner -->
+<section class="relative h-64 rounded-xl overflow-hidden mb-8 shadow-sm group">
+<div class="absolute inset-0 bg-secondary">
+<img alt="Class Banner" class="w-full h-full object-cover mix-blend-overlay opacity-40" data-alt="Abstract green pattern with educational motifs" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGNr4QwSQkx9fnLMJDGQ1e2oiUrchCxbWdeFB_e6OsdIMlIQTEQO0Q__FHEepLna6OC9SFvDmB_Gu0dMJoy4o8obaajklKyNvXsKK1CDiFFUJBxZoigblHzvC2uEOQQHA0RwQoHbwQgqS8QjOiTPpJDLNN0I3aYx9kOZnY0NGXv7IR6f9TH2RYg5dLNgECIZd7LBmGGrrPcQtYNncF93l3GImp7OlA93KJiM7F1F2csG4nd4eBC0uJ_OlsBoUm-d9dbyj3QeZFBQY"/>
+</div>
+<div class="absolute bottom-6 left-6 text-white">
+<h2 class="text-4xl font-bold tracking-tight">Advanced Architectural Studio</h2>
+<p class="text-xl opacity-90">Section A • Semester 2</p>
+</div>
+<button class="absolute top-4 right-4 bg-white/20 backdrop-blur-md p-2 rounded-full text-white hover:bg-white/30 transition-colors">
+<span class="material-symbols-outlined">info</span>
+</button>
+</section>
+<div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+<!-- Left Column: Upcoming -->
+<aside class="lg:col-span-1">
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm border border-slate-100/10">
+<h3 class="text-sm font-semibold text-on-surface uppercase tracking-wider mb-4">Upcoming</h3>
+<div class="space-y-4">
+<div class="group cursor-pointer">
+<p class="text-xs text-secondary font-bold mb-1">Due Tomorrow</p>
+<p class="text-sm text-slate-700 font-medium group-hover:text-primary transition-colors">Draft Portfolio Review</p>
+</div>
+<div class="group cursor-pointer">
+<p class="text-xs text-slate-400 font-bold mb-1">Due Friday</p>
+<p class="text-sm text-slate-700 font-medium group-hover:text-primary transition-colors">Spatial Analysis Thesis</p>
+</div>
+</div>
+<div class="mt-6 pt-4 border-t border-slate-50 flex justify-end">
+<a class="text-sm font-bold text-primary hover:bg-blue-50 px-3 py-1 rounded-full transition-colors" href="#">View all</a>
+</div>
+</div>
+</aside>
+<!-- Center Column: Stream Feed -->
+<div class="lg:col-span-3 space-y-6">
+<!-- Announcement Input -->
+<div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm border border-slate-100/10 flex items-center gap-4 hover:shadow-md transition-shadow cursor-pointer">
+<div class="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
+<img alt="User" class="w-full h-full object-cover" data-alt="Female user profile image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCd5ADdJWEjjVGjCXooAjcC0a3KvWnsxRRoKp_uPhe7wj6wdGxsEuqDTRlLbVpHAuorRdDFtJrmELtX4Tlj9qQPZ3flAkuMT34gwC0eMjFnzyOwZ-tZhg8_S05_-5taRq8exYnccLnRNSg2XsQQnjccqXi0MkYRKSSlv-oRnAaK32nikxgW9degH-KIg9FJqQjUEX0pN4cx1bqA7zIEcA3ilAf3NN9S-NIAq_usOT6sLatdDh6C57-v3-MazIfZpThc5A5IVwRj_VQ"/>
+</div>
+<p class="text-slate-500 text-sm">Announce something to your class</p>
+</div>
+<!-- Post 1: Teacher Announcement -->
+<article class="bg-surface-container-lowest rounded-xl shadow-sm border border-slate-100/10 overflow-hidden">
+<div class="p-6">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+</div>
+<div>
+<p class="text-sm font-bold text-slate-900">Dr. Helena Vance</p>
+<p class="text-xs text-slate-500">Oct 24 (Edited Oct 25)</p>
+</div>
+</div>
+<button class="p-2 hover:bg-slate-50 rounded-full text-slate-400">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="text-on-surface leading-relaxed mb-6">
+<p>Welcome back everyone! For our session tomorrow, please ensure you have your preliminary sketches ready for the site analysis. We will be working in groups to synthesize the climatic data into our design frameworks.</p>
+<p class="mt-4">I've attached the latest site survey data below for your reference.</p>
+</div>
+<!-- Attachment -->
+<div class="border border-slate-100 rounded-lg p-3 flex items-center gap-4 hover:bg-slate-50 cursor-pointer transition-colors group">
+<div class="w-12 h-12 bg-blue-50 rounded flex items-center justify-center text-blue-600">
+<span class="material-symbols-outlined">description</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-medium text-slate-800 group-hover:text-primary transition-colors">Site_Survey_Final_Data.pdf</p>
+<p class="text-xs text-slate-400">PDF Document • 4.2 MB</p>
+</div>
+</div>
+</div>
+<!-- Comment Section -->
+<div class="bg-slate-50/50 border-t border-slate-100 p-4">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-slate-400 text-sm">group</span>
+<p class="text-xs font-bold text-slate-500 uppercase tracking-tighter">2 Class Comments</p>
+</div>
+<div class="space-y-4 mb-4">
+<div class="flex gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
+<img alt="Student" class="w-full h-full object-cover" data-alt="Portrait of a male student" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkwPFZXrd2QV2QyxRH_uUEJkuusBKOI0im2lGs37je-THHNvtpWTbdIV6jCvKvS0LSNms530M9WlO_KGo_c6jk6LPGK7gPX7hpn3Fwn_E1F2iouvUv9wOJdRBkAM2ogqIU6vBj6vuIoTtjSmNEXVtJ7sJUnjtTh-mm-9e1w8cJnztE-qC4pwhKc0Pg6QRE4Uk0MUz2M7tcK2X7rywA6iGUfx86SGDKzSzjnxlrneV1XyPbef3K-wR6wFnjl8RDEcchABR-CiNVFAc"/>
+</div>
+<div class="flex-1 bg-white p-3 rounded-lg shadow-sm">
+<div class="flex justify-between items-center mb-1">
+<p class="text-xs font-bold text-slate-900">Marcus Thorne</p>
+<p class="text-[10px] text-slate-400">10:45 AM</p>
+</div>
+<p class="text-sm text-slate-700">Will the VR lab be open after class for testing the models?</p>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
+<img alt="User" class="w-full h-full object-cover" data-alt="Female user profile image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAawzolabIJfFvVP7YWV7RqfADvk6NJz_VEPDeFZVMF3kWY6o_aAFfb4bAgZ_4VGjjnuijcAtHXX-zSmgcuQTO377Mow7wisuL1MUsLFAFJSETok__L82mWjy80ZnnKI1Yu4S0QifkrodPDfhheeubc3OTBAaJSbQ0ZGbxsKQFVPZfKgoZHgjEZcbVpITo5R4vVEGn4iE40FgSU98YjOpUqZ0FxJ7Yv7K1AmNDG_9y90XFPiL2xXsm4SW9f3x9LhVtIo2XE92GaQv8"/>
+</div>
+<div class="flex-1 relative">
+<input class="w-full bg-white border border-slate-200 rounded-full py-2 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Add class comment..." type="text"/>
+<button class="absolute right-2 top-1.5 p-1 text-slate-300 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- Post 2: New Material -->
+<article class="bg-surface-container-lowest rounded-xl shadow-sm border border-slate-100/10 p-6 hover:bg-slate-50/30 transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-white">
+<span class="material-symbols-outlined">description</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-medium text-slate-900"><span class="font-bold">Dr. Helena Vance</span> posted a new material: <span class="group-hover:text-secondary transition-colors">Module 4: Sustainable Materials</span></p>
+<p class="text-xs text-slate-500">Oct 23</p>
+</div>
+</div>
+</article>
+<!-- Post 3: Student Announcement -->
+<article class="bg-surface-container-lowest rounded-xl shadow-sm border border-slate-100/10 p-6">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
+<img alt="Student" class="w-full h-full object-cover" data-alt="Female student portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbkJxRZgtxmUU9soraDEW-TjjLckYt-JifpE8wVPmqgOKhWnK7pvcX-6un1rctFud0eRfRPe_vsy0MrrmwXeZWpBwC22afe8FIIdASQ3ydonVxP1kW_bvJKbvpjbI8YUROGHXbqz-lsxo5Brq9E8VUIXclI4J0Oiv5nouGELvVLvWak3zmcAPEJiNTpWp4A3MINlOiCkE95tBFmIsTE_hWggU-bHAsfYtwnDJNZQ49JzX8OhDfabydzmoKugGm1dvaTTxLlgLsz_A"/>
+</div>
+<div>
+<p class="text-sm font-bold text-slate-900">Sofia Rodriguez</p>
+<p class="text-xs text-slate-500">Oct 22</p>
+</div>
+</div>
+<div class="text-on-surface leading-relaxed">
+<p>Hi everyone, I'm forming a study group for the spatial analysis thesis this Thursday at the library. Anyone interested in joining?</p>
+</div>
+<div class="mt-4 pt-4 border-t border-slate-50 flex items-center gap-2">
+<button class="text-xs font-bold text-slate-400 hover:text-primary px-3 py-1 rounded-full transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">reply</span> Reply
+                            </button>
+</div>
+</article>
+</div>
+</div>
+</div>
+</main>
+<!-- FAB for Teachers (Conditional rendering logic) -->
+<button class="fixed bottom-8 right-8 w-14 h-14 bg-primary text-white rounded-full shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all flex items-center justify-center z-50">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</body></html>

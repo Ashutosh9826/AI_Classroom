@@ -1,0 +1,166 @@
+﻿Γö£ΓöÇΓöÇ backend
+Γöé   Γö£ΓöÇΓöÇ .dockerignore
+Γöé   Γö£ΓöÇΓöÇ .env
+Γöé   Γö£ΓöÇΓöÇ .env.example
+Γöé   Γö£ΓöÇΓöÇ Dockerfile
+Γöé   Γö£ΓöÇΓöÇ error.html
+Γöé   Γö£ΓöÇΓöÇ index.js
+Γöé   Γö£ΓöÇΓöÇ logs.txt
+Γöé   Γö£ΓöÇΓöÇ middleware
+Γöé   Γöé   ΓööΓöÇΓöÇ authMiddleware.js
+Γöé   Γö£ΓöÇΓöÇ package-lock.json
+Γöé   Γö£ΓöÇΓöÇ package.json
+Γöé   Γö£ΓöÇΓöÇ payload.json
+Γöé   Γö£ΓöÇΓöÇ prisma
+Γöé   Γöé   Γö£ΓöÇΓöÇ migrations
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ 20260324134326_init
+Γöé   Γöé   Γöé   Γöé   ΓööΓöÇΓöÇ migration.sql
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ 20260327120000_student_notes_personal_blocks_and_code_flags
+Γöé   Γöé   Γöé   Γöé   ΓööΓöÇΓöÇ migration.sql
+Γöé   Γöé   Γöé   ΓööΓöÇΓöÇ migration_lock.toml
+Γöé   Γöé   ΓööΓöÇΓöÇ schema.prisma
+Γöé   Γö£ΓöÇΓöÇ railway_help.txt
+Γöé   Γö£ΓöÇΓöÇ realtime
+Γöé   Γöé   ΓööΓöÇΓöÇ registerRealtimeHandlers.js
+Γöé   Γö£ΓöÇΓöÇ routes
+Γöé   Γöé   Γö£ΓöÇΓöÇ assignments.js
+Γöé   Γöé   Γö£ΓöÇΓöÇ attendance.js
+Γöé   Γöé   Γö£ΓöÇΓöÇ auth.js
+Γöé   Γöé   Γö£ΓöÇΓöÇ chat.js
+Γöé   Γöé   Γö£ΓöÇΓöÇ classes.js
+Γöé   Γöé   Γö£ΓöÇΓöÇ codeExecution.js
+Γöé   Γöé   Γö£ΓöÇΓöÇ lessons.js
+Γöé   Γöé   ΓööΓöÇΓöÇ notes.js
+Γöé   Γö£ΓöÇΓöÇ schemas
+Γöé   Γöé   ΓööΓöÇΓöÇ simulationBlockSchema.js
+Γöé   Γö£ΓöÇΓöÇ scripts
+Γöé   Γöé   ΓööΓöÇΓöÇ cleanupTestData.js
+Γöé   Γö£ΓöÇΓöÇ services
+Γöé   Γöé   Γö£ΓöÇΓöÇ presenceStore.js
+Γöé   Γöé   ΓööΓöÇΓöÇ redisClient.js
+Γöé   Γö£ΓöÇΓöÇ tmp
+Γöé   ΓööΓöÇΓöÇ vars.txt
+Γö£ΓöÇΓöÇ CLOUD_MIGRATION_PLAN.md
+Γö£ΓöÇΓöÇ CLOUD_PATCH_PLAN.md
+Γö£ΓöÇΓöÇ core_tree.txt
+Γö£ΓöÇΓöÇ deploy-piston.sh
+Γö£ΓöÇΓöÇ deploy.bat
+Γö£ΓöÇΓöÇ docs
+Γöé   Γö£ΓöÇΓöÇ archive
+Γöé   Γöé   Γö£ΓöÇΓöÇ IMPLEMENTATION_CHECKLIST.md
+Γöé   Γöé   ΓööΓöÇΓöÇ PROJECT_SUMMARY.md
+Γöé   Γö£ΓöÇΓöÇ design_mockups_legacy
+Γöé   Γöé   Γö£ΓöÇΓöÇ academic_atelier_final_delivery_package.html
+Γöé   Γöé   Γö£ΓöÇΓöÇ academic_clarity
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ DESIDN1.md
+Γöé   Γöé   Γöé   ΓööΓöÇΓöÇ DESIGN.md
+Γöé   Γöé   Γö£ΓöÇΓöÇ assignment_detail_student_view
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ code.html
+Γöé   Γöé   Γöé   ΓööΓöÇΓöÇ screen.png
+Γöé   Γöé   Γö£ΓöÇΓöÇ class_stream_main_page
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ code.html
+Γöé   Γöé   Γöé   ΓööΓöÇΓöÇ screen.png
+Γöé   Γöé   Γö£ΓöÇΓöÇ code_ai_integration_real_time_logic.html
+Γöé   Γöé   Γö£ΓöÇΓöÇ code_architecture_auth_foundation.html
+Γöé   Γöé   Γö£ΓöÇΓöÇ create_lesson_ai_generation
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ code.html
+Γöé   Γöé   Γöé   ΓööΓöÇΓöÇ screen.png
+Γöé   Γöé   Γö£ΓöÇΓöÇ dashboard_class_list
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ code.html
+Γöé   Γöé   Γöé   ΓööΓöÇΓöÇ screen.png
+Γöé   Γöé   Γö£ΓöÇΓöÇ frontend_ai_chat_assistant_component_react.html
+Γöé   Γöé   Γö£ΓöÇΓöÇ frontend_lesson_editor_component_react.html
+Γöé   Γöé   Γö£ΓöÇΓöÇ frontend_live_lesson_view_react_socket.io.html
+Γöé   Γöé   Γö£ΓöÇΓöÇ frontend_teacher_control_panel_component_react.html
+Γöé   Γöé   Γö£ΓöÇΓöÇ implementation_guide_setup.html
+Γöé   Γöé   Γö£ΓöÇΓöÇ lesson_editor_teacher
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ code.html
+Γöé   Γöé   Γöé   ΓööΓöÇΓöÇ screen.png
+Γöé   Γöé   Γö£ΓöÇΓöÇ live_code_exercise_teacher
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ code.html
+Γöé   Γöé   Γöé   ΓööΓöÇΓöÇ screen.png
+Γöé   Γöé   Γö£ΓöÇΓöÇ live_lesson_controls_teacher
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ code.html
+Γöé   Γöé   Γöé   ΓööΓöÇΓöÇ screen.png
+Γöé   Γöé   Γö£ΓöÇΓöÇ live_lesson_student_view
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ code.html
+Γöé   Γöé   Γöé   ΓööΓöÇΓöÇ screen.png
+Γöé   Γöé   Γö£ΓöÇΓöÇ live_poll_teacher
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ code.html
+Γöé   Γöé   Γöé   ΓööΓöÇΓöÇ screen.png
+Γöé   Γöé   Γö£ΓöÇΓöÇ live_quiz_mcq_teacher
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ code.html
+Γöé   Γöé   Γöé   ΓööΓöÇΓöÇ screen.png
+Γöé   Γöé   Γö£ΓöÇΓöÇ lms_prd_ai_lessons_update.html
+Γöé   Γöé   Γö£ΓöÇΓöÇ lms_project_prd.html
+Γöé   Γöé   Γö£ΓöÇΓöÇ login_screen
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ code.html
+Γöé   Γöé   Γöé   ΓööΓöÇΓöÇ screen.png
+Γöé   Γöé   ΓööΓöÇΓöÇ teacher_grading_view
+Γöé   Γöé       Γö£ΓöÇΓöÇ code.html
+Γöé   Γöé       ΓööΓöÇΓöÇ screen.png
+Γöé   ΓööΓöÇΓöÇ README.md
+Γö£ΓöÇΓöÇ DOC_AUDIT_PLAN.md
+Γö£ΓöÇΓöÇ frontend
+Γöé   Γö£ΓöÇΓöÇ .env
+Γöé   Γö£ΓöÇΓöÇ .env.example
+Γöé   Γö£ΓöÇΓöÇ .env.production
+Γöé   Γö£ΓöÇΓöÇ .vercel
+Γöé   Γöé   Γö£ΓöÇΓöÇ project.json
+Γöé   Γöé   ΓööΓöÇΓöÇ README.txt
+Γöé   Γö£ΓöÇΓöÇ eslint.config.js
+Γöé   Γö£ΓöÇΓöÇ index.html
+Γöé   Γö£ΓöÇΓöÇ package-lock.json
+Γöé   Γö£ΓöÇΓöÇ package.json
+Γöé   Γö£ΓöÇΓöÇ public
+Γöé   Γöé   Γö£ΓöÇΓöÇ favicon.svg
+Γöé   Γöé   ΓööΓöÇΓöÇ icons.svg
+Γöé   Γö£ΓöÇΓöÇ README.md
+Γöé   Γö£ΓöÇΓöÇ src
+Γöé   Γöé   Γö£ΓöÇΓöÇ App.jsx
+Γöé   Γöé   Γö£ΓöÇΓöÇ components
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ ChatAssistant.jsx
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ CodeNotebookBlock.jsx
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ InteractiveQuiz.jsx
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ InteractiveSimulationBlock.jsx
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ MermaidBlock.jsx
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ SandpackErrorBoundary.jsx
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ Sidebar.jsx
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ StaticChartBlock.jsx
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ TeacherControlPanel.jsx
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ TopNavBar.jsx
+Γöé   Γöé   Γöé   ΓööΓöÇΓöÇ WrittenQuiz.jsx
+Γöé   Γöé   Γö£ΓöÇΓöÇ index.css
+Γöé   Γöé   Γö£ΓöÇΓöÇ main.jsx
+Γöé   Γöé   Γö£ΓöÇΓöÇ pages
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ ArchivedClassesPage.jsx
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ AssignmentGradingPage.jsx
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ AssignmentView.jsx
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ CalendarPage.jsx
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ ClassStreamPage.jsx
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ ClassworkPage.jsx
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ DashboardPage.jsx
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ ForgotPasswordPage.jsx
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ GradesPage.jsx
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ LessonEditor.jsx
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ LiveLessonView.jsx
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ LoginPage.jsx
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ PeoplePage.jsx
+Γöé   Γöé   Γöé   Γö£ΓöÇΓöÇ SettingsPage.jsx
+Γöé   Γöé   Γöé   ΓööΓöÇΓöÇ UtilityPage.jsx
+Γöé   Γöé   Γö£ΓöÇΓöÇ services
+Γöé   Γöé   Γöé   ΓööΓöÇΓöÇ api.js
+Γöé   Γöé   ΓööΓöÇΓöÇ store
+Γöé   Γöé       ΓööΓöÇΓöÇ useAuthStore.js
+Γöé   ΓööΓöÇΓöÇ vite.config.js
+Γö£ΓöÇΓöÇ full_structure.txt
+Γö£ΓöÇΓöÇ package.json
+Γö£ΓöÇΓöÇ piston-runner
+Γöé   Γö£ΓöÇΓöÇ Dockerfile
+Γöé   Γö£ΓöÇΓöÇ install-required-packages.js
+Γöé   ΓööΓöÇΓöÇ start-piston.sh
+Γö£ΓöÇΓöÇ PROJECT_CONTEXT.md
+Γö£ΓöÇΓöÇ PROJECT_DOCUMENTATION.md
+Γö£ΓöÇΓöÇ scripts
+Γöé   ΓööΓöÇΓöÇ compact-context.mjs
+ΓööΓöÇΓöÇ UPDATE_DEMOGRAPHIC.md

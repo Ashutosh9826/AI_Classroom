@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Live Lesson | Atelier AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "inverse-surface": "#2e3132",
+              "secondary": "#006e2a",
+              "error-container": "#ffdad6",
+              "primary": "#005bbf",
+              "on-primary-container": "#ffffff",
+              "surface-tint": "#005bc0",
+              "secondary-fixed-dim": "#73dc82",
+              "tertiary-fixed-dim": "#ffb4a9",
+              "on-secondary-container": "#00752d",
+              "on-primary-fixed": "#001a41",
+              "on-error-container": "#93000a",
+              "on-primary": "#ffffff",
+              "surface-container-highest": "#e1e3e4",
+              "primary-container": "#1a73e8",
+              "inverse-primary": "#adc7ff",
+              "surface-variant": "#e1e3e4",
+              "surface-container-lowest": "#ffffff",
+              "on-tertiary-fixed": "#410001",
+              "tertiary-container": "#df3429",
+              "surface-container": "#edeeef",
+              "on-secondary-fixed": "#002108",
+              "on-tertiary": "#ffffff",
+              "on-surface": "#191c1d",
+              "on-surface-variant": "#414754",
+              "tertiary": "#bb1712",
+              "background": "#f8f9fa",
+              "surface-bright": "#f8f9fa",
+              "surface-container-low": "#f3f4f5",
+              "secondary-fixed": "#8ffa9b",
+              "outline-variant": "#c1c6d6",
+              "outline": "#727785",
+              "tertiary-fixed": "#ffdad5",
+              "surface": "#f8f9fa",
+              "primary-fixed": "#d8e2ff",
+              "on-tertiary-fixed-variant": "#930004",
+              "on-secondary-fixed-variant": "#00531e",
+              "secondary-container": "#8ffa9b",
+              "primary-fixed-dim": "#adc7ff",
+              "on-background": "#191c1d",
+              "inverse-on-surface": "#f0f1f2",
+              "on-tertiary-container": "#ffffff",
+              "error": "#ba1a1a",
+              "on-secondary": "#ffffff",
+              "on-primary-fixed-variant": "#004493",
+              "surface-dim": "#d9dadb",
+              "surface-container-high": "#e7e8e9",
+              "on-error": "#ffffff"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .notebook-line {
+            background-image: linear-gradient(to bottom, transparent 95%, #e1e3e4 95%);
+            background-size: 100% 2.5rem;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c1c6d6;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface overflow-hidden h-screen flex flex-col">
+<!-- TopNavBar Implementation -->
+<header class="fixed top-0 w-full z-50 bg-[#f8f9fa]/80 dark:bg-[#191c1d]/80 backdrop-blur-xl shadow-[0px_10px_40px_rgba(25,28,29,0.04)]">
+<div class="flex justify-between items-center px-8 h-16 w-full">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold text-[#191c1d] dark:text-white tracking-tighter">Atelier AI</span>
+<nav class="hidden md:flex gap-6 items-center">
+<a class="font-['Inter'] font-medium text-sm tracking-tight text-[#727785] dark:text-[#c1c6d6] hover:text-[#191c1d] hover:bg-[#f3f4f5] dark:hover:bg-[#2c2c2c] transition-colors duration-200 px-2 py-1" href="#">Curriculum</a>
+<a class="font-['Inter'] font-medium text-sm tracking-tight text-[#005bbf] dark:text-[#8ffa9b] border-b-2 border-[#005bbf] pb-1" href="#">Notebooks</a>
+<a class="font-['Inter'] font-medium text-sm tracking-tight text-[#727785] dark:text-[#c1c6d6] hover:text-[#191c1d] hover:bg-[#f3f4f5] dark:hover:bg-[#2c2c2c] transition-colors duration-200 px-2 py-1" href="#">Insights</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden sm:flex items-center bg-surface-container-high rounded-full px-4 py-1.5 gap-2">
+<span class="material-symbols-outlined text-outline text-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-48" placeholder="Search resources..." type="text"/>
+</div>
+<button class="material-symbols-outlined p-2 rounded-full hover:bg-[#f3f4f5] transition-colors">notifications</button>
+<button class="material-symbols-outlined p-2 rounded-full hover:bg-[#f3f4f5] transition-colors">settings</button>
+<div class="w-8 h-8 rounded-full overflow-hidden bg-primary-container">
+<img alt="User profile" data-alt="Close up of a professional male student portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAxpdZxly3cPkmAuoHeJJSqXDXDUTTVAZguu5Fcsu0F4nhGgMzVvfHL5-Jix76VktK_mXfJRobH8Rl61f9ya3fWs6iOE-iOIZhWc11B22ngmTJCQtHJM6lytcGY21cY-oN4I4T7-srlmbLkOj9fO9w0dAGyx2KmhZadf2cjxsharJbsA0nrmiQ8qLkMa6q23TN_hY9h8A_LBj7mMTCYiF3a_Veynhb_1bfkYaFwNbSvgDOPe3rmdoQeLhg5r_EcLGhCwk59worAQI"/>
+</div>
+</div>
+</div>
+<div class="bg-[#f3f4f5] dark:bg-[#2c2c2c] h-[1px] w-full absolute bottom-0"></div>
+</header>
+<!-- Main Layout Container -->
+<main class="flex-1 flex pt-16 h-full overflow-hidden">
+<!-- Left Side: Scrollable Notebook Content (3/4) -->
+<section class="w-full lg:w-3/4 flex flex-col h-full bg-surface">
+<!-- Session Header Chip -->
+<div class="px-8 py-4 flex items-center justify-between border-b border-surface-container">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-3 py-1 bg-tertiary/10 rounded-full">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+<span class="text-xs font-bold text-tertiary tracking-widest uppercase">Live Session</span>
+</div>
+<h1 class="text-title-lg font-semibold text-on-surface tracking-tight">Quantum Mechanics: Wave-Particle Duality</h1>
+</div>
+<div class="flex items-center gap-3">
+<div class="text-right">
+<p class="text-[0.65rem] uppercase tracking-widest font-bold text-outline">Instructor</p>
+<p class="text-sm font-medium">Dr. Helena Vance</p>
+</div>
+<img alt="Instructor" class="w-10 h-10 rounded-full border-2 border-surface-container-lowest" data-alt="A portrait of a female academic instructor" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQSC9ZoRlFz0pJuTB7dnc-fZ2-qTZ9IGR4RSQtViowpMdB4Pxm1-26_5vHU4Fpz_rSFOxjSwCb5mRiScPhkprgRvl1ejXIfNr2qG_R_4f33XR1r8D2_QFA1l3T6142efB_9QtGCEB7CbEHH_YKMeD8W9uKYhIHl7_1AcAHsO0WjL4ynKBbX0H5ea8OyqxhwWZUYAMJRjdvqsWXU11tjMOtr9iID5WWzoKBNgdfWQ6nJ2PBZk-ibwjas5Pgy168sj9Sr1HF1idAWnE"/>
+</div>
+</div>
+<!-- Notebook Canvas -->
+<div class="flex-1 overflow-y-auto custom-scrollbar px-8 md:px-12 lg:px-20 py-12">
+<div class="max-w-3xl mx-auto space-y-12">
+<!-- Content Section 1 -->
+<article class="space-y-6">
+<div class="space-y-2">
+<span class="text-primary text-[0.75rem] font-bold tracking-widest uppercase">Module 04 — Part A</span>
+<h2 class="text-headline-md font-bold leading-tight">Introduction to Light Interference</h2>
+</div>
+<p class="text-body-lg text-on-surface-variant leading-relaxed">
+                            To understand the true nature of light, we must first examine Thomas Young’s Double Slit experiment. This pivotal moment in 1801 demonstrated that light exhibits properties of waves through the phenomenon of interference. 
+                        </p>
+<div class="aspect-video bg-surface-container-low rounded-xl overflow-hidden shadow-sm flex items-center justify-center border border-outline-variant/10">
+<img alt="Scientific Diagram" class="w-full h-full object-cover mix-blend-multiply opacity-80" data-alt="Abstract scientific wave interference pattern diagram" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDImd9FijQJli31phwmYQqyh-ygrinbkYXwIg-0Y5MMBVbPPIjV5mPe3PLGFJRjCXEVVytUpnnjAUHlziiHpv-dLrfwTDfVsIB1bfxZtMQQMLXidnZUi96Mwp_li8O0E86qrf2QRGDhwg1F4QNZ-kg6Y7Oj4x3xMkqUPDjDhoSGgtnFTvDM7jxEjsRuBGGyytW-KqchkAi1itmsso8-AtJ7BTcALUlJ1DpGfk05hiojGaoC4yQ_6Dh0HGKOz-Tq1_H4XiecGtgLU_8"/>
+</div>
+</article>
+<!-- Live Quiz Block -->
+<div class="relative group">
+<div class="absolute -inset-1 bg-gradient-to-r from-primary to-primary-container rounded-2xl blur opacity-25"></div>
+<div class="relative bg-surface-container-lowest p-8 rounded-xl shadow-lg space-y-6 border border-primary/10">
+<div class="flex justify-between items-start">
+<div class="space-y-1">
+<h3 class="text-title-lg font-bold text-primary flex items-center gap-2">
+<span class="material-symbols-outlined">quiz</span>
+                                        Live Pulse Quiz
+                                    </h3>
+<p class="text-sm text-outline">Respond quickly to maintain your streak!</p>
+</div>
+<div class="flex items-center gap-2 bg-error-container text-on-error-container px-4 py-2 rounded-full font-bold tabular-nums">
+<span class="material-symbols-outlined text-sm">timer</span>
+<span>00:45</span>
+</div>
+</div>
+<p class="text-lg font-medium text-on-surface">
+                                In Young's experiment, what happens to the interference pattern if the distance between the two slits is increased?
+                            </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<button class="flex items-center p-4 rounded-lg bg-surface border border-outline-variant hover:border-primary hover:bg-primary/5 transition-all text-left group">
+<span class="w-8 h-8 flex items-center justify-center rounded-full bg-surface-container-high mr-4 font-bold text-sm group-hover:bg-primary group-hover:text-white transition-colors">A</span>
+<span class="text-sm font-medium">The fringes become closer together.</span>
+</button>
+<button class="flex items-center p-4 rounded-lg bg-surface border border-outline-variant hover:border-primary hover:bg-primary/5 transition-all text-left group">
+<span class="w-8 h-8 flex items-center justify-center rounded-full bg-surface-container-high mr-4 font-bold text-sm group-hover:bg-primary group-hover:text-white transition-colors">B</span>
+<span class="text-sm font-medium">The fringes move further apart.</span>
+</button>
+<button class="flex items-center p-4 rounded-lg bg-surface border border-outline-variant hover:border-primary hover:bg-primary/5 transition-all text-left group">
+<span class="w-8 h-8 flex items-center justify-center rounded-full bg-surface-container-high mr-4 font-bold text-sm group-hover:bg-primary group-hover:text-white transition-colors">C</span>
+<span class="text-sm font-medium">The pattern disappears entirely.</span>
+</button>
+<button class="flex items-center p-4 rounded-lg bg-surface border border-outline-variant hover:border-primary hover:bg-primary/5 transition-all text-left group">
+<span class="w-8 h-8 flex items-center justify-center rounded-full bg-surface-container-high mr-4 font-bold text-sm group-hover:bg-primary group-hover:text-white transition-colors">D</span>
+<span class="text-sm font-medium">The intensity of light doubles.</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Content Section 2 -->
+<article class="space-y-6 opacity-60">
+<h2 class="text-headline-md font-bold leading-tight">The Photoelectric Effect</h2>
+<p class="text-body-lg text-on-surface-variant leading-relaxed">
+                            While Young proved light was a wave, Einstein's explanation of the photoelectric effect in 1905 provided the first concrete evidence that light could also behave as a stream of particles called quanta or photons.
+                        </p>
+<div class="h-24 notebook-line opacity-20"></div>
+</article>
+</div>
+</div>
+</section>
+<!-- Right Side: AI Assistant Chat Sidebar (1/4) -->
+<aside class="hidden lg:flex w-1/4 flex-col border-l border-surface-container-high bg-surface-container-low h-full">
+<!-- Assistant Header -->
+<div class="p-6 border-b border-surface-container flex items-center gap-4 bg-surface-container-lowest">
+<div class="w-10 h-10 rounded-xl bg-primary-container flex items-center justify-center text-white">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+<div>
+<h2 class="text-sm font-bold text-on-surface">Atelier Assistant</h2>
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-[0.7rem] font-semibold text-secondary uppercase tracking-widest">Active Now</span>
+</div>
+</div>
+</div>
+<!-- Chat Messages Container -->
+<div class="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-6">
+<!-- System/AI Greeting -->
+<div class="flex gap-3">
+<div class="w-8 h-8 shrink-0 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-sm">auto_awesome</span>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-2xl rounded-tl-none shadow-sm text-sm leading-relaxed border border-outline-variant/10">
+                        Hey there! I'm watching the live session with you. Dr. Vance just mentioned "destructive interference"—would you like a quick visualization of how those waves cancel out?
+                    </div>
+</div>
+<!-- User Message -->
+<div class="flex gap-3 justify-end">
+<div class="bg-primary text-white p-4 rounded-2xl rounded-tr-none shadow-md text-sm leading-relaxed max-w-[85%]">
+                        Yes, please! Especially how it relates to noise-canceling headphones.
+                    </div>
+</div>
+<!-- AI Response -->
+<div class="flex gap-3">
+<div class="w-8 h-8 shrink-0 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-sm">auto_awesome</span>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-2xl rounded-tl-none shadow-sm text-sm leading-relaxed border border-outline-variant/10 space-y-3">
+<p>Great analogy! Noise-canceling tech uses a microphone to capture ambient sound waves, then generates an "anti-wave" with the exact opposite phase. </p>
+<div class="p-2 bg-surface rounded-lg border border-dashed border-outline-variant">
+<img alt="Wave cancel" class="rounded w-full" data-alt="Diagram showing two waves canceling each other out" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUnowkTKoJCvAHeQZg5KUx5q2hF113suBdZ3sZ6_mfNAIYIpqto0TkOoqb_YKgOaQMiWtTxD85WWbpb3E9E-qUeVyoy-u3RohRRZon5eQlLkmoa7grZHNnhU-KYoAk8uTgpMD3qi2QlyxrRJH4waXUqctfXEGKUmU6GviCKdnQzcVlwvV9LU1fWSdSRglRhOKhwA9dGXcgjPyM7zi4HyxmWUc6b-bGGQFFgOH62d-QfW_NXGT85pMEvfM1QIxDg3f4N_dzwnbR-88"/>
+<p class="text-[10px] text-outline mt-2 text-center font-medium">Destructive Interference Visual</p>
+</div>
+</div>
+</div>
+<!-- Live Notification in Chat -->
+<div class="flex justify-center">
+<span class="text-[10px] font-bold text-outline-variant bg-surface-container px-3 py-1 rounded-full uppercase tracking-tighter">Quiz started 2m ago</span>
+</div>
+</div>
+<!-- Chat Input Area -->
+<div class="p-4 bg-surface-container-lowest border-t border-surface-container">
+<div class="relative">
+<textarea class="w-full bg-surface-container-high border-none rounded-xl text-sm p-4 pr-12 focus:ring-2 focus:ring-primary/20 transition-all resize-none min-h-[100px]" placeholder="Ask the Atelier Assistant..."></textarea>
+<button class="absolute bottom-3 right-3 w-8 h-8 bg-primary text-white rounded-lg flex items-center justify-center shadow-lg active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-sm">send</span>
+</button>
+</div>
+<div class="flex gap-2 mt-3">
+<button class="text-[10px] font-bold text-primary bg-primary/5 px-2 py-1 rounded border border-primary/20 hover:bg-primary/10 transition-colors uppercase tracking-widest">Explain Formula</button>
+<button class="text-[10px] font-bold text-primary bg-primary/5 px-2 py-1 rounded border border-primary/20 hover:bg-primary/10 transition-colors uppercase tracking-widest">Summarize</button>
+</div>
+</div>
+</aside>
+</main>
+<!-- BottomNavBar (Mobile only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-6 py-4 bg-white/90 dark:bg-[#191c1d]/90 backdrop-blur-lg border-t border-[#f3f4f5] dark:border-[#2c2c2c] shadow-[0_-10px_40px_rgba(25,28,29,0.06)] md:hidden rounded-t-3xl">
+<a class="text-[#1a73e8] bg-[#1a73e8] text-white rounded-full p-3 transition-transform duration-200 scale-110 flex flex-col items-center" href="#">
+<span class="material-symbols-outlined">auto_stories</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-bold mt-1">Lessons</span>
+</a>
+<a class="text-[#727785] p-3 hover:bg-[#f3f4f5] dark:hover:bg-[#2c2c2c] transition-colors flex flex-col items-center" href="#">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-bold mt-1">AI Chat</span>
+</a>
+<a class="text-[#727785] p-3 hover:bg-[#f3f4f5] dark:hover:bg-[#2c2c2c] transition-colors flex flex-col items-center" href="#">
+<span class="material-symbols-outlined">timer</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-bold mt-1">Quiz</span>
+</a>
+<a class="text-[#727785] p-3 hover:bg-[#f3f4f5] dark:hover:bg-[#2c2c2c] transition-colors flex flex-col items-center" href="#">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="font-['Inter'] text-[10px] uppercase tracking-widest font-bold mt-1">Profile</span>
+</a>
+</nav>
+<!-- Contextual FAB (Hidden on Live Session to avoid clutter per guidelines) -->
+</body></html>

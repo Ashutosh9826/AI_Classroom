@@ -1,0 +1,58 @@
+# Product Requirements Document: Google Classroom-Style LMS with AI Interactive Lessons
+
+## 1. Project Overview
+A full-stack Learning Management System (LMS) inspired by Google Classroom, featuring high-fidelity UI, robust backend architecture, and a cutting-edge "Interactive AI Lessons" feature for live teaching.
+
+## 2. Tech Stack
+### Frontend
+- **Framework:** React (Vite)
+- **Styling:** Tailwind CSS
+- **Navigation:** React Router
+- **Data Fetching:** Axios
+- **Real-time:** Socket.io-client
+- **Responsiveness:** Desktop & Mobile compatible
+
+### Backend
+- **Runtime:** Node.js
+- **Framework:** Express.js
+- **Architecture:** REST API + WebSockets (Socket.io)
+- **Database:** PostgreSQL with Prisma ORM
+- **AI Integration:** OpenRouter API (Model: nvidia/nemotron-3-super-120b-a12b:free)
+
+## 3. Core Features
+### [Existing Features]
+- **Authentication:** Signup/Login, Google OAuth, JWT, RBAC (Teacher/Student).
+- **Class Management:** Create/Join classes, Stream, Dashboard.
+- **Assignments:** CRUD assignments, file uploads (S3/Cloudinary), grading, feedback.
+
+### [NEW] AI Interactive Lessons
+#### Teacher Flow:
+- **Creation:** Form for title, topic, objectives, duration, and difficulty.
+- **AI Generation:** "Generate with AI" button triggers the OpenRouter API to create a structured, block-based lesson.
+- **Editor:** Notebook-style (Colab-like) editor to manually edit or ask AI to modify specific blocks.
+- **Live Controls:** Start lesson, start/pause/next quiz question, lock/unlock student AI chat.
+
+#### Lesson Content (Blocks):
+- Text explanation, code blocks, mini-exercises, discussion prompts.
+- **Live Quiz Block:** Synchronized real-time questions (MCQ, T/F, Poll, Fill-blank) with leaderboards.
+
+#### Student Experience:
+- **Interactive View:** Scroll through blocks, participate in live quizzes.
+- **AI Learning Assistant:** Side-panel chatbot providing hints and conceptual explanations (context-aware, no direct answers).
+
+## 4. Database Schema Additions
+- **Lessons:** id, class_id, title, created_by, status, created_at
+- **LessonBlocks:** id, lesson_id, type, content, order_index
+- **QuizSessions:** id, lesson_id, active, current_question
+- **QuizResponses:** id, session_id, student_id, answer, score
+- **ChatMessages:** id, lesson_id, user_id, message, role
+
+## 5. API Architecture (New Routes)
+- `/lessons`: POST /generate-ai, GET /:id, PUT /:id
+- `/quiz`: POST /start, POST /answer, GET /leaderboard
+- `/lesson-chat`: POST /message, POST /lock, POST /unlock
+
+## 6. UI/UX Requirements
+- **Notebook Editor:** Clean, block-based interface with AI action buttons.
+- **Live Session View:** Integrated quiz components and persistent AI chat sidebar.
+- **Teacher Dashboard:** Real-time monitoring of student progress and chat logs.

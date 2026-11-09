@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Login - Academic Atelier</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-tint": "#005bc0",
+                        "on-surface-variant": "#414754",
+                        "background": "#f8f9fa",
+                        "inverse-on-surface": "#f0f1f2",
+                        "primary": "#005bbf",
+                        "secondary-fixed-dim": "#73dc82",
+                        "surface-bright": "#f8f9fa",
+                        "error": "#ba1a1a",
+                        "secondary": "#006e2a",
+                        "surface-container": "#edeeef",
+                        "secondary-fixed": "#8ffa9b",
+                        "on-error-container": "#93000a",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#00752d",
+                        "tertiary-fixed": "#ffdad5",
+                        "on-secondary-fixed-variant": "#00531e",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#e1e3e4",
+                        "on-primary-fixed": "#001a41",
+                        "on-primary-container": "#ffffff",
+                        "on-tertiary-container": "#ffffff",
+                        "primary-container": "#1a73e8",
+                        "inverse-primary": "#adc7ff",
+                        "primary-fixed": "#d8e2ff",
+                        "on-primary-fixed-variant": "#004493",
+                        "secondary-container": "#8ffa9b",
+                        "tertiary-container": "#df3429",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed": "#410001",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary": "#bb1712",
+                        "primary-fixed-dim": "#adc7ff",
+                        "on-tertiary-fixed-variant": "#930004",
+                        "outline": "#727785",
+                        "surface-container-high": "#e7e8e9",
+                        "surface": "#f8f9fa",
+                        "surface-dim": "#d9dadb",
+                        "on-secondary-fixed": "#002108",
+                        "on-secondary": "#ffffff",
+                        "on-background": "#191c1d",
+                        "surface-container-highest": "#e1e3e4",
+                        "surface-container-low": "#f3f4f5",
+                        "on-surface": "#191c1d",
+                        "tertiary-fixed-dim": "#ffb4a9",
+                        "outline-variant": "#c1c6d6",
+                        "inverse-surface": "#2e3132",
+                        "on-tertiary": "#ffffff"
+                    },
+                    fontFamily: {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .signature-gradient {
+            background: linear-gradient(135deg, #005bbf 0%, #1a73e8 100%);
+        }
+        .ambient-shadow {
+            box-shadow: 0px 10px 40px rgba(25, 28, 29, 0.06);
+        }
+    </style>
+</head>
+<body class="bg-background font-body text-on-surface min-h-screen flex flex-col items-center justify-center p-6">
+<!-- Brand Header Anchor (Minimal for Login) -->
+<header class="mb-12 text-center">
+<div class="flex items-center justify-center gap-3 mb-4">
+<div class="w-12 h-12 signature-gradient rounded-xl flex items-center justify-center shadow-lg">
+<span class="material-symbols-outlined text-white text-3xl" data-icon="school">school</span>
+</div>
+<h1 class="text-2xl font-bold tracking-tight text-on-surface headline">Academic Atelier</h1>
+</div>
+</header>
+<main class="w-full max-w-[440px]">
+<!-- The Atelier Card -->
+<div class="bg-surface-container-lowest rounded-xl p-8 ambient-shadow">
+<div class="mb-8 text-center">
+<h2 class="text-3xl font-semibold text-on-surface mb-2">Welcome Back</h2>
+<p class="text-on-surface-variant text-sm">Please enter your details to sign in</p>
+</div>
+<!-- Role Selection Toggle -->
+<div class="flex p-1 bg-surface-container rounded-full mb-8">
+<button class="flex-1 py-2 text-sm font-semibold rounded-full bg-surface-container-lowest text-primary shadow-sm transition-all">
+                    Student
+                </button>
+<button class="flex-1 py-2 text-sm font-medium text-on-surface-variant hover:text-on-surface transition-all">
+                    Teacher
+                </button>
+</div>
+<form class="space-y-6">
+<!-- Google Sign In (Primary Action) -->
+<button class="w-full flex items-center justify-center gap-3 py-3 px-4 border border-outline-variant rounded-full text-on-surface font-medium hover:bg-surface-container-low transition-all active:scale-95 duration-200" type="button">
+<img alt="Google Logo" class="w-5 h-5" data-alt="Google colorful G logo icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmSeQUXIqeNYJGEEGB49yA7d5htWcPh_CyE2rdZwzpk95h1RFhd-Cm06VcjQf2LJ2tzkqDqkDGuC0102chA5LJnh5CwHQpI84OHl6g-riikN_BCJBOB0_JjOZBHa_2lFqRVIvxrf2cJjuqkO6Oh_VhUWQdo2fab8dz5NHpXIDhhZjygILKhyHnUTqOWN2qooVvXDvU80Zz2dIUKWX3D08v-ehyzQ_nBFJ866BZ-zkcZKS4OdQW2AGbZCiI5ikr-Y8R44mVVvf9ATg"/>
+                    Sign in with Google
+                </button>
+<div class="relative flex items-center py-4">
+<div class="flex-grow border-t border-outline-variant/30"></div>
+<span class="flex-shrink mx-4 text-xs font-semibold text-on-surface-variant label-md tracking-wider uppercase">Or continue with</span>
+<div class="flex-grow border-t border-outline-variant/30"></div>
+</div>
+<!-- Email Input -->
+<div class="space-y-1">
+<label class="block text-xs font-semibold text-on-surface-variant ml-1 label-md">EMAIL ADDRESS</label>
+<div class="relative group">
+<input class="w-full bg-surface-container-high border-b-2 border-outline/50 focus:border-primary focus:ring-0 px-1 py-3 transition-colors outline-none text-on-surface placeholder:text-on-surface-variant/50" placeholder="name@school.edu" type="email"/>
+</div>
+</div>
+<!-- Password Input -->
+<div class="space-y-1">
+<div class="flex justify-between items-center px-1">
+<label class="text-xs font-semibold text-on-surface-variant label-md">PASSWORD</label>
+<a class="text-xs font-semibold text-primary hover:underline" href="#">Forgot?</a>
+</div>
+<div class="relative group">
+<input class="w-full bg-surface-container-high border-b-2 border-outline/50 focus:border-primary focus:ring-0 px-1 py-3 transition-colors outline-none text-on-surface placeholder:text-on-surface-variant/50" placeholder="••••••••" type="password"/>
+</div>
+</div>
+<!-- Sign In Button -->
+<button class="w-full signature-gradient text-white font-semibold py-4 rounded-full shadow-lg shadow-primary/20 hover:shadow-primary/40 active:scale-95 transition-all duration-200 mt-4" type="submit">
+                    Sign in to Atelier
+                </button>
+</form>
+<div class="mt-8 text-center">
+<p class="text-sm text-on-surface-variant">
+                    Don't have an account? 
+                    <a class="text-primary font-semibold hover:underline decoration-2 underline-offset-4" href="#">Create account</a>
+</p>
+</div>
+</div>
+<!-- Footer Links -->
+<footer class="mt-12 flex justify-center gap-6 text-xs font-medium text-on-surface-variant">
+<a class="hover:text-primary transition-colors" href="#">Help Center</a>
+<a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
+</footer>
+</main>
+<!-- Decoration / Ambient Background Elements -->
+<div class="fixed top-0 left-0 w-full h-full -z-10 overflow-hidden pointer-events-none">
+<div class="absolute top-[-10%] right-[-5%] w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
+<div class="absolute bottom-[-10%] left-[-5%] w-80 h-80 bg-secondary/5 rounded-full blur-3xl"></div>
+</div>
+</body></html>

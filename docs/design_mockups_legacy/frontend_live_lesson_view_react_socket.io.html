@@ -1,0 +1,128 @@
+import React, { useState, useEffect } from 'react';
+import io from 'socket.io-client';
+import AssistantChat from '../components/AssistantChat';
+
+const socket = io(process.env.REACT_APP_BACKEND_URL);
+
+const LiveLessonView = ({ lessonId, userId }) => {
+  const [lesson, setLesson] = useState(null);
+  const [activeBlockIndex, setActiveBlockIndex] = useState(0);
+  const [isQuizActive, setIsQuizActive] = useState(false);
+  const [quizData, setQuizData] = useState(null);
+  const [leaderboard, setLeaderboard] = useState([]);
+
+  useEffect(() => {
+    socket.emit('join_lesson', lessonId);
+
+    socket.on('sync_navigation', ({ nextIndex }) => {
+      setActiveBlockIndex(nextIndex);
+      setIsQuizActive(false);
+    });
+
+    socket.on('quiz_started', ({ blockId, data }) => {
+      setQuizData(data);
+      setIsQuizActive(true);
+    });
+
+    socket.on('update_leaderboard', (data) => {
+      setLeaderboard(data);
+    });
+
+    return () => {
+      socket.off('sync_navigation');
+      socket.off('quiz_started');
+      socket.off('update_leaderboard');
+    };
+  }, [lessonId]);
+
+  const submitAnswer = (answer) => {
+    socket.emit('submit_answer', {
+      lessonId,
+      studentId: userId,
+      answer
+    });
+  };
+
+  if (!lesson) return <div>Loading Session...</div>;
+
+  return (
+    <div className="flex h-screen bg-white">
+      {/* Main Content Area */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <header className="h-16 border-b border-slate-100 flex items-center justify-between px-8 bg-white/80 backdrop-blur-md sticky top-0 z-10">
+          <div className="flex items-center gap-4">
+            <span className="flex h-2 w-2 rounded-full bg-red-500 animate-pulse" />
+            <h1 className="font-semibold text-slate-900">{lesson.title}</h1>
+          </div>
+          <div className="text-sm text-slate-500 font-medium">
+            Module 04 — Part A
+          </div>
+        </header>
+
+        <main className="flex-1 overflow-y-auto p-12 scroll-smooth">
+          <div className="max-w-3xl mx-auto space-y-12">
+            {lesson.blocks.map((block, index) => (
+              <div 
+                key={block.id} 
+                className={`transition-opacity duration-500 ${index > activeBlockIndex ? 'opacity-20 pointer-events-none' : 'opacity-100'}`}
+              >
+                {renderLiveBlock(block, isQuizActive && index === activeBlockIndex, submitAnswer)}
+              </div>
+            ))}
+          </div>
+        </main>
+      </div>
+
+      {/* AI Assistant Sidebar */}
+      <aside className="w-80 border-l border-slate-100 bg-slate-50 flex flex-col">
+        <AssistantChat lessonContext={lesson.topic} />
+      </aside>
+
+      {/* Real-time Leaderboard Overlay (Optional/Toggle) */}
+      {isQuizActive && (
+        <div className="fixed bottom-8 left-8 bg-white shadow-2xl rounded-2xl p-6 border border-slate-200 w-64 animate-bounce-in">
+          <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Leaderboard</h3>
+          <div className="space-y-3">
+            {leaderboard.slice(0, 3).map((entry, i) => (
+              <div key={entry.id} className="flex justify-between items-center">
+                <span className="text-sm font-medium">{entry.name}</span>
+                <span className="text-sm font-bold text-blue-600">{entry.score} pts</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const renderLiveBlock = (block, isActiveQuiz, onAnswer) => {
+  if (block.type === 'quiz' && isActiveQuiz) {
+    return (
+      <div className="bg-blue-600 rounded-3xl p-8 text-white shadow-xl animate-scale-in">
+        <h2 className="text-2xl font-bold mb-8">{block.content.question}</h2>
+        <div className="grid grid-cols-1 gap-4">
+          {block.content.options.map((option, i) => (
+            <button 
+              key={i}
+              onClick={() => onAnswer(option)}
+              className="bg-white/10 hover:bg-white/20 border border-white/20 py-4 px-6 rounded-xl text-left font-medium transition-all active:scale-95"
+            >
+              {option}
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // Standard Text/Code rendering logic...
+  return (
+    <div className="prose prose-slate max-w-none">
+      <h2 className="text-3xl font-bold text-slate-900 tracking-tight">{block.content.header}</h2>
+      <p className="text-lg text-slate-600 leading-relaxed">{block.content.body}</p>
+    </div>
+  );
+};
+
+export default LiveLessonView;

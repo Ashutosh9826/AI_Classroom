@@ -1,0 +1,66 @@
+# Product Requirements Document: Google Classroom-Style LMS
+
+## 1. Project Overview
+A full-stack Learning Management System (LMS) inspired by Google Classroom, designed for high-fidelity UI and robust backend architecture.
+
+## 2. Tech Stack
+### Frontend
+- **Framework:** React (Vite)
+- **Styling:** Tailwind CSS
+- **Navigation:** React Router
+- **Data Fetching:** Axios
+- **Responsiveness:** Desktop & Mobile compatible
+
+### Backend
+- **Runtime:** Node.js
+- **Framework:** Express.js
+- **Architecture:** REST API, MVC Pattern
+- **Database:** PostgreSQL with Prisma ORM
+- **Authentication:** JWT (Access + Refresh Tokens), Google OAuth
+- **Role-Based Access Control (RBAC):** Teacher vs. Student roles
+
+### Storage
+- AWS S3 or Cloudinary for assignments, submissions, and profiles.
+
+## 3. Core Features & User Flows
+### Authentication
+- Signup/Login with role selection.
+- Google OAuth integration.
+- Protected routes based on JWT.
+
+### Class Management
+- **Teacher:** Create classes, generate join codes, manage stream.
+- **Student:** Join classes via code, view enrolled classes.
+
+### Assignments & Submissions
+- Teachers create assignments with due dates and attachments.
+- Students upload submissions (file uploads).
+- Teachers view, grade (numeric), and provide feedback.
+
+### Announcements
+- Class stream for posts and comments.
+
+## 4. Database Schema (Prisma/PostgreSQL)
+- **Users:** id, name, email, password, role, created_at
+- **Classes:** id, name, section, teacher_id, class_code
+- **Enrollments:** id, user_id, class_id
+- **Assignments:** id, class_id, title, description, due_date, attachment_url
+- **Submissions:** id, assignment_id, student_id, file_url, grade, feedback, submitted_at
+- **Announcements:** id, class_id, message, created_at
+
+## 5. UI/UX Requirements
+- **Design Direction:** Google Classroom inspired—clean, white/light-gray backgrounds, primary color accents (e.g., Google Blue/Green), card-based layouts.
+- **Key Screens:**
+    1. Login/Register
+    2. Main Dashboard (Class List)
+    3. Class Stream/Dashboard
+    4. Assignment Detail View
+    5. Submission Management (Teacher & Student views)
+    6. Modals for Create/Join Class
+
+## 6. API Architecture
+- `/auth`: register, login, google
+- `/classes`: CRUD classes, join class
+- `/assignments`: CRUD assignments by class
+- `/submissions`: post/get submissions
+- `/grades`: grading logic
